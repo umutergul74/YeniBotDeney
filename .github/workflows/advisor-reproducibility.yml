@@ -46,6 +46,10 @@ jobs:
       - name: Validate changed Python syntax
         run: |
           python -c "import ast,json,pathlib; p=json.loads(pathlib.Path('reports/test-plan.json').read_text()); [ast.parse(pathlib.Path(f).read_text(encoding='utf-8'), filename=f) for f in p['changed_paths'] if f.endswith('.py') and pathlib.Path(f).is_file()]"
+      - name: Validate append-only research history
+        if: steps.plan.outputs.scope == 'metadata' || steps.plan.outputs.scope == 'targeted' || steps.plan.outputs.scope == 'full'
+        run: |
+          python -c "import json,pathlib,subprocess,sys; p=json.loads(pathlib.Path('reports/test-plan.json').read_text()); subprocess.run([sys.executable,'scripts/advisor_lab.py','validate']+(['--base',p['base']] if p.get('base') else []),check=True)"
       - name: Run actual notebook bootstrap only for ML test scopes
         if: steps.plan.outputs.scope == 'targeted' || steps.plan.outputs.scope == 'full'
         run: |

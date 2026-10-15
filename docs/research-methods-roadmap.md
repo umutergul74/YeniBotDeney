@@ -1,5 +1,10 @@
 # Yöntem ve geliştirme kararı — 15 Ekim 2026
 
+**Öncelik düzeltmesi:** Kullanıcının açıkladığı araştırma sırası gereği önce
+[Kampanya 002'deki teşhis soruları](../research/campaigns/002-diagnostics.md)
+plan olarak kaydedildi. Aşağıdaki yeni model/özellik önerileri bekleyen fikirlerdir;
+aktif veya çalıştırılmasına karar verilmiş deneyler değildir. Yeni deney başlamadı.
+
 ## Şu an uygulanmış olanlar
 
 Donmuş motor 741d1d4: nedensel özellikler, train-only ölçekleme, purge/embargo,

@@ -1,7 +1,27 @@
 # YeniBotDeney · Advisor araştırma çalışma alanı
 
-Bu depo danışman deneyleri için bağımsız çalışma alanıdır. Başlangıç noktası
-[üç notebookluk kullanım rehberi](notebooks/README.md).
+Bu depo aynı veri üzerinde soruların, deneylerin ve öğrenilenlerin biriktiği
+bağımsız araştırma laboratuvarıdır. Başlangıç noktası **[Deney defteri](research/INDEX.md)**.
+Notebooklar çalıştırma aracıdır; kalıcı hafıza sonuç/karar kayıtlarıdır.
+
+## Araştırmanın hafızası
+
+- **[Deney defteri ve kayıtlı sonuç tabloları](research/INDEX.md):** ne denendi,
+  ne elde edildi, hangi ölçüte göre seçildi/seçilmedi ve kanıtı nerede?
+- **[Çalışma, kayıt, düzeltme ve yedekleme rehberi](research/README.md).**
+- **[Kampanya 001](research/campaigns/001-model-comparisons.md):** A–D → wavelet
+  → loss → final. 10 tarihsel kayıt; yeniden eğitim yapılmadı.
+- **[Kampanya 002](research/campaigns/002-diagnostics.md):** validation eşikleri
+  ve 2/5, 2/2, 3/2 ATR bariyerleri. İki plan; henüz çalıştırılmadı.
+
+Kayıtlar Git'te sürümlenir. Düzeltmeler gerekçeli yeni revizyon olarak eklenir;
+önceki sonuç ve karar silinmez. Kanıt belgelerinin hashli kopyaları saklanır.
+Teknik tamamlanma, yöntem seçimi ve nihai başarım ayrı değerlendirilir.
+
+## Gerektiğinde çalıştırma araçları
+
+[Notebook rehberi](notebooks/README.md). Mevcut notebooklar tarihsel protokolün
+tekrar üretimi/kurtarma/denetimi içindir; yeni teşhis planlarını çalıştırmaz.
 
 | İhtiyaç | Notebook | Colab |
 |---|---|---|

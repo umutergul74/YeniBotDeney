@@ -7,6 +7,7 @@ This applies to local work and CI, including future sessions.
 |---|---|
 | Documentation/instructions | Diff checks; no ML install or pytest |
 | CI/test-selection policy | Fast stdlib routing tests; no ML install |
+| Research ledger CLI, records and review-document copies | Stdlib metadata persistence/history tests; no ML install or training |
 | Bootstrap | Two bootstrap regressions |
 | Notebook launcher/backend | Parameterized launcher import regression |
 | Notebook generator/cells | Notebook structure/syntax and regeneration check |
@@ -18,6 +19,13 @@ The runtime environment exception is checked by comparing ASTs: changes outside
 `clean_environment` retain full coverage. All changed paths in a push are combined;
 a docs or policy change cannot downgrade a scientific change. An unavailable diff
 base defaults to full. Whole-module selections subsume their individual nodes.
+
+The independent `scripts/advisor_lab.py` and `research/` tree store only metadata,
+review-document copies and unexecuted plans. They cannot run training, labeling,
+splits or metric computation. Their explicit `metadata` scope verifies persistence,
+hash chains, evidence, backups and generated catalog; CI also rejects edits/deletions
+of published ledger events/sources. `.gitignore` is repository policy. Any scientific
+code/config/lock changes in the same push still select full coverage.
 
 Inspect a plan without executing tests:
 

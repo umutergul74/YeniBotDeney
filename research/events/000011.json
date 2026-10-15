@@ -1,0 +1,44 @@
+{
+  "previous_sha256": "33183e672eff3a8484f48ec29f0af6853698d89a19f51d0457a5ac3e3c144f87",
+  "reason": "Kullanıcının ilettiği ikinci öneri; yalnızca plan kaydı.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "development-validation-only; September 2026 excluded",
+      "labels_id": null,
+      "raw_sha256": null,
+      "snapshot_id": null,
+      "split_id": null
+    },
+    "decision": "Çalıştırılmadı. Validation girdileri, ızgara ve seçim amacı önce kaydedilecek.",
+    "evidence": [],
+    "id": "exp-011-threshold-diagnostics",
+    "limitations": [
+      "Girdi manifestleri ve analiz planı henüz kesinleştirilmedi.",
+      "Yeni özellik/mimari denemesinden önce teşhis önerisi."
+    ],
+    "method": {
+      "aggregation": null,
+      "analysis": "precision/recall/F1 vs threshold",
+      "threshold_grid": null,
+      "training": false
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-010-final"
+    ],
+    "provenance": {
+      "executed": false,
+      "origin": "user-supplied-research-proposal"
+    },
+    "question": "Düşük recall/F1 sabit 0.5 eşik ve skor dağılımıyla nasıl ilişkili?",
+    "results": [],
+    "selection_rule": "Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.",
+    "status": "planned",
+    "title": "Plan · Validation eşik–performans teşhisi"
+  },
+  "recorded_at": "2026-10-15T14:05:20.946262+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 11
+}

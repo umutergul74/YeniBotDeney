@@ -76,6 +76,16 @@ class ScopeTests(unittest.TestCase):
         self.assertIn('tests/test_advisor_notebook_workflows.py', plan['tests'])
         self.assertTrue(plan['notebook_check'])
 
+    def test_ledger_metadata_needs_no_ml_but_science_still_requires_full(self):
+        paths = ['scripts/advisor_lab.py', 'research/events/000001.json',
+                 'research/INDEX.md', 'tests/test_advisor_lab.py']
+        plan = module.classify(paths + list(module.POLICY))
+        self.assertEqual(plan['scope'], 'metadata')
+        self.assertEqual(plan['runner'], 'unittest')
+        self.assertEqual(set(plan['tests']), {module.LAB_TEST, module.POLICY_TEST})
+        self.assertEqual(module.classify(paths + ['yenibot/labeling/triple_barrier.py'])['scope'], 'full')
+        self.assertEqual(module.classify(['research/new_training.py'])['scope'], 'full')
+
 
 if __name__ == '__main__':
     unittest.main()

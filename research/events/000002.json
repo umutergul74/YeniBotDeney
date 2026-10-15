@@ -1,0 +1,77 @@
+{
+  "previous_sha256": "70a34bc04aa5ff0c0ffbf15b71921eec3be345bfa157f173a312f7e6b431dbc7",
+  "reason": "Tarihsel inceleme raporundan aktarım; yeniden çalışma yok.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation",
+      "labels_id": "legacy-tp2-sl5-atr-h10",
+      "raw_sha256": null,
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "legacy-walk-forward-38fold-3seed"
+    },
+    "decision": "BCE bakımından A geçilmedi. F1 daha yüksek olsa da seçim ölçütü sonradan değiştirilmedi.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "docs/advisor-abcd-validation-review.md",
+        "path": "sources/1b65963eccac28992df095407cee783dd383427fd85694c90aa0a531255734df.md",
+        "sha256": "1b65963eccac28992df095407cee783dd383427fd85694c90aa0a531255734df"
+      }
+    ],
+    "id": "exp-002-b",
+    "limitations": [
+      "Kaynak inceleme raporundan aktarım; metrikler yeniden hesaplanmadı.",
+      "Ham veri/model hashleri bu kayıtta henüz bağlı değil; kaynak raporu doğrulamak ham artifact doğrulaması değildir.",
+      "38 fold × 3 seed bağımsız 114 istatistiksel tekrar değildir.",
+      "A özellikleri B/C/D listesinin birebir altkümesi değildir; A karşılaştırması yalnızca özellik ekleme etkisini izole etmez.",
+      "Mimari parametre bütçeleri eşitlenmedi."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "feature_count": 34,
+      "loss": "BCE",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "wavelet": false
+    },
+    "outcome": "not_selected",
+    "parent_ids": [
+      "exp-001-a"
+    ],
+    "provenance": {
+      "artifact_availability": "review_document_captured; raw_models_not_verified_in_this_import",
+      "drive_locator": "MyDrive/yeniBot/advisor_experiments/colab_v1",
+      "execution_date": "2026-10-03/04; kesin run zamanı kaynak artifactten bağlanmalı",
+      "origin": "historical-review-import",
+      "source_commit": "d55573c (paket kaynak commit; tüm runların tek commit olduğu iddia edilmez)"
+    },
+    "question": "Bu sabit protokolde aday validation BCE bakımından kontrolü iyileştiriyor mu?",
+    "results": [
+      {
+        "aggregation": "Eşit ağırlıklı 114 fold/seed metrik ortalaması",
+        "cohort": "legacy-development-matched-38fold-3seed",
+        "metrics": {
+          "AP": 0.397423,
+          "BCE": 0.612412,
+          "F1": 0.1595,
+          "accuracy": 0.6777,
+          "precision": 0.4478,
+          "rank_ic": 0.001562,
+          "recall": 0.1149
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Epoch ve yöntem: minimum validation BCE; sınıflandırma eşiği 0.5.",
+    "status": "completed",
+    "title": "B · 34 mevcut girdi → GRU → BCE"
+  },
+  "recorded_at": "2026-10-15T14:05:20.588382+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 2
+}

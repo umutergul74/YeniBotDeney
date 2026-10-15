@@ -1,0 +1,80 @@
+{
+  "previous_sha256": "6960991c0d47d88fc86404dc65dbb5cb81c6cfd28b0457c687da9dbdd1bce091",
+  "reason": "Tarihsel final raporundan aktarım; yeni değerlendirme yok.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "test-seen",
+      "labels_id": "legacy-tp2-sl5-atr-h10",
+      "raw_sha256": null,
+      "snapshot_id": "legacy-final-september-2026",
+      "split_id": "fixed-final-september-2026-720hours"
+    },
+    "decision": "BCE/AP train-frekans referansından iyi; recall/F1 düşük ve seed duyarlı. Yeni teşhis soruları doğdu; test üzerinden seçim yapılmaz.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "docs/advisor-final-results.md",
+        "path": "sources/68a9031401f5bce92cac1dd37752aac1c6451c2db6bccd9454b8ba2206c1361c.md",
+        "sha256": "68a9031401f5bce92cac1dd37752aac1c6451c2db6bccd9454b8ba2206c1361c"
+      }
+    ],
+    "id": "exp-010-final",
+    "limitations": [
+      "Eylül 2026 görülmüş testtir; yeni seçim ve karşılaştırma için kullanılamaz.",
+      "3 seed bağımsız test dönemleri değildir; std güven aralığı değildir.",
+      "Kaynak inceleme raporundan aktarım; metrikler yeniden hesaplanmadı.",
+      "Ham veri/model hashleri bu kayıtta henüz bağlı değil; kaynak raporu doğrulamak ham artifact doğrulaması değildir."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "feature_count": 6,
+      "loss": "BCE",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "threshold": 0.5,
+      "wavelet": false
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-006-weighted-bce",
+      "exp-007-focal",
+      "exp-008-bce-pearson",
+      "exp-009-focal-pearson"
+    ],
+    "provenance": {
+      "artifact_availability": "review_document_captured; raw_models_not_verified_in_this_import",
+      "drive_locator": "MyDrive/yeniBot/advisor_experiments/colab_v1",
+      "execution_date": "2026-10-03/04; kesin run zamanı kaynak artifactten bağlanmalı",
+      "origin": "historical-review-import",
+      "source_commit": "af6d81e3899443a0ff87026b7b3d6abf4ae7db65"
+    },
+    "question": "Validation ile dondurulan yöntemin ayrılmış testte kayıtlı başarımı nedir?",
+    "results": [
+      {
+        "aggregation": "Aynı 720 saat üzerinde 3 seed ortalaması; ensemble değil",
+        "cohort": "fixed-september-2026-720hours",
+        "metrics": {
+          "AP": 0.443801,
+          "BCE": 0.590713,
+          "F1": 0.143704,
+          "accuracy": 0.669444,
+          "precision": 0.37959,
+          "rank_ic": 0.007261,
+          "recall": 0.10101
+        },
+        "split": "test"
+      }
+    ],
+    "selection_rule": "Yöntem ve epoch validation ile seçildi; testte model/seed/eşik seçimi yok.",
+    "status": "completed",
+    "title": "Donmuş A/W_OFF/BCE · Eylül 2026 final raporu"
+  },
+  "recorded_at": "2026-10-15T14:05:20.898677+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 10
+}

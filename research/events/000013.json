@@ -1,0 +1,75 @@
+{
+  "previous_sha256": "1d5cdaa8236992378607d7585d776c89753466b00551e005fdcdd246a3623252",
+  "reason": "Aktarım kontrolünde elle kopyalama hatası düzeltildi; docs/advisor-loss-results.md değerleri esas alındı. Eski aktarım revizyonu korunur; yeni analiz yok.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation",
+      "labels_id": "legacy-tp2-sl5-atr-h10",
+      "raw_sha256": null,
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "legacy-walk-forward-38fold-3seed"
+    },
+    "decision": "Recall/F1 artışı BCE ölçütünde kontrolü geçirmedi.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "docs/advisor-loss-results.md",
+        "path": "sources/be2cfa1f436ad500c3df5fa6b9f823558e021e410342a68dfd0e37a39000a2e6.md",
+        "sha256": "be2cfa1f436ad500c3df5fa6b9f823558e021e410342a68dfd0e37a39000a2e6"
+      }
+    ],
+    "id": "exp-007-focal",
+    "limitations": [
+      "Kaynak inceleme raporundan aktarım; metrikler yeniden hesaplanmadı.",
+      "Ham veri/model hashleri bu kayıtta henüz bağlı değil; kaynak raporu doğrulamak ham artifact doğrulaması değildir.",
+      "38 fold × 3 seed bağımsız 114 istatistiksel tekrar değildir."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "feature_count": 6,
+      "loss": "focal",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "wavelet": false
+    },
+    "outcome": "not_selected",
+    "parent_ids": [
+      "exp-005-wavelet"
+    ],
+    "provenance": {
+      "artifact_availability": "review_document_captured; raw_models_not_verified_in_this_import",
+      "drive_locator": "MyDrive/yeniBot/advisor_experiments/colab_v1",
+      "execution_date": "2026-10-03/04; kesin run zamanı kaynak artifactten bağlanmalı",
+      "origin": "historical-review-import",
+      "source_commit": null
+    },
+    "question": "Bu sabit protokolde aday validation BCE bakımından kontrolü iyileştiriyor mu?",
+    "results": [
+      {
+        "aggregation": "Eşit ağırlıklı 114 fold/seed metrik ortalaması",
+        "cohort": "legacy-development-matched-38fold-3seed",
+        "metrics": {
+          "AP": 0.402705,
+          "BCE": 0.630117,
+          "F1": 0.333079,
+          "accuracy": 0.654522,
+          "precision": 0.412398,
+          "rank_ic": 0.012364,
+          "recall": 0.30351
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Epoch ve yöntem: minimum validation BCE; sınıflandırma eşiği 0.5.",
+    "status": "completed",
+    "title": "A üzerinde focal loss"
+  },
+  "recorded_at": "2026-10-15T14:07:37.380641+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 13
+}

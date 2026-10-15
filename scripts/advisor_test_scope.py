@@ -15,8 +15,9 @@ import sys
 
 WORKSPACE_TEST = 'tests/test_advisor_workspace.py'
 POLICY_TEST = 'tests/test_advisor_test_scope.py'
+LAB_TEST = 'tests/test_advisor_lab.py'
 RUNTIME = 'yenibot/experiment/advisor_runtime.py'
-POLICY = {'scripts/advisor_test_scope.py', POLICY_TEST,
+POLICY = {'scripts/advisor_test_scope.py', POLICY_TEST, '.gitignore', '.gitattributes',
           '.github/workflows/advisor-reproducibility.yml'}
 FOCUSED = {
     'scripts/bootstrap_advisor.py': [
@@ -61,6 +62,9 @@ def classify(paths: list[str], *, runtime_environment_only=False, force_full=Fal
     for path in sorted(set(paths)):
         if path in POLICY:
             targets.add(POLICY_TEST)
+        elif path == 'scripts/advisor_lab.py' or (
+                path.startswith('research/') and path.endswith(('.md', '.json', '.csv', '.txt'))):
+            targets.add(LAB_TEST)
         elif path in FOCUSED:
             targets.update(WORKSPACE_TEST + '::' + name for name in FOCUSED[path])
             if path == 'scripts/build_advisor_notebooks_v2.py':
@@ -89,11 +93,13 @@ def classify(paths: list[str], *, runtime_environment_only=False, force_full=Fal
         scope = 'docs'
     elif targets == {POLICY_TEST}:
         scope = 'policy'
+    elif targets <= {POLICY_TEST, LAB_TEST}:
+        scope = 'metadata'
     else:
         scope = 'targeted'
     # A selected whole module subsumes its selected individual tests.
     targets = {t for t in targets if '::' not in t or t.split('::')[0] not in targets}
-    return {'scope': scope, 'runner': 'unittest' if scope == 'policy' else 'pytest',
+    return {'scope': scope, 'runner': 'unittest' if scope in {'policy', 'metadata'} else 'pytest',
             'tests': sorted(targets), 'changed_paths': sorted(set(paths)),
             'notebook_check': notebook_check,
             'reason': 'explicit full request' if force_full else
@@ -134,8 +140,12 @@ def make_plan(base, head, force_full):
 def execute(plan, python):
     if plan['scope'] == 'docs':
         return
-    if plan['scope'] == 'policy':
-        command = [python, '-m', 'unittest', 'discover', '-s', 'tests', '-p', Path(POLICY_TEST).name]
+    if plan['scope'] in {'policy', 'metadata'}:
+        patterns = [Path(target).name for target in plan['tests']]
+        code = ('import unittest,sys; '
+                f'suite=unittest.TestSuite(unittest.defaultTestLoader.discover("tests",pattern=p) for p in {patterns!r}); '
+                'result=unittest.TextTestRunner(verbosity=1).run(suite); sys.exit(not result.wasSuccessful())')
+        command = [python, '-c', code]
     else:
         command = [python, '-m', 'pytest', '-q', '--tb=short',
                    '--junitxml=reports/advisor-tests.xml', *plan['tests']]

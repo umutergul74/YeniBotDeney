@@ -1,0 +1,78 @@
+{
+  "previous_sha256": "ef1d12cc52d38bf269f4d8be4054a615c51af7aebe886e010b9e5d4fded4166d",
+  "reason": "Tarihsel inceleme raporundan aktarım; yeniden çalışma yok.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation",
+      "labels_id": "legacy-tp2-sl5-atr-h10",
+      "raw_sha256": null,
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "legacy-walk-forward-38fold-3seed"
+    },
+    "decision": "W_OFF/A seçildi; fark küçük, istatistiksel anlamlılık iddiası yok.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "docs/advisor-wavelet-results.md",
+        "path": "sources/4439279f6c030e012880fd56278f43849431b204d5ea4865da76ad021926d32d.md",
+        "sha256": "4439279f6c030e012880fd56278f43849431b204d5ea4865da76ad021926d32d"
+      }
+    ],
+    "id": "exp-005-wavelet",
+    "limitations": [
+      "Kaynak inceleme raporundan aktarım; metrikler yeniden hesaplanmadı.",
+      "Ham veri/model hashleri bu kayıtta henüz bağlı değil; kaynak raporu doğrulamak ham artifact doğrulaması değildir.",
+      "38 fold × 3 seed bağımsız 114 istatistiksel tekrar değildir."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "feature_count": 6,
+      "loss": "BCE",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "wavelet": true
+    },
+    "outcome": "not_selected",
+    "parent_ids": [
+      "exp-001-a",
+      "exp-002-b",
+      "exp-003-c",
+      "exp-004-d"
+    ],
+    "provenance": {
+      "artifact_availability": "review_document_captured; raw_models_not_verified_in_this_import",
+      "drive_locator": "MyDrive/yeniBot/advisor_experiments/colab_v1",
+      "execution_date": "2026-10-03/04; kesin run zamanı kaynak artifactten bağlanmalı",
+      "origin": "historical-review-import",
+      "source_commit": "021d59a91969e82d88308c01fd1941091d65f482"
+    },
+    "question": "Bu sabit protokolde aday validation BCE bakımından kontrolü iyileştiriyor mu?",
+    "results": [
+      {
+        "aggregation": "Eşit ağırlıklı 114 fold/seed metrik ortalaması",
+        "cohort": "legacy-development-matched-38fold-3seed",
+        "metrics": {
+          "AP": 0.419435,
+          "BCE": 0.595259,
+          "F1": 0.129448,
+          "accuracy": 0.687186,
+          "precision": 0.426119,
+          "rank_ic": 0.020638,
+          "recall": 0.088158
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Epoch ve yöntem: minimum validation BCE; sınıflandırma eşiği 0.5.",
+    "status": "completed",
+    "title": "Seçilen A üzerinde nedensel wavelet"
+  },
+  "recorded_at": "2026-10-15T14:05:20.681589+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 5
+}

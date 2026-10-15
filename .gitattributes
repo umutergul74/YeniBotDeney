@@ -1,0 +1,3 @@
+# Hash-linked research history and source evidence must retain exact bytes on all hosts.
+research/events/** -text
+research/sources/** -text

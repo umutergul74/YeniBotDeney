@@ -1,0 +1,58 @@
+{
+  "previous_sha256": "cb99af8ff714691d0e1ecf3f46833aeae8f6fbe2ca204a3c184764f878cbbe86",
+  "reason": "Kullanıcının ilettiği ikinci öneri; yalnızca plan kaydı.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "development-validation-only; September 2026 excluded",
+      "labels_id": null,
+      "raw_sha256": null,
+      "snapshot_id": null,
+      "split_id": null
+    },
+    "decision": "Çalıştırılmadı. Uygun tarih evreni, ATR ve temas kuralı belirlenmeden etiket üretilmeyecek.",
+    "evidence": [],
+    "id": "exp-012-barrier-diagnostics",
+    "limitations": [
+      "Girdi manifestleri ve analiz planı henüz kesinleştirilmedi.",
+      "Yeni özellik/mimari denemesinden önce teşhis önerisi."
+    ],
+    "method": {
+      "analysis": "first-touch counts and timeout return distribution",
+      "horizon_hours": 10,
+      "same_bar_rule": null,
+      "tp_sl_atr": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "training": false
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-010-final"
+    ],
+    "provenance": {
+      "executed": false,
+      "origin": "user-supplied-research-proposal"
+    },
+    "question": "TP/SL seçimi ilk temas sınıflarını ve süre dolumu getirilerini nasıl etkiliyor?",
+    "results": [],
+    "selection_rule": "Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.",
+    "status": "planned",
+    "title": "Plan · ATR bariyerleri ve etiket dağılımı"
+  },
+  "recorded_at": "2026-10-15T14:05:20.995047+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 12
+}

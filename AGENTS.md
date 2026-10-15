@@ -18,6 +18,15 @@
   explicit user requests and unknown code. Never weaken research thresholds.
 - Keep the notebooks thin. Python host packages must not enter research processes.
 - Independent reviewers are read-only and bounded; default to one agent.
+- This is a cumulative experiment laboratory. Start research planning from
+  `research/README.md` and `research/INDEX.md`, not from notebook numbering.
+  Preserve unsuccessful, failed and abandoned experiments as well as successes.
+  Record questions, parent experiments, data/label/split identity, selection rules,
+  evidence, results and decisions. Append corrections; never rewrite published
+  `research/events/` or `research/sources/`. New runs/methods get new IDs.
+- A proposal is not authorization to execute it. The threshold/barrier diagnostic
+  proposals are planned only until the user requests execution. Notebook changes
+  do not implicitly authorize training or analysis.
 - Routine task commits/pushes are authorized, but do not move frozen release tags
   or merge into main/advisor baseline without a separate explicit request.
 

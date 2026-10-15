@@ -1,0 +1,34 @@
+{
+  "campaign": "campaign-new",
+  "data": {
+    "evaluation_scope": "development-validation-only; September 2026 excluded",
+    "labels_id": null,
+    "raw_sha256": null,
+    "snapshot_id": null,
+    "split_id": null
+  },
+  "decision": "Plan kaydı; çalıştırılmadı.",
+  "evidence": [],
+  "id": "exp-new-example",
+  "limitations": [
+    "Çalıştırmadan önce kimlik, veri ve seçim ölçütlerini kesinleştirin."
+  ],
+  "method": {
+    "changed_factor": null,
+    "code_commit": null,
+    "environment_lock_sha256": null,
+    "run_id": null,
+    "seeds": []
+  },
+  "outcome": "pending",
+  "parent_ids": [],
+  "provenance": {
+    "executed": false,
+    "origin": "user-supplied-research-proposal"
+  },
+  "question": "Hangi soruyu hangi kontrolle yanıtlıyoruz?",
+  "results": [],
+  "selection_rule": "Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.",
+  "status": "planned",
+  "title": "Araştırma başlığı"
+}

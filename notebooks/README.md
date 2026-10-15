@@ -1,5 +1,11 @@
 # Notebook giriş noktaları
 
+**Araştırmanın ana ekranı [deney defteridir](../research/INDEX.md).**
+Bu notebooklar kayıt sisteminin yerine geçmez. Yeni öneri önce plan olarak
+kaydedilir; her yeni deney için yeni notebook oluşturmak gerekmez.
+Buradaki araştırma notebooku mevcut A–D/wavelet/loss protokolüne aittir;
+eşik/bariyer teşhisleri henüz uygulanmadı veya çalıştırılmadı.
+
 Aktif kullanıcı akışı yalnızca **workflows/** içindeki üç notebooktur:
 
 | Notebook | Ne zaman? | Ne üretir? |
