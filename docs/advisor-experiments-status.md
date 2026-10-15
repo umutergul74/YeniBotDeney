@@ -1,5 +1,10 @@
 # Danışman deneyleri — çalışma ve devam kaydı
 
+**15 Ekim 2026 kullanım notu:** Aşağıdaki kayıtlar tarihseldir; eski
+“sonraki adım” talimatlarını yeni çalışma talimatı olarak uygulamayın.
+Final tamamlandı ve Eylül 2026 görüldü. Güncel giriş noktaları
+[üç notebook rehberindedir](../notebooks/README.md).
+
 Başlangıç: 2026-10-03. Dal: `codex/advisor-ablation-protocol`.
 Kaynak dal: `main`; geçmiş deney ve sonuçlar korunur.
 

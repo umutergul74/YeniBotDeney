@@ -22,7 +22,7 @@ def cell(kind, text):
     return result
 
 
-def build(phase):
+def build(phase, *, render_only=False):
     name=NAMES[phase]
     mode='recovery' if phase in ('basic','full') else ('archive' if phase=='final' else 'research')
     experiments={'basic':['A'],'full':['B','C','D'],'wavelet':['W_ON'],
@@ -180,9 +180,99 @@ def build(phase):
     notebook={'cells':cells,'metadata':{'colab':{'name':name,'provenance':[]},
         'kernelspec':{'display_name':'Python 3 (orchestrator)','language':'python','name':'python3'},
         'language_info':{'name':'python'},'accelerator':'GPU'},'nbformat':4,'nbformat_minor':5}
+    if render_only:
+        return notebook
     target=ROOT/'notebooks'/name
     target.write_text(json.dumps(notebook,ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')
     return target
+
+
+def build_workflows():
+    """Three task-oriented entry points; the versioned v2 entry points stay intact."""
+    destination = ROOT / 'notebooks' / 'workflows'
+    destination.mkdir(parents=True, exist_ok=True)
+    descriptions = {
+        'recovery': ('01_recover_data.ipynb', 'Eksik hazırlanmış tabloları kurtar',
+            'Eski A ve B/C/D tablolarını sabit ham snapshot’tan yeniden oluşturur. '
+            'Özgün SHA eşleşmesi zorunludur. Eğitim yapmaz. Tablolar zaten tam ise atlayın.'),
+        'research': ('02_research.ipynb', 'Kontroller ve isteğe bağlı deneyler',
+            'Her oturumda tek aşama seçin: basic → full → isteğe bağlı wavelet → loss. '
+            'Aşamalar aynı yeni workspace ve sürümü kullanır. Varsayılan eğitim kapalıdır. '
+            'Bu, dondurulmuş protokolün yeni ortamda tekrar üretimidir; yeni yöntem protokolü değildir.'),
+        'archive': ('03_audit_archive.ipynb', 'Tarihsel finalin bütünlüğünü denetle',
+            'Yalnızca mevcut dosyaları ve hashlerini okur. Model yüklemez, tahmin veya '
+            'yeni test üretmez. Günlük araştırma için zorunlu değildir.'),
+    }
+    for mode, (name, title, description) in descriptions.items():
+        notebook = build('final' if mode == 'archive' else 'basic', render_only=True)
+        cells = notebook['cells']
+        cells[0] = cell('markdown', f'''# {title}
+
+{description}
+
+**Yayın:** advisor-notebooks-v2.1.0 · **Depo:** umutergul74/YeniBotDeney
+
+**Girdi:** Drive `MyDrive/yeniBot/advisor_experiments/colab_v1` arşivi.
+**Çıktı:** ayrı workspace; veriler `data/`, modeller `runs/`, raporlar `reports/`.
+Drive hesabı: `icinbedava34@gmail.com`. Bağlarken hesabı kontrol edin.
+
+**Başarı ölçütü:** işlem hatasız tamamlanır, `STATUS.md` ve inceleme paketi oluşur.
+Bu teknik başarı, modelin iyi performans verdiği anlamına gelmez.
+
+Hücreleri yukarıdan aşağı çalıştırın. İlk kurulum paket indirebilir.
+Eğitim için T4 gerekir. Aynı workspace'e ikinci oturumdan yazmayın.
+Kesintiden sonra aynı sürüm/ayarlarla baştan çalıştırın; uyumlu checkpointler kullanılır.
+v2.0.x workspace'ine v2.1.0 ile devam etmeyin; yeni WORKSPACE_ID kullanın.
+''')
+        settings = cells[2]['source']
+        settings = settings.replace("MODE = 'recovery'", f'MODE = {mode!r}')
+        settings = settings.replace("WORKSPACE_ID = 'advisor_protocol_v2'", f"WORKSPACE_ID = 'advisor_v21_{mode}_001'")
+        settings = settings.replace(RELEASE, 'advisor-notebooks-v2.1.0')
+        settings = settings.replace('umutergul74/yeniBot.git', 'umutergul74/YeniBotDeney.git')
+        settings = settings.replace('/content/advisor_reproducible_repo', '/content/advisor_deney_v21_repo')
+        if mode == 'research':
+            settings = settings.replace("PHASE = 'basic'", "PHASE = 'basic'  # @param ['basic', 'full', 'wavelet', 'loss']")
+            settings = settings.replace("EXPERIMENTS = ['A']", """EXPERIMENTS = {
+    'basic': ['A'],
+    'full': ['B', 'C', 'D'],
+    'wavelet': ['W_ON'],
+    'loss': ['L_WEIGHTED_BCE', 'L_FOCAL', 'L_BCE_PEARSON', 'L_FOCAL_PEARSON'],
+}[PHASE]""")
+            settings += "\nprint('Seçilen aşama:', PHASE, '| Deneyler:', EXPERIMENTS)\n"
+            settings += "print('Planlanan fold × seed:', len(EXPERIMENTS) * 38 * 3, '| Eğitim izni:', ALLOW_TRAINING)\n"
+            cells[1]['source'] += '''
+| Aşama | Amaç | Önkoşul | Yeni eğitim sayısı |
+|---|---|---|---:|
+| basic | A: temel özellik/GRU kontrolü | Sabit ham arşiv | 114 |
+| full | B/C/D: özellik ve mimari kontrolleri | Aynı workspace'te tamamlanmış A | 342 |
+| wavelet | Nedensel filtre katkısı, isteğe bağlı | Tam A–D; desteklenen A kazananı | 114 |
+| loss | Kayıp fonksiyonu katkısı, isteğe bağlı | A–D ve wavelet karşılaştırması | 456 |
+
+Loss mevcut protokolde wavelet kararını gerektirir; wavelet atlanarak loss çalıştırılmaz.
+08/09'un tarihsel sonucu wavelet kapalı + saf BCE'dir. Bu tüm yöntem ailesi için
+üstünlük iddiası değildir. Aday seçimi validation BCE; Eylül 2026 testine dönülmez.
+`ALLOW_TRAINING=False` hazırlığa izin verir; eğitim hücresi açıklama yazıp durur.
+'''
+            for c in cells:
+                if c['cell_type'] == 'code' and "if MODE == 'research':" in c['source']:
+                    c['source'] = "if ALLOW_TRAINING:\n    execute_step('train')\nelse:\n    print('Yalnızca hazırlık tamamlandı. Eğitim için ayarlarda ALLOW_TRAINING=True seçin.')\n"
+        cells[2]['source'] = settings
+        if mode == 'recovery':
+            for c in cells:
+                if c['cell_type'] == 'code' and c['source'].strip() == "execute_step('prepare')":
+                    c['source'] = "for PHASE in ('basic', 'full'):\n    EXPERIMENTS = []\n    print('Kurtarılan tablo kapsamı:', PHASE)\n    execute_step('prepare')\n"
+        # Refuse reuse of a checkout from the old source repository.
+        for c in cells:
+            if c['cell_type'] == 'code' and "assert not git('status'" in c['source']:
+                c['source'] += "assert git('remote', 'get-url', 'origin') == REPO_URL, 'Yanlış kaynak depo; yeni runtime açın.'\n"
+        notebook['metadata']['colab']['name'] = name
+        if mode != 'research':
+            notebook['metadata'].pop('accelerator', None)
+        for i, c in enumerate(cells):
+            c['id'] = f'advisor-workflow-{mode}-{i:02d}'
+            if c['cell_type'] == 'code':
+                compile(c['source'], f'{name}:{i}', 'exec')
+        (destination / name).write_text(json.dumps(notebook, ensure_ascii=False, indent=1) + '\n', encoding='utf-8', newline='\n')
 
 
 def build_all():
@@ -199,6 +289,7 @@ def build_all():
         records.append(hashlib.sha256(payload).hexdigest()+'  '+name)
     (archive/'SHA256SUMS').write_text('\n'.join(records)+'\n',encoding='utf-8',newline='\n')
     for phase in NAMES:print('Generated',build(phase))
+    build_workflows()
 
 
 if __name__=='__main__':build_all()

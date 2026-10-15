@@ -68,6 +68,14 @@ class ScopeTests(unittest.TestCase):
         self.assertEqual(plan['scope'], 'targeted')
         self.assertTrue(plan['notebook_check'])
 
+    def test_workflow_notebooks_have_bounded_regressions(self):
+        plan = module.classify(['scripts/build_advisor_notebooks_v2.py',
+                                'notebooks/workflows/02_research.ipynb'])
+        self.assertEqual(plan['scope'], 'targeted')
+        self.assertEqual(len(plan['tests']), 2)
+        self.assertIn('tests/test_advisor_notebook_workflows.py', plan['tests'])
+        self.assertTrue(plan['notebook_check'])
+
 
 if __name__ == '__main__':
     unittest.main()

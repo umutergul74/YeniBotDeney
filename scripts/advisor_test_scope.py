@@ -63,9 +63,16 @@ def classify(paths: list[str], *, runtime_environment_only=False, force_full=Fal
             targets.add(POLICY_TEST)
         elif path in FOCUSED:
             targets.update(WORKSPACE_TEST + '::' + name for name in FOCUSED[path])
+            if path == 'scripts/build_advisor_notebooks_v2.py':
+                targets.add('tests/test_advisor_notebook_workflows.py')
             notebook_check |= 'build_advisor' in path
         elif path == RUNTIME and runtime_environment_only:
             targets.update(WORKSPACE_TEST + '::' + name for name in ENVIRONMENT_TESTS)
+        elif path in {'notebooks/workflows/01_recover_data.ipynb',
+                      'notebooks/workflows/02_research.ipynb',
+                      'notebooks/workflows/03_audit_archive.ipynb'}:
+            notebook_check = True
+            targets.add('tests/test_advisor_notebook_workflows.py')
         elif path in ADVISOR_NOTEBOOKS:
             notebook_check = True
             targets.add(WORKSPACE_TEST + '::test_all_notebooks_are_thin_safe_and_archive_does_not_execute_test')

@@ -1,5 +1,15 @@
 # Advisor notebookları v2 — tekrar üretilebilir çalışma düzeni
 
+## v2.1.0 — güncel giriş noktaları
+
+Aktif kullanım [üç görev notebookuna](../notebooks/README.md) indirildi:
+veri kurtarma, araştırma, arşiv denetimi. Kaynak depo artık
+`umutergul74/YeniBotDeney`; yeni girişler `advisor-notebooks-v2.1.0` yayınına bağlı.
+06/07 kurtarma tek notebookta; 06–09 araştırma tek aşama seçicili notebookta;
+10 salt okunur denetim notebookunda yer alır. Bilimsel motor ve kilit değişmedi.
+Eski 06–10 ve aşağıdaki v2.0.x talimatları mevcut oturum uyumluluğu içindir.
+Yeni sürüm eski workspace kimliğini değiştirmez; yeni WORKSPACE_ID kullanın.
+
 15 Ekim 2026. Bağımsız depo: `C:/Users/Umut/Desktop/advisor-research`.
 Dal: `codex/advisor-reproducible-notebooks`.
 Değişmeyen araştırma motoru başlangıcı: `741d1d4`.
@@ -106,8 +116,9 @@ kırma veya checkpoint üstüne yazma yoktur.
 
 ## Doğrulama durumu
 
-Kod değişikliği için sentetik persistence/isolation testleri ve mevcut advisor
-regresyonları; nihai gate olarak tek Linux tam CPU CI çalışması kullanılır.
+Kod değişikliği için [kapsam politikası](test-budget.md) uygulanır; notebook
+değişikliğinde yapı/sözdizimi, üretim tutarlılığı ve ilgili kontrol akışı testleri
+yeterlidir. Bilimsel veya donmuş artifact değişikliği tam suite gerektirir.
 Gerçek Colab kurulumu ve uzun eğitim kullanıcı oturumunda ayrıca doğrulanmalıdır.
 CI CPU kontrolleri, T4/CUDA yeniden üretimini doğrulamaz. Testler tamamlanmadan
 bu belge tek başına geçmiş bir başarı iddiası değildir.
