@@ -1,3 +1,5 @@
 # Hash-linked research history and source evidence must retain exact bytes on all hosts.
 research/events/** -text
 research/sources/** -text
+research/sources/** whitespace=cr-at-eol
+research/analyses/** -text whitespace=cr-at-eol
