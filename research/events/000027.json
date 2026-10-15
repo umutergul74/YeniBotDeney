@@ -1,0 +1,91 @@
+{
+  "previous_sha256": "8772cdddd991778c8f038caf5cf04199f2e7f2c3971f2f7d7ff94ff7d8912d69",
+  "reason": "Kullanıcı precision hedefini kilitlemeden %60/%65/%70 karşılaştırmasını açıkça seçti.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "planned historical validation diagnostics; no test command",
+      "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Kullanıcı %60/%65/%70 karşılaştırmasını seçti; hedef/eşik kilitlenmeyecek. Özgün veri/pencere düzenindeki notebook CI doğrulamasında; gerçek eğitim henüz çalıştırılmadı.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/selective-walkforward-20261016/PLAN.md",
+        "path": "sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md",
+        "sha256": "f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/selective-walkforward-20261016/PLAN.md",
+        "path": "sources/93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0.md",
+        "sha256": "93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0"
+      }
+    ],
+    "id": "exp-016-selective-walk-forward",
+    "limitations": [
+      "Validation used for epoch choice and diagnostics is optimistic.",
+      "Overlapping folds/seeds are not independent samples.",
+      "Negative label includes timeout; not a pure TP-vs-SL classifier.",
+      "Precision acceptance and signal-support criteria not yet locked."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "automatic_threshold_selection": false,
+      "candidates": [
+        "B25",
+        "B11",
+        "B12",
+        "B152",
+        "B22",
+        "B32"
+      ],
+      "folds": 38,
+      "horizon_hours": 10,
+      "loss": "BCE",
+      "precision_scenarios": [
+        0.6,
+        0.65,
+        0.7
+      ],
+      "purge_embargo": [
+        24,
+        24
+      ],
+      "same_bar_rule": "stop-first",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "sequence_length": 64,
+      "step_bars": 720,
+      "train_validation_test_bars": [
+        5040,
+        1080,
+        720
+      ],
+      "training_runs": 684
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-015-six-barrier-training"
+    ],
+    "provenance": {
+      "executed": false,
+      "execution_authorized": true
+    },
+    "question": "Sabit tarih/split/özellik/model altında hangi bariyerler precision, recall, sinyal sayısı ve dönem tutarlılığında seçicilik sağlıyor?",
+    "results": [],
+    "selection_rule": "Epoch minimum validation BCE. User explicitly chose descriptive precision 60/65/70 comparison without locking a target or threshold. No automatic winner; report support, recall and fold/seed stability.",
+    "status": "planned",
+    "title": "Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi"
+  },
+  "recorded_at": "2026-10-15T22:24:05.764842+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 27
+}

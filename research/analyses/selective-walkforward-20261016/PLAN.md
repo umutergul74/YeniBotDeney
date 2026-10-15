@@ -38,9 +38,9 @@ bu çalışma hedef tanımını sessizce değiştirmez.
 F1 maksimizasyonu ve otomatik BCE-skill kazanan seçimi kaldırılır. Bu sürüm
 hiçbir deployment eşiği, model kazananı veya test kilidi üretmez.
 
-Kullanıcıya precision hedefi soruldu. Yanıtla kilitlenene kadar %60/%65/%70
-yalnızca betimsel karşılaştırma senaryolarıdır; başarı garantisi veya kabul
-edilmiş performans şartı değildir. Her 0–1/.005 eşikte:
+Kullanıcı %60/%65/%70 için karşılaştırmalı raporu açıkça seçti; hiçbir
+precision hedefi veya eşik kilitlenmeyecek. Bu seviyeler betimsel senaryolardır;
+başarı garantisi veya kabul edilmiş performans şartı değildir. Her 0–1/.005 eşikte:
 
 - Fold/seed bazında precision, recall, F1 (raporlama için), TP/FP/FN,
   pozitif karar sayısı/oranı; seçilen SL, timeout ve çift temas sayıları.

@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**16 deney/plan · 26 geçmiş kaydı**
+**16 deney/plan · 27 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -1181,9 +1181,9 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 
 **Veri kimliği:** {"evaluation_scope": "planned historical validation diagnostics; no test command", "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"}
 
-**Seçim kuralı:** Epoch minimum validation BCE. No automatic threshold or winner. Precision 60/65/70 are descriptive scenarios pending explicit objective; report support, recall and stability.
+**Seçim kuralı:** Epoch minimum validation BCE. User explicitly chose descriptive precision 60/65/70 comparison without locking a target or threshold. No automatic winner; report support, recall and fold/seed stability.
 
-**Karar / öğrenilen:** Yeni Colab adapter/notebook hazırlanıyor; eğitim henüz çalıştırılmadı. Orijinal veri ve pencere düzeni sabit.
+**Karar / öğrenilen:** Kullanıcı %60/%65/%70 karşılaştırmasını seçti; hedef/eşik kilitlenmeyecek. Özgün veri/pencere düzenindeki notebook CI doğrulamasında; gerçek eğitim henüz çalıştırılmadı.
 
 **Henüz sonuç yok.**
 
@@ -1195,5 +1195,6 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 
 **Kanıt kopyaları:**
 - [research/analyses/selective-walkforward-20261016/PLAN.md](sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md) · SHA256 `f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf`
+- [research/analyses/selective-walkforward-20261016/PLAN.md](sources/93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0.md) · SHA256 `93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0`
 
-[Son kayıt](events/000026.json) · revizyon 1 · Kullanıcı seçici sinyal amacıyla gerekli düzenlemeleri yetkilendirdi; eski motor korunarak sabit kohort geri getiriliyor.
+[Son kayıt](events/000027.json) · revizyon 2 · Kullanıcı precision hedefini kilitlemeden %60/%65/%70 karşılaştırmasını açıkça seçti.
