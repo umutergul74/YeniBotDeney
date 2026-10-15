@@ -1,0 +1,73 @@
+"""Fast stdlib-only checks for scope routing; no scientific imports or training."""
+import importlib.util
+from pathlib import Path
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location('advisor_test_scope', ROOT/'scripts/advisor_test_scope.py')
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+
+
+class ScopeTests(unittest.TestCase):
+    def test_docs_need_no_pytest(self):
+        plan = module.classify(['AGENTS.md', 'README.md', 'docs/advisor-notebooks-v2.md'])
+        self.assertEqual(plan['scope'], 'docs')
+        self.assertEqual(plan['tests'], [])
+
+    def test_bootstrap_and_backend_regression_select_only_related_tests(self):
+        plan = module.classify(['scripts/bootstrap_advisor.py', 'scripts/advisor_workspace.py'])
+        self.assertEqual(plan['scope'], 'targeted')
+        self.assertEqual(len(plan['tests']), 3)
+        self.assertTrue(all('::' in target for target in plan['tests']))
+
+    def test_runtime_environment_only_is_targeted_but_identity_changes_are_full(self):
+        self.assertEqual(module.classify([module.RUNTIME], runtime_environment_only=True)['scope'], 'targeted')
+        self.assertEqual(module.classify([module.RUNTIME])['scope'], 'full')
+        before = 'def clean_environment():\n return 1\ndef freeze():\n return 2\n'
+        self.assertTrue(module.only_environment_changed(before, before.replace('return 1', 'return 3')))
+        self.assertFalse(module.only_environment_changed(before, before.replace('return 2', 'return 3')))
+
+    def test_scientific_or_unmapped_code_preserves_full_gate(self):
+        for path in ['yenibot/training/advisor.py', 'yenibot/experiment/advisor_storage.py',
+                     'yenibot/experiment/advisor_workspace.py', 'yenibot/features/builder.py',
+                     'configs/advisor_ablation.yaml', 'requirements/advisor-linux-py313.lock',
+                     'tests/conftest.py', 'scripts/unmapped.py',
+                     'notebooks/99_advisor_unknown.ipynb',
+                     'notebooks/archive/advisor_v1/06_advisor_ablation_colab.ipynb']:
+            with self.subTest(path=path):
+                self.assertEqual(module.classify([path, 'README.md'])['scope'], 'full')
+
+    def test_policy_changes_need_only_stdlib_checks(self):
+        plan = module.classify(list(module.POLICY)+['AGENTS.md'])
+        self.assertEqual(plan['scope'], 'policy')
+        self.assertEqual(plan['runner'], 'unittest')
+
+    def test_whole_module_subsumes_individual_nodes(self):
+        plan = module.classify([module.WORKSPACE_TEST, 'scripts/bootstrap_advisor.py'])
+        self.assertEqual(plan['tests'], [module.WORKSPACE_TEST])
+
+    def test_explicit_full_and_mixed_scientific_changes_cannot_downgrade(self):
+        self.assertEqual(module.classify(['README.md'], force_full=True)['scope'], 'full')
+        plan = module.classify(list(module.POLICY)+['yenibot/training/advisor_stages.py'])
+        self.assertEqual(plan['scope'], 'full')
+        self.assertEqual(plan['tests'], [])
+
+    def test_missing_diff_base_defaults_to_full(self):
+        for base in ['', '0'*40]:
+            self.assertEqual(module.make_plan(base, 'HEAD', False)['scope'], 'full')
+
+    def test_unavailable_diff_base_retains_full_gate(self):
+        from unittest.mock import patch
+        import subprocess
+        with patch.object(module, 'git', side_effect=subprocess.CalledProcessError(1, 'git')):
+            self.assertEqual(module.make_plan('missing', 'HEAD', False)['scope'], 'full')
+
+    def test_notebook_changes_require_generation_check(self):
+        plan = module.classify(['notebooks/06_advisor_ablation_colab.ipynb'])
+        self.assertEqual(plan['scope'], 'targeted')
+        self.assertTrue(plan['notebook_check'])
+
+
+if __name__ == '__main__':
+    unittest.main()
