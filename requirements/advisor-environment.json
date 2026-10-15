@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "python": "3.13.15",
+  "system": "Linux",
+  "machine": "x86_64",
+  "training_gpu": "Tesla T4",
+  "lock": "requirements/advisor-linux-py313.lock",
+  "lock_sha256": "ac2b6b0f1417edb939f2e1e737331cfe6bd7d1545113a23b2487ad16940d8db9",
+  "uv": {
+    "version": "0.13.0",
+    "url": "https://files.pythonhosted.org/packages/c3/75/1901383808ba0d421f32060ba0e9884169b685a722e1af5d87fdd4225ba6/uv-0.13.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "sha256": "52c7da0fd9056d9551124777ec77de53f0df7017daf8f98a19e947b7837416ed"
+  },
+  "legacy_baseline": "741d1d4bebbb7fe2a931d09d56f5fe6d87bac006",
+  "note": "New isolated profile; old Colab host identity is not silently replaced."
+}

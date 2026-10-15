@@ -1,0 +1,20 @@
+# Scientific versions recorded by the completed advisor Colab sessions.
+# New isolated workspace only: this does not claim the old host CUDA ABI.
+numpy==2.1.3
+pandas==2.2.3
+pyarrow==23.0.1
+requests==2.32.4
+PyYAML==6.0.3
+scikit-learn==1.6.1
+scipy==1.16.3
+torch==2.11.0
+numba==0.61.2
+PyWavelets==1.10.0
+hmmlearn==0.3.3
+joblib==1.6.0
+matplotlib==3.10.0
+seaborn==0.13.2
+tqdm==4.67.3
+pytest==8.4.2
+pip==26.2.1
+packaging==25.0

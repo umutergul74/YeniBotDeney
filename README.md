@@ -1,5 +1,8 @@
 # yeniBot
 
+Advisor notebookları (06–10) için [izole ortam ve Drive kayıt rehberi](docs/advisor-notebooks-v2.md).
+Yeni eğitimler sürüm kilitli ayrı workspace kullanır; tamamlanan final arşivi salt okunurdur.
+
 [![Phase](https://img.shields.io/badge/phase-1%20model%20validation-16794b)](#current-status)
 [![Phase 2](https://img.shields.io/badge/phase%202-blocked%20by%20future%20OOS-c47b13)](#current-status)
 [![CI](https://github.com/umutergul74/yeniBot/actions/workflows/ci.yml/badge.svg)](https://github.com/umutergul74/yeniBot/actions/workflows/ci.yml)

@@ -1,0 +1,51 @@
+name: Advisor reproducibility full gate
+
+on:
+  push:
+    branches: [codex/advisor-reproducible-notebooks]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: advisor-full-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  full:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      OMP_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      CUBLAS_WORKSPACE_CONFIG: ':4096:8'
+      PYTHONHASHSEED: '42'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13.15'
+      - name: Verify lock and install into a new isolated environment
+        run: |
+          python -c "import hashlib,json,pathlib; p=json.loads(pathlib.Path('requirements/advisor-environment.json').read_text()); assert hashlib.sha256(pathlib.Path(p['lock']).read_bytes()).hexdigest()==p['lock_sha256']"
+          python -m venv .ci-advisor
+          .ci-advisor/bin/python -I -m pip --isolated install --no-cache-dir --only-binary=:all: --require-hashes --index-url https://pypi.org/simple -r requirements/advisor-linux-py313.lock
+          .ci-advisor/bin/python -I -m pip check
+      - name: Static compilation and generated notebook checks
+        run: |
+          .ci-advisor/bin/python -m compileall -q yenibot scripts
+          .ci-advisor/bin/python scripts/build_advisor_notebooks_v2.py
+          git diff --exit-code -- notebooks
+      - name: One full CPU regression suite
+        run: |
+          mkdir -p reports
+          .ci-advisor/bin/python -m pytest -q --tb=short --junitxml=reports/advisor-full.xml > reports/advisor-full.log 2>&1 || { tail -n 100 reports/advisor-full.log; exit 1; }
+          tail -n 12 reports/advisor-full.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: advisor-full-evidence
+          path: reports/advisor-full.*
