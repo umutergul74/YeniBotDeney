@@ -1,6 +1,14 @@
 # Advisor notebookları v2 — tekrar üretilebilir çalışma düzeni
 
-## v2.1.0 — güncel giriş noktaları
+## Seçici sinyal çalışması — 16 Ekim 2026
+
+Güncel bariyer çalışması 04 notebookunun `advisor-selective-v1.0.0` sürümüdür.
+[Plan](../research/analyses/selective-walkforward-20261016/PLAN.md): özgün
+33.551 saat / 38 fold; altı aday, 684 eğitim. Önceki tek dönemli bariyer
+çalışmasının yerine geçer. Yeni workspace gerekir. F1 eşik seçimi ve otomatik
+kazanan yok; validation seçicilik raporu vardır. Test komutu bulunmaz.
+
+## v2.1.0 — önceki giriş noktaları
 
 Aktif kullanım [üç görev notebookuna](../notebooks/README.md) indirildi:
 veri kurtarma, araştırma, arşiv denetimi. Kaynak depo artık

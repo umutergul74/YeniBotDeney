@@ -14,16 +14,21 @@ Aktif kullanıcı akışı **workflows/** içindeki görev notebooklarıdır:
 | [01 · Veri kurtarma](workflows/01_recover_data.ipynb) | Eski hazırlanmış tablolar eksikse | SHA doğrulanmış A ve B/C/D tabloları |
 | [02 · Araştırma](workflows/02_research.ipynb) | Sabit protokolü yeni izole ortamda çalıştırmak için | Seçilen aşamanın model, checkpoint ve raporları |
 | [03 · Arşiv denetimi](workflows/03_audit_archive.ipynb) | Tamamlanmış final dosyalarını doğrulamak için | Salt okunur denetim raporu |
-| [04 · Bariyer çalışması](workflows/04_barrier_study.ipynb) | 2/5, 1/1, 1/2, 1.5/2, 2/2, 3/2 model karşılaştırması | 18 eğitim, ayrı eşik doğrulaması, kilit ve 2–14 Ekim testi |
+| [04 · Seçici sinyal](workflows/04_barrier_study.ipynb) | Altı bariyer, özgün 33.551 saat / 38 fold | Validation seçicilik raporları; test/eşik kilidi yok |
 
-**Güncel yeni deney için 04'ü kullanın.** [Deney planı](../research/analyses/six-barrier-training-20261015/PLAN.md).
-04, `advisor-barriers-v1.1.0` sabit yayınını ve yeni workspace'i kullanır.
-v1.0.0 notebookuna yalnızca B22/B32 eklemek yeterli değildir; yeni notebooku açın.
-Eski çalışma alanı varsa koruyun; yeni varsayılan `barriers_october_v11_001` kullanılır.
-T4 seçin; eğitim için `ALLOW_TRAINING=True`. İlk çalışmada `ALLOW_TEST=False`
-kalsın. Kalibrasyon raporundan sonra `ALLOW_TEST=True` değişkenini ayarlayıp
-yalnızca son test hücresini çalıştırın. Eşik/model değiştirmeyin. Sonuçlar Drive
-`barrier_research_v1/<WORKSPACE_ID>/reports/` altında kalır. 01'i çalıştırmak gerekmez.
+**Güncel çalışma 04'tür:** [seçici sinyal planı](../research/analyses/selective-walkforward-20261016/PLAN.md).
+`advisor-selective-v1.0.0` yayını ve yeni `selective_walkforward_v1_001`
+workspace'i kullanılır. Önceki tek ayrımlı bariyer notebookları farklı kohorttur;
+bu çalışma için kullanılmaz. Eski modeller ve sonuçlar korunur.
+T4 seçin; eğitim için `ALLOW_TRAINING=True`. Her aday 38×3=114 eğitim,
+altısı toplam684; `EXPERIMENTS` ile bir veya birkaç aday seçip sırayla ilerleyin.
+Aynı adayı aynı workspace'te yeniden çağırmak uygun checkpointten devam eder.
+Prepare altı adayın ortak veri/split sözleşmesini denetler. Report yalnızca
+seçili adayların tamamlanmış 114 koşusunu inceler; eksik kapsamda durur.
+F1 maksimizasyonu yok. %60/%65/%70 precision senaryoları betimseldir;
+minimum sinyal sayısı ve dönem tutarlılığı görülmeden eşik/başarı ilan edilmez.
+Bu sürümde **test komutu yoktur**. Sonuçlar `selective_research_v1/<WORKSPACE_ID>/reports/`.
+ZIP satır bazlı validation tahminlerini de içerir; tüm modeller için workspace yedeği gerekir.
 
 Bunlar zorunlu bir 01 → 02 → 03 eğitim zinciri değildir. Kurtarma sonuçları
 research workspace'e otomatik taşınmaz; araştırma kendi girdilerini doğrular.

@@ -1,0 +1,85 @@
+{
+  "previous_sha256": "dceaa147177cecae639696bcec55ca9dce3a610051731a568312ccac21f2205c",
+  "reason": "Kullanıcı seçici sinyal amacıyla gerekli düzenlemeleri yetkilendirdi; eski motor korunarak sabit kohort geri getiriliyor.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "planned historical validation diagnostics; no test command",
+      "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Yeni Colab adapter/notebook hazırlanıyor; eğitim henüz çalıştırılmadı. Orijinal veri ve pencere düzeni sabit.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/selective-walkforward-20261016/PLAN.md",
+        "path": "sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md",
+        "sha256": "f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf"
+      }
+    ],
+    "id": "exp-016-selective-walk-forward",
+    "limitations": [
+      "Validation used for epoch choice and diagnostics is optimistic.",
+      "Overlapping folds/seeds are not independent samples.",
+      "Negative label includes timeout; not a pure TP-vs-SL classifier.",
+      "Precision acceptance and signal-support criteria not yet locked."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "automatic_threshold_selection": false,
+      "candidates": [
+        "B25",
+        "B11",
+        "B12",
+        "B152",
+        "B22",
+        "B32"
+      ],
+      "folds": 38,
+      "horizon_hours": 10,
+      "loss": "BCE",
+      "precision_scenarios": [
+        0.6,
+        0.65,
+        0.7
+      ],
+      "purge_embargo": [
+        24,
+        24
+      ],
+      "same_bar_rule": "stop-first",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "sequence_length": 64,
+      "step_bars": 720,
+      "train_validation_test_bars": [
+        5040,
+        1080,
+        720
+      ],
+      "training_runs": 684
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-015-six-barrier-training"
+    ],
+    "provenance": {
+      "executed": false,
+      "execution_authorized": true
+    },
+    "question": "Sabit tarih/split/özellik/model altında hangi bariyerler precision, recall, sinyal sayısı ve dönem tutarlılığında seçicilik sağlıyor?",
+    "results": [],
+    "selection_rule": "Epoch minimum validation BCE. No automatic threshold or winner. Precision 60/65/70 are descriptive scenarios pending explicit objective; report support, recall and stability.",
+    "status": "planned",
+    "title": "Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi"
+  },
+  "recorded_at": "2026-10-15T22:22:17.525959+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 26
+}

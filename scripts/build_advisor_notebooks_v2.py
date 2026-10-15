@@ -278,63 +278,59 @@ Loss mevcut protokolde wavelet kararını gerektirir; wavelet atlanarak loss ça
 def build_barrier_workflow():
     notebook = build('basic', render_only=True)
     cells = notebook['cells'][:9]
-    cells[0] = cell('markdown', '''# Altı bariyer · eğitim → doğrulama → kilit → test
+    cells[0] = cell('markdown', '''# Seçici sinyal · özgün 38-fold bariyer karşılaştırması
 
-2/5, 1/1, 1/2, 1.5/2, 2/2 ve 3/2 ATR; 10 saat ufuk; aynı mumda çift temas: zarar önce.
-Altı temel özellik, GRU, BCE, wavelet kapalı. Üç seed, toplam 18 eğitim.
-Bu yeni tek dönem çalışmasıdır; eski 38-fold sonuçlarıyla birleştirilmez.
+**Amaç:** Önümüzdeki 10 bar içinde TP'ye SL'den önce ulaşacak örnekleri seçmek.
+TP=1; SL ve timeout=0. Negatif karar kesin SL demek değildir. Aynı mumda çift temas: SL önce.
 
-| Bölüm | UTC dönem | Görev |
-|---|---|---|
-| Eğitim | 18 Aralık 2025–15 Temmuz 2026 | Ağırlık ve scaler öğrenimi |
-| Doğrulama | 17 Temmuz–8 Ağustos 2026 | En düşük BCE ile epoch seçimi |
-| Eşik doğrulaması | 10–30 Ağustos 2026 | Ortalama F1 ile ortak aday eşiği |
-| Test | 2–14 Ekim 2026 | Kilitli 6 aday, 312 saat; seçim yapılmaz |
+**Sabit veri:** 1 Mart 2022 04:00–28 Aralık 2025 02:00 UTC, 33.551 saat.
+38 fold; train/validation/test bölüm boyutları 5040/1080/720; adım720;
+purge24/embargo24; seq64 → 4977/1017/657 dizi. Test bölümü puanlanmaz.
+Altı temel özellik, GRU, BCE, wavelet kapalı. Epoch seçimi validation BCE.
+B25=2/5, B11=1/1, B12=1/2, B152=1.5/2, B22=2/2, B32=3/2.
+Her aday 38 fold × 3 seed = 114 eğitim; toplam **684**. Uzun bir Colab çalışmasıdır.
+Adayları ayrı oturumlarda çalıştırabilirsiniz; aynı aday kaldığı fold/epoch'tan devam eder.
 
-Ağustos geçmişte görülmüştür; burada geliştirme verisidir. Eylül test edilmez.
-Test verisi yalnızca tüm modeller/eşikler kilitlendikten sonra indirilir.
-Kısa tek dönem testi kârlılık veya istatistiksel kesinlik kanıtı değildir.
-Farklı bariyerlerin etiketleri farklıdır; ham F1/AP/BCE tek başına kazanan belirlemez.
+**F1 maksimizasyonu ve otomatik kazanan kaldırıldı.** %60/%65/%70 precision
+senaryoları seçilmiş politikalar değildir. Precision, recall, sinyal sayısı,
+sinyalsiz dönemler, fold/seed istikrarı, SL/timeout ayrımı ve AP/BCE referansları raporlanır.
+Aynı validation epoch seçimi için de kullanıldığından sonuçlar iyimser geliştirme sonuçlarıdır.
 
-**Colab Tesla T4** seçin. Drive: **icinbedava34@gmail.com** hesabını kontrol edin.
-Eski arşiv salt okunur. Bu notebook kendi yeni workspace'ini kullanır.
-v1.0.0 çalışmasına yeni aday eklemeyin; v1.1.0 için yeni workspace kullanın.
-Önce prepare → train → freeze → bundle; calibration raporunu inceleyin.
-Test için ayrı hücreyi, eşik/model değiştirmeden çalıştırın. Kesintide aynı ayarlarla devam edin.
+**Test komutu yoktur.** Eylül/Ekim okunmaz; final eğitim/test ayrı sonraki protokoldür.
+T4 seçin. Drive hesabı: icinbedava34@gmail.com. Eski workspace'i koruyun;
+yeni varsayılan workspace ve advisor-selective-v1.0.0 sürümünü kullanın.
+Çıktılar/checkpointler Drive'da. Aynı workspace'e eşzamanlı iki runtime yazdırmayın.
+İnceleme ZIP'i satır bazlı validation tahminlerini içerir; tam model yedeği tüm workspace'tir.
 ''')
     cells[2]['source'] = cells[2]['source'].replace("MODE = 'recovery'", "MODE = 'research'")
     for old, new in {
-        "WORKSPACE_ID = 'advisor_protocol_v2'": "WORKSPACE_ID = 'barriers_october_v11_001'",
-        "EXPERIMENTS = ['A']": "EXPERIMENTS = ['B25', 'B11', 'B12', 'B152', 'B22', 'B32']  # Her aday ayrı çalıştırılabilir; freeze tümünü ister.",
-        RELEASE: 'advisor-barriers-v1.1.0',
+        "WORKSPACE_ID = 'advisor_protocol_v2'": "WORKSPACE_ID = 'selective_walkforward_v1_001'",
+        "EXPERIMENTS = ['A']": "EXPERIMENTS = ['B25', 'B11', 'B12', 'B152', 'B22', 'B32']  # İsterseniz tek aday seçin; her aday 114 eğitimdir.",
+        RELEASE: 'advisor-selective-v1.0.0',
         'umutergul74/yeniBot.git': 'umutergul74/YeniBotDeney.git',
-        '/content/advisor_reproducible_repo': '/content/advisor_barriers_v11_repo',
-        '/content/advisor_isolated_runtime': '/content/advisor_barriers_v11_runtime',
+        '/content/advisor_reproducible_repo': '/content/advisor_selective_v1_repo',
+        '/content/advisor_isolated_runtime': '/content/advisor_selective_v1_runtime',
     }.items():
         cells[2]['source'] = cells[2]['source'].replace(old, new)
-    cells[2]['source'] += '\nALLOW_TEST = False\n'
-    cells[4]['source'] = cells[4]['source'].replace("'research':'research_v2'", "'research':'barrier_research_v1'")
+    cells[4]['source'] = cells[4]['source'].replace("'research':'research_v2'", "'research':'selective_research_v1'")
     cells[6]['source'] += "\nassert git('remote','get-url','origin') == REPO_URL, 'Yanlış depo'\n"
     setup = cells[8]['source'].split('def execute_step(action):')[0]
     cells[8]['source'] = setup + dedent('''
     def execute_step(action):
-        command = [RESEARCH_PYTHON, '-I', str(REPO_DIR/'scripts/advisor_barrier_training.py'), action,
+        command = [RESEARCH_PYTHON, '-I', str(REPO_DIR/'scripts/advisor_selective.py'), action,
                    '--root', str(ROOT), '--legacy', str(LEGACY_ROOT), '--session', SESSION,
                    '--candidates', *EXPERIMENTS]
         if ALLOW_TRAINING: command.append('--allow-training')
-        if ALLOW_TEST: command.append('--allow-test')
         logged(command, action+'.log')
     ''')
     for title, description, code in [
-        ('5 · Hazırlık', 'Mevcut fit_raw dosyasının SHA kontrolü; Ekim verisi okunmaz. Eksik arşivde durur.', "execute_step('prepare')"),
-        ('6 · Eğitim', 'ALLOW_TRAINING=True yapın. Her epoch checkpoint Drive’da. Aynı workspace’e ikinci oturum yazdırmayın.',
+        ('5 · Sabit kohort hazırlığı', 'Ham snapshot hashleri, 33.551 ortak saat, özellikler ve 38 fold doğrulanır. Yeni veri indirilmez.', "execute_step('prepare')"),
+        ('6 · Eğitim', 'ALLOW_TRAINING=True seçin. Her aday 114 eğitim; checkpointler kalıcı. Aday listesi daraltılabilir.',
          "if ALLOW_TRAINING:\n    execute_step('train')\nelse:\n    print('Eğitim kapalı; ayarlarda ALLOW_TRAINING=True seçin.')"),
-        ('7 · Eşik seçimi ve değişmez model kilidi', '18 eğitim tamamlanmalıdır. Eşik: 0–1, adım 0.005; üç seed ortalama F1. Eşitlikte yüksek eşik. Aday sıralaması: kalibrasyon BCE skill; testten önce kaydedilir.',
-         "if ALLOW_TRAINING:\n    execute_step('freeze')\nelse:\n    print('Eğitim ve kilitleme henüz başlatılmadı.')"),
-        ('8 · Rapor ve yedek', 'Küçük ZIP modelleri içermez. Tam yedek için workspace’in tamamını koruyun.',
+        ('7 · Seçicilik raporu', 'Seçili adayların 38×3 koşusu tamamlanmalıdır. Eşik veya kazanan otomatik seçilmez. Precision hedefleri betimseldir.',
+         "if ALLOW_TRAINING:\n    execute_step('report')\nelse:\n    print('Rapor eğitim tamamlandıktan sonra hazırlanır.')"),
+        ('8 · Ayrıntılı inceleme paketi', 'Validation tahminleri, history ve metrikler ZIP içinde. Ham veri/ağırlıklar için tüm workspace yedeklenir.',
          "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')"),
-        ('9 · Nihai test — ayrı adım', 'Önce calibration_REPORT.md ve calibration_thresholds.png dosyalarını inceleyin. ALLOW_TEST=True olduğunda yalnızca kilitli adaylar değerlendirilir. Sonuç kötü olsa da bu testte yeniden ayar yapılmaz.',
-         "if ALLOW_TEST:\n    execute_step('test')\n    execute_step('bundle')\nelse:\n    print('Test kapalı. Önce eğitim ve kilit; sonra yalnızca bu hücreyi çalıştırın.')"),
     ]:
         cells.extend([cell('markdown', '## '+title+'\n\n'+description), cell('code', code)])
     for i, c in enumerate(cells):

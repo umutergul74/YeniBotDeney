@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**15 deney/plan · 24 geçmiş kaydı**
+**16 deney/plan · 26 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -22,7 +22,8 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-012-barrier-diagnostics](#exp-012-barrier-diagnostics) | Plan · ATR bariyerleri ve etiket dağılımı | completed | mixed |
 | [exp-013-barrier-expansion](#exp-013-barrier-expansion) | Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi | completed | mixed |
 | [exp-014-barrier-training](#exp-014-barrier-training) | Dört ATR bariyeri: GRU/BCE, ayrı epoch/eşik doğrulaması ve Ekim testi | abandoned | inconclusive |
-| [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | running | pending |
+| [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | abandoned | mixed |
+| [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -989,7 +990,7 @@ Kampanya: `campaign-002` · Durum: **abandoned** · Sonuç: **inconclusive**
 
 Aynı GRU üzerinde önceki dört adayla 2/2 ve 3/2 bariyerlerinin doğrulama/test sonuçları nasıl karşılaştırılıyor?
 
-Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
+Kampanya: `campaign-002` · Durum: **abandoned** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-014-barrier-training
 
@@ -999,7 +1000,7 @@ Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
 
 **Seçim kuralı:** Epoch: validation BCE. Threshold: mean calibration F1, ties highest threshold. Candidate: calibration BCE skill, ties ID. Test cannot select.
 
-**Karar / öğrenilen:** Eğitim ve kalibrasyon paketle doğrulandı; test yürütülmedi. Kullanıcı özgün 2022–2025 / 38-fold tasarımından sapmayı ve kendisinin belirlemediği F1 eşik kuralını reddetti. Mevcut sonuçlar keşif kanıtı olarak korunur; B11 seçim kararı benimsenmez. Önce yöntem incelemesi, test beklemede.
+**Karar / öğrenilen:** Eğitim/kalibrasyon kanıtları korunuyor; test aşaması yürütülmeden bu protokol bırakıldı. Kullanıcı özgün veri/split düzeninde seçici sinyal hedefiyle devam edilmesini istedi; yeni kimlik exp-016-selective-walk-forward.
 
 **validation** · single-split-calibration-20260810-20260830-441hours · B25; mean of 3 seeds; threshold selected on same calibration
 
@@ -1164,4 +1165,35 @@ Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
 - [reports/six-barrier-review-20261016/received/reports/B25_thresholds.csv](sources/e7b0f6f4015857651e33292deb92392f9085db5c345b0c24394283f8188f38ba.csv) · SHA256 `e7b0f6f4015857651e33292deb92392f9085db5c345b0c24394283f8188f38ba`
 - [reports/six-barrier-review-20261016/received/reports/B32_thresholds.csv](sources/bd2f3b33b05356231b5ce1390179f81fc513e83c63218ef06e4e4b9a1a839ea2.csv) · SHA256 `bd2f3b33b05356231b5ce1390179f81fc513e83c63218ef06e4e4b9a1a839ea2`
 
-[Son kayıt](events/000024.json) · revizyon 2 · Kullanıcı eğitim paketini iletti; dönem ve F1 amacı sapmaları kaydedildi. Eğitim/kalibrasyon tamam, test yapılmadı; eski kanıtlar korunuyor.
+[Son kayıt](events/000025.json) · revizyon 3 · Özgün kohorttan sapan çalışmanın testi yapılmayacak; sonuçlar silinmedi.
+
+## exp-016-selective-walk-forward
+
+**Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi**
+
+Sabit tarih/split/özellik/model altında hangi bariyerler precision, recall, sinyal sayısı ve dönem tutarlılığında seçicilik sağlıyor?
+
+Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-015-six-barrier-training
+
+**Yöntem:** {"architecture": "GRU", "automatic_threshold_selection": false, "candidates": ["B25", "B11", "B12", "B152", "B22", "B32"], "folds": 38, "horizon_hours": 10, "loss": "BCE", "precision_scenarios": [0.6, 0.65, 0.7], "purge_embargo": [24, 24], "same_bar_rule": "stop-first", "seeds": [42, 43, 44], "sequence_length": 64, "step_bars": 720, "train_validation_test_bars": [5040, 1080, 720], "training_runs": 684}
+
+**Veri kimliği:** {"evaluation_scope": "planned historical validation diagnostics; no test command", "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Epoch minimum validation BCE. No automatic threshold or winner. Precision 60/65/70 are descriptive scenarios pending explicit objective; report support, recall and stability.
+
+**Karar / öğrenilen:** Yeni Colab adapter/notebook hazırlanıyor; eğitim henüz çalıştırılmadı. Orijinal veri ve pencere düzeni sabit.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Validation used for epoch choice and diagnostics is optimistic.
+- Overlapping folds/seeds are not independent samples.
+- Negative label includes timeout; not a pure TP-vs-SL classifier.
+- Precision acceptance and signal-support criteria not yet locked.
+
+**Kanıt kopyaları:**
+- [research/analyses/selective-walkforward-20261016/PLAN.md](sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md) · SHA256 `f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf`
+
+[Son kayıt](events/000026.json) · revizyon 1 · Kullanıcı seçici sinyal amacıyla gerekli düzenlemeleri yetkilendirdi; eski motor korunarak sabit kohort geri getiriliyor.
