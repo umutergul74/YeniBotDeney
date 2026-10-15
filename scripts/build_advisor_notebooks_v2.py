@@ -278,10 +278,10 @@ Loss mevcut protokolde wavelet kararını gerektirir; wavelet atlanarak loss ça
 def build_barrier_workflow():
     notebook = build('basic', render_only=True)
     cells = notebook['cells'][:9]
-    cells[0] = cell('markdown', '''# Dört bariyer · eğitim → doğrulama → kilit → test
+    cells[0] = cell('markdown', '''# Altı bariyer · eğitim → doğrulama → kilit → test
 
-2/5, 1/1, 1/2 ve 1.5/2 ATR; 10 saat ufuk; aynı mumda çift temas: zarar önce.
-Altı temel özellik, GRU, BCE, wavelet kapalı. Üç seed, toplam 12 eğitim.
+2/5, 1/1, 1/2, 1.5/2, 2/2 ve 3/2 ATR; 10 saat ufuk; aynı mumda çift temas: zarar önce.
+Altı temel özellik, GRU, BCE, wavelet kapalı. Üç seed, toplam 18 eğitim.
 Bu yeni tek dönem çalışmasıdır; eski 38-fold sonuçlarıyla birleştirilmez.
 
 | Bölüm | UTC dönem | Görev |
@@ -289,7 +289,7 @@ Bu yeni tek dönem çalışmasıdır; eski 38-fold sonuçlarıyla birleştirilme
 | Eğitim | 18 Aralık 2025–15 Temmuz 2026 | Ağırlık ve scaler öğrenimi |
 | Doğrulama | 17 Temmuz–8 Ağustos 2026 | En düşük BCE ile epoch seçimi |
 | Eşik doğrulaması | 10–30 Ağustos 2026 | Ortalama F1 ile ortak aday eşiği |
-| Test | 2–14 Ekim 2026 | Kilitli 4 aday, 312 saat; seçim yapılmaz |
+| Test | 2–14 Ekim 2026 | Kilitli 6 aday, 312 saat; seçim yapılmaz |
 
 Ağustos geçmişte görülmüştür; burada geliştirme verisidir. Eylül test edilmez.
 Test verisi yalnızca tüm modeller/eşikler kilitlendikten sonra indirilir.
@@ -298,17 +298,18 @@ Farklı bariyerlerin etiketleri farklıdır; ham F1/AP/BCE tek başına kazanan 
 
 **Colab Tesla T4** seçin. Drive: **icinbedava34@gmail.com** hesabını kontrol edin.
 Eski arşiv salt okunur. Bu notebook kendi yeni workspace'ini kullanır.
+v1.0.0 çalışmasına yeni aday eklemeyin; v1.1.0 için yeni workspace kullanın.
 Önce prepare → train → freeze → bundle; calibration raporunu inceleyin.
 Test için ayrı hücreyi, eşik/model değiştirmeden çalıştırın. Kesintide aynı ayarlarla devam edin.
 ''')
     cells[2]['source'] = cells[2]['source'].replace("MODE = 'recovery'", "MODE = 'research'")
     for old, new in {
-        "WORKSPACE_ID = 'advisor_protocol_v2'": "WORKSPACE_ID = 'barriers_october_v1_001'",
-        "EXPERIMENTS = ['A']": "EXPERIMENTS = ['B25', 'B11', 'B12', 'B152']  # Her aday ayrı çalıştırılabilir; freeze tümünü ister.",
-        RELEASE: 'advisor-barriers-v1.0.0',
+        "WORKSPACE_ID = 'advisor_protocol_v2'": "WORKSPACE_ID = 'barriers_october_v11_001'",
+        "EXPERIMENTS = ['A']": "EXPERIMENTS = ['B25', 'B11', 'B12', 'B152', 'B22', 'B32']  # Her aday ayrı çalıştırılabilir; freeze tümünü ister.",
+        RELEASE: 'advisor-barriers-v1.1.0',
         'umutergul74/yeniBot.git': 'umutergul74/YeniBotDeney.git',
-        '/content/advisor_reproducible_repo': '/content/advisor_barriers_repo',
-        '/content/advisor_isolated_runtime': '/content/advisor_barriers_runtime',
+        '/content/advisor_reproducible_repo': '/content/advisor_barriers_v11_repo',
+        '/content/advisor_isolated_runtime': '/content/advisor_barriers_v11_runtime',
     }.items():
         cells[2]['source'] = cells[2]['source'].replace(old, new)
     cells[2]['source'] += '\nALLOW_TEST = False\n'
@@ -328,7 +329,7 @@ Test için ayrı hücreyi, eşik/model değiştirmeden çalıştırın. Kesintid
         ('5 · Hazırlık', 'Mevcut fit_raw dosyasının SHA kontrolü; Ekim verisi okunmaz. Eksik arşivde durur.', "execute_step('prepare')"),
         ('6 · Eğitim', 'ALLOW_TRAINING=True yapın. Her epoch checkpoint Drive’da. Aynı workspace’e ikinci oturum yazdırmayın.',
          "if ALLOW_TRAINING:\n    execute_step('train')\nelse:\n    print('Eğitim kapalı; ayarlarda ALLOW_TRAINING=True seçin.')"),
-        ('7 · Eşik seçimi ve değişmez model kilidi', '12 eğitim tamamlanmalıdır. Eşik: 0–1, adım 0.005; üç seed ortalama F1. Eşitlikte yüksek eşik. Aday sıralaması: kalibrasyon BCE skill; testten önce kaydedilir.',
+        ('7 · Eşik seçimi ve değişmez model kilidi', '18 eğitim tamamlanmalıdır. Eşik: 0–1, adım 0.005; üç seed ortalama F1. Eşitlikte yüksek eşik. Aday sıralaması: kalibrasyon BCE skill; testten önce kaydedilir.',
          "if ALLOW_TRAINING:\n    execute_step('freeze')\nelse:\n    print('Eğitim ve kilitleme henüz başlatılmadı.')"),
         ('8 · Rapor ve yedek', 'Küçük ZIP modelleri içermez. Tam yedek için workspace’in tamamını koruyun.',
          "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')"),

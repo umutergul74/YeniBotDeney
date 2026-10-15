@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**14 deney/plan · 21 geçmiş kaydı**
+**15 deney/plan · 23 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -21,7 +21,8 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-011-threshold-diagnostics](#exp-011-threshold-diagnostics) | Plan · Validation eşik–performans teşhisi | completed | mixed |
 | [exp-012-barrier-diagnostics](#exp-012-barrier-diagnostics) | Plan · ATR bariyerleri ve etiket dağılımı | completed | mixed |
 | [exp-013-barrier-expansion](#exp-013-barrier-expansion) | Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi | completed | mixed |
-| [exp-014-barrier-training](#exp-014-barrier-training) | Dört ATR bariyeri: GRU/BCE, ayrı epoch/eşik doğrulaması ve Ekim testi | planned | pending |
+| [exp-014-barrier-training](#exp-014-barrier-training) | Dört ATR bariyeri: GRU/BCE, ayrı epoch/eşik doğrulaması ve Ekim testi | abandoned | inconclusive |
+| [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -898,7 +899,7 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 
 2/5, 1/1, 1/2, 1.5/2 hedefleriyle aynı GRU için öğrenme ve eşik başarımı nasıl değişiyor?
 
-Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-002` · Durum: **abandoned** · Sonuç: **inconclusive**
 
 Önceki kayıtlar: exp-013-barrier-expansion
 
@@ -908,7 +909,7 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 
 **Seçim kuralı:** Epoch: validation BCE. Threshold: mean calibration F1, ties highest threshold. Candidate: calibration BCE skill, ties ID. Test cannot select.
 
-**Karar / öğrenilen:** Colab T4 notebook hazırlanıyor; test 2–14 Ekim 2026. Eğitim/test henüz yapılmadı.
+**Karar / öğrenilen:** Yeni yürütmeler için altı adaylı exp-015-six-barrier-training planıyla değiştirildi. Eski plan/kanıtlar ve varsa Colab checkpointleri korunur; önceki eğitim yürütme durumu teyit edilmedi. Kullanıcı Ekim testinin çalıştırılmadığını doğruladı.
 
 **Henüz sonuç yok.**
 
@@ -920,4 +921,35 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 **Kanıt kopyaları:**
 - [research/analyses/barrier-training-20261015/PLAN.md](sources/712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32.md) · SHA256 `712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32`
 
-[Son kayıt](events/000021.json) · revizyon 1 · Kullanıcı eğitim notebookunu ve uygun yeni test dönemi seçimini yetkilendirdi.
+[Son kayıt](events/000022.json) · revizyon 2 · Kullanıcı test görülmeden 2/2 ve 3/2 eklenmesini istedi; önceki dört adaylı plan korundu.
+
+## exp-015-six-barrier-training
+
+**Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE**
+
+Aynı GRU üzerinde önceki dört adayla 2/2 ve 3/2 bariyerlerinin doğrulama/test sonuçları nasıl karşılaştırılıyor?
+
+Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-014-barrier-training
+
+**Yöntem:** {"architecture": "GRU", "horizon_hours": 10, "loss": "BCE", "same_bar_rule": "stop-first", "seeds": [42, 43, 44], "tp_sl_atr": [[2, 5], [1, 1], [1, 2], [1.5, 2], [2, 2], [3, 2]], "training_runs": 18}
+
+**Veri kimliği:** {"evaluation_scope": "planned six-candidate study; October test not executed per user confirmation", "labels_id": "barriers-six-h10", "raw_sha256": "f3a29be9f7a935ca144fe70a701b41072f30a1b2432b177faa309a8c37b404c6", "snapshot_id": "legacy-final-fit-raw", "split_id": "fixed-train-20251218-20260715-val-20260717-20260808-cal-20260810-20260830-test-20261002-20261014"}
+
+**Seçim kuralı:** Epoch: validation BCE. Threshold: mean calibration F1, ties highest threshold. Candidate: calibration BCE skill, ties ID. Test cannot select.
+
+**Karar / öğrenilen:** Altı aday yeni sürüm ve yeni workspace ile çalıştırılacak; yeni sonuç yok. Ekim testinin görülmediği kullanıcı tarafından doğrulandı.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- 13-day single holdout, overlapping labels, no trading costs.
+- Previously seen August is development only; September excluded from evaluation.
+- Different label targets; no absolute strategy winner claim.
+
+**Kanıt kopyaları:**
+- [research/analyses/barrier-training-20261015/PLAN.md](sources/712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32.md) · SHA256 `712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32`
+- [research/analyses/six-barrier-training-20261015/PLAN.md](sources/aff1479c2d0ba1ddd54a430e1a185fff9c9606d2be0645e1f6456e5ea376e144.md) · SHA256 `aff1479c2d0ba1ddd54a430e1a185fff9c9606d2be0645e1f6456e5ea376e144`
+
+[Son kayıt](events/000023.json) · revizyon 1 · Altı adaylı yeni bilimsel kapsam; 18 eğitim, aynı tarihler ve seçim kuralları.

@@ -5,7 +5,7 @@ Bu notebooklar kayıt sisteminin yerine geçmez. Yeni öneri önce plan olarak
 kaydedilir; her yeni deney için yeni notebook oluşturmak gerekmez.
 Buradaki araştırma notebooku mevcut A–D/wavelet/loss protokolüne aittir;
 Eşik/bariyer teşhisleri tamamlandı; sonuçlar deney defterindedir.
-Yeni dört bariyerin eğitim karşılaştırması ayrı 04 girişindedir.
+Yeni altı bariyerin eğitim karşılaştırması ayrı 04 girişindedir.
 
 Aktif kullanıcı akışı **workflows/** içindeki görev notebooklarıdır:
 
@@ -14,10 +14,12 @@ Aktif kullanıcı akışı **workflows/** içindeki görev notebooklarıdır:
 | [01 · Veri kurtarma](workflows/01_recover_data.ipynb) | Eski hazırlanmış tablolar eksikse | SHA doğrulanmış A ve B/C/D tabloları |
 | [02 · Araştırma](workflows/02_research.ipynb) | Sabit protokolü yeni izole ortamda çalıştırmak için | Seçilen aşamanın model, checkpoint ve raporları |
 | [03 · Arşiv denetimi](workflows/03_audit_archive.ipynb) | Tamamlanmış final dosyalarını doğrulamak için | Salt okunur denetim raporu |
-| [04 · Bariyer çalışması](workflows/04_barrier_study.ipynb) | 2/5, 1/1, 1/2, 1.5/2 model karşılaştırması | 12 eğitim, ayrı eşik doğrulaması, kilit ve 2–14 Ekim testi |
+| [04 · Bariyer çalışması](workflows/04_barrier_study.ipynb) | 2/5, 1/1, 1/2, 1.5/2, 2/2, 3/2 model karşılaştırması | 18 eğitim, ayrı eşik doğrulaması, kilit ve 2–14 Ekim testi |
 
-**Güncel yeni deney için 04'ü kullanın.** [Deney planı](../research/analyses/barrier-training-20261015/PLAN.md).
-04, `advisor-barriers-v1.0.0` sabit yayınını ve yeni workspace'i kullanır.
+**Güncel yeni deney için 04'ü kullanın.** [Deney planı](../research/analyses/six-barrier-training-20261015/PLAN.md).
+04, `advisor-barriers-v1.1.0` sabit yayınını ve yeni workspace'i kullanır.
+v1.0.0 notebookuna yalnızca B22/B32 eklemek yeterli değildir; yeni notebooku açın.
+Eski çalışma alanı varsa koruyun; yeni varsayılan `barriers_october_v11_001` kullanılır.
 T4 seçin; eğitim için `ALLOW_TRAINING=True`. İlk çalışmada `ALLOW_TEST=False`
 kalsın. Kalibrasyon raporundan sonra `ALLOW_TEST=True` değişkenini ayarlayıp
 yalnızca son test hücresini çalıştırın. Eşik/model değiştirmeyin. Sonuçlar Drive

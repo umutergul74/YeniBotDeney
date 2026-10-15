@@ -21,7 +21,8 @@ from yenibot.training import advisor, advisor_final
 from yenibot.training.advisor_models import build_advisor_model
 from yenibot.training.walk_forward import FoldIndices
 
-CANDIDATES = {'B25': (2., 5.), 'B11': (1., 1.), 'B12': (1., 2.), 'B152': (1.5, 2.)}
+CANDIDATES = {'B25': (2., 5.), 'B11': (1., 1.), 'B12': (1., 2.),
+              'B152': (1.5, 2.), 'B22': (2., 2.), 'B32': (3., 2.)}
 RAW_SHA = 'f3a29be9f7a935ca144fe70a701b41072f30a1b2432b177faa309a8c37b404c6'
 DATES = {
     'train_start': '2025-12-18T00:00:00Z', 'train_end': '2026-07-15T23:00:00Z',
@@ -37,14 +38,14 @@ def digest(value):
 
 def plan():
     cfg = read_config('configs/advisor_ablation.yaml')
-    return {'schema': 1, 'experiment': 'exp-014-barrier-training', 'dates': DATES,
+    return {'schema': 1, 'experiment': 'exp-015-six-barrier-training', 'dates': DATES,
             'candidates': CANDIDATES, 'model': cfg['model'], 'training': cfg['training'],
             'features': cfg['data']['basic_features'], 'raw_sha256': RAW_SHA,
             'horizon_hours': 10, 'same_bar_rule': 'stop-first',
             'epoch_selection': 'minimum validation BCE per seed',
             'threshold_selection': 'maximum mean calibration F1; tie: highest threshold; grid 0:0.005:1',
             'candidate_selection': 'maximum mean calibration BCE skill vs training prevalence; tie: candidate ID',
-            'test_policy': 'all four frozen candidates reported once; no test selection or refit',
+            'test_policy': 'all six frozen candidates reported once; no test selection or refit',
             'limitations': ['Historical validation and calibration are previously seen development data.',
                             'Different barriers define different targets; skill ranking is provisional.',
                             '312 test hours is a short single-regime holdout; no profitability claim.']}
@@ -114,7 +115,7 @@ def prepare(root, legacy):
                                            cfg['selected_method']['features'])
         split_indices(frame)  # Boundary audits before publication.
         save_frame(root/f'data/{name}.parquet', frame)
-    print('Four prepared frames saved; no test data read.', flush=True)
+    print(f'{len(CANDIDATES)} prepared frames saved; no test data read.', flush=True)
 
 
 def split_indices(frame):
@@ -195,11 +196,21 @@ def verify_freeze(root):
     return frozen
 
 
+def require_completed_runs(root):
+    """Check the entire declared cohort before any calibration inference."""
+    for name in CANDIDATES:
+        for seed in configuration(name)['training']['seeds']:
+            path = root/f'runs/{name}/seed_{seed}/validation_metrics.json'
+            if not path.exists() or json.loads(path.read_text())['status'] != 'complete':
+                raise ValueError(f'All candidate/seed runs must complete before calibration; missing: {name}/seed_{seed}')
+
+
 def freeze(root):
     if (root/'artifacts/freeze.json').exists():
         verify_freeze(root)
         print('Existing freeze verified; thresholds unchanged.')
         return
+    require_completed_runs(root)
     reports = root/'reports'; reports.mkdir(exist_ok=True)
     results, files = {}, {}
     for name in CANDIDATES:
@@ -209,9 +220,6 @@ def freeze(root):
         predictions = []
         for seed in (42,43,44):
             folder = root/f'runs/{name}/seed_{seed}'
-            completed = json.loads((folder/'validation_metrics.json').read_text())
-            if completed['status'] != 'complete':
-                raise ValueError('All 12 training runs must complete before calibration')
             prediction_path = folder/'calibration_predictions.parquet'
             if prediction_path.exists():
                 p = load_frame(prediction_path)
@@ -246,13 +254,16 @@ def make_report(root, results, split):
     ax.set_title(f'{split}: fixed barriers / GRU / BCE (mean of 3 seeds)')
     ax.figure.tight_layout(); ax.figure.savefig(reports/f'{split}_comparison.png', dpi=160); plt.close(ax.figure)
     if split == 'calibration':
-        fig, axes = plt.subplots(2,2,figsize=(12,8))
+        rows = (len(CANDIDATES)+1)//2
+        fig, axes = plt.subplots(rows,2,figsize=(12,4*rows), squeeze=False)
         for ax, name in zip(axes.flat, CANDIDATES):
             curve = pd.read_csv(reports/f'{name}_thresholds.csv')
             for metric in ['precision','recall','f1']:
                 ax.plot(curve.threshold, curve[metric], label=metric)
             ax.axvline(results[name]['threshold'], color='black', linestyle='--')
             ax.set(title=name, xlabel='Threshold', ylim=(0,1)); ax.legend()
+        for ax in axes.flat[len(CANDIDATES):]:
+            ax.set_visible(False)
         fig.tight_layout(); fig.savefig(reports/'calibration_thresholds.png', dpi=160); plt.close(fig)
     text = '# Bariyer karşılaştırması · '+split+'\n\n'
     text += 'Üç seed ortalaması; ensemble değildir. Hedef etiketleri farklıdır; ham F1/AP/BCE doğrudan üstünlük kanıtı değildir.\n\n'
