@@ -23,7 +23,7 @@ def clean_environment() -> dict:
     for name in ('PYTHONPATH', 'PYTHONHOME', 'PYTHONSTARTUP', 'IPYTHONDIR', 'JUPYTER_CONFIG_DIR'):
         env.pop(name, None)
     env.update(PYTHONNOUSERSITE='1', CUBLAS_WORKSPACE_CONFIG=':4096:8',
-               OMP_NUM_THREADS='4', MKL_NUM_THREADS='4')
+               OMP_NUM_THREADS='4', MKL_NUM_THREADS='4', MPLBACKEND='Agg')
     return env
 
 

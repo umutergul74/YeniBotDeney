@@ -113,7 +113,9 @@ def test_runtime_lock_parser_tracks_transitive_packages(tmp_path):
 def test_child_environment_does_not_inherit_host_python_paths(monkeypatch):
     for key in ('PYTHONPATH','PYTHONHOME','PYTHONSTARTUP','IPYTHONDIR'):
         monkeypatch.setenv(key,'unreviewed_host_path')
+    monkeypatch.setenv('MPLBACKEND','module://matplotlib_inline.backend_inline')
     env=runtime.clean_environment()
+    assert env['MPLBACKEND']=='Agg'
     assert all(k not in env for k in ('PYTHONPATH','PYTHONHOME','PYTHONSTARTUP','IPYTHONDIR'))
     assert env['CUBLAS_WORKSPACE_CONFIG']==':4096:8'
 
@@ -182,6 +184,7 @@ def test_all_notebooks_are_thin_safe_and_archive_does_not_execute_test():
         source='\n'.join(c['source'] for c in notebook['cells'] if c['cell_type']=='code')
         assert 'import torch' not in source and 'import pandas' not in source
         assert 'RESEARCH_PYTHON' in source and 'RELEASE_TAG' in source
+        assert "env['MPLBACKEND']='Agg'" in source
         assert "execute_step('bundle')" in source
         assert 'pip install' not in source
         if phase=='final':assert 'evaluate-test' not in source and "execute_step('audit-final')" in source
@@ -189,11 +192,14 @@ def test_all_notebooks_are_thin_safe_and_archive_does_not_execute_test():
             if c['cell_type']=='code':compile(c['source'],f'{name}:{i}','exec')
 
 
-def test_bootstrap_uses_hash_lock_and_never_host_pip_install():
+def test_bootstrap_uses_hash_lock_and_never_host_pip_install(monkeypatch):
     root=Path(__file__).resolve().parents[1]
     spec=importlib.util.spec_from_file_location('advisor_bootstrap',root/'scripts/bootstrap_advisor.py')
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    monkeypatch.setenv('UV_SYSTEM_PYTHON','1')
+    monkeypatch.setenv('MPLBACKEND','module://matplotlib_inline.backend_inline')
     env=module.environment(Path('/cache'),Path('/python'))
+    assert env['MPLBACKEND']=='Agg' and 'UV_SYSTEM_PYTHON' not in env
     assert 'PYTHONPATH' not in env and env['UV_NO_CONFIG']=='1'
     profile=json.loads((root/'requirements/advisor-environment.json').read_text(encoding='utf-8'))
     assert storage.sha256(root/profile['lock'])==profile['lock_sha256']
@@ -282,3 +288,18 @@ def test_bootstrap_keeps_all_uv_state_off_drive(tmp_path,monkeypatch):
     assert result['uv_cache']==str(runtime_root/'uv-cache')
     assert not (drive/'uv-cache').exists()
     assert any('--require-hashes' in command for command in calls)
+
+
+@pytest.mark.parametrize('host_backend',[
+    'module://matplotlib_inline.backend_inline','module://missing_host_backend.backend',
+])
+def test_launcher_overrides_colab_backend_before_package_import(tmp_path,host_backend):
+    import os
+    import subprocess
+    import sys
+    root=Path(__file__).resolve().parents[1]
+    env=dict(os.environ,MPLBACKEND=host_backend)
+    result=subprocess.run([sys.executable,'-I',str(root/'scripts/advisor_workspace.py'),
+        '--help'],cwd=tmp_path,env=env,capture_output=True,text=True,timeout=90)
+    assert result.returncode==0,result.stdout+result.stderr
+    assert 'audit-final' in result.stdout

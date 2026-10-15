@@ -6,7 +6,7 @@ from textwrap import dedent
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = '741d1d4bebbb7fe2a931d09d56f5fe6d87bac006'
-RELEASE = 'advisor-notebooks-v2.0.1'
+RELEASE = 'advisor-notebooks-v2.0.2'
 NAMES = {
     'basic':'06_advisor_ablation_colab.ipynb',
     'full':'07_advisor_full_features_colab.ipynb',
@@ -110,6 +110,7 @@ def build(phase):
             for key in ('PYTHONPATH','PYTHONHOME','PYTHONSTARTUP','IPYTHONDIR','JUPYTER_CONFIG_DIR'):
                 env.pop(key,None)
             env['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
+            env['MPLBACKEND']='Agg'  # Colab inline backend is host-only.
             with subprocess.Popen(command,cwd=REPO_DIR,env=env,stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT,text=True,bufsize=1) as process:
                 try:

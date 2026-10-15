@@ -24,12 +24,12 @@ def digest(path):
 def environment(cache, python_home):
     result = dict(os.environ)
     for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTHONSTARTUP', 'VIRTUAL_ENV',
-                'UV_INDEX', 'UV_INDEX_URL', 'UV_EXTRA_INDEX_URL', 'PIP_INDEX_URL',
+                'UV_SYSTEM_PYTHON', 'UV_INDEX', 'UV_INDEX_URL', 'UV_EXTRA_INDEX_URL', 'PIP_INDEX_URL',
                 'PIP_EXTRA_INDEX_URL', 'PIP_CONFIG_FILE'):
         result.pop(key, None)
     result.update(UV_CACHE_DIR=str(cache), UV_PYTHON_INSTALL_DIR=str(python_home),
                   UV_LINK_MODE='copy', UV_NO_CONFIG='1', PYTHONNOUSERSITE='1',
-                  TMPDIR=str(cache.parent / 'tmp'))
+                  TMPDIR=str(cache.parent / 'tmp'), MPLBACKEND='Agg')
     return result
 
 

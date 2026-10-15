@@ -26,7 +26,7 @@ ayarları değiştirilmedi. Eski notebooklar `notebooks/archive/advisor_v1/` alt
 üretilmedi. Eylül 2026 artık görülmüştür; yeni araştırmanın final testi olarak
 yeniden kullanılamaz.
 
-Yeni notebooklar `advisor-notebooks-v2.0.1` sabit Git yayınına bağlıdır. Yayın
+Yeni notebooklar `advisor-notebooks-v2.0.2` sabit Git yayınına bağlıdır. Yayın
 etiketini taşımayın; sonraki kod değişikliğini yeni yayın ve yeni çalışma olarak
 yönetin. Aynı oturumda başka dalın kodunu import etmeyin. Python araştırma
 kodunu notebook kernel'ı yerine `-I` ile izole alt süreç yürütür.
@@ -126,3 +126,21 @@ runtime and run from the beginning. Do not delete Drive files. If preparation
 and training were never reached, the same WORKSPACE_ID can be used. Existing
 v2.0.0 workspaces with a frozen identity require a new WORKSPACE_ID for a new
 commit. The historical archive and package lock are unchanged.
+
+## v2.0.2 - Colab plotting environment isolation
+
+The launcher sets MPLBACKEND=Agg before importing research packages. Notebook
+subprocesses, bootstrap and runtime checks use the same headless backend.
+No matplotlib_inline or IPython packages are added to the research lock.
+Inherited UV_SYSTEM_PYTHON is removed from bootstrap subprocesses as well.
+
+For an already-open v2.0.1 session, before retrying the preparation cell:
+
+```python
+import os
+os.environ["MPLBACKEND"] = "Agg"
+```
+
+This does not edit tracked sources or change data/model settings. Keep the same
+release across 06/07 in an existing workspace. A new release must use a new
+WORKSPACE_ID if an older release has already frozen that workspace identity.
