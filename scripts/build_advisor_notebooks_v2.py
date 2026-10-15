@@ -6,7 +6,7 @@ from textwrap import dedent
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = '741d1d4bebbb7fe2a931d09d56f5fe6d87bac006'
-RELEASE = 'advisor-notebooks-v2.0.0'
+RELEASE = 'advisor-notebooks-v2.0.1'
 NAMES = {
     'basic':'06_advisor_ablation_colab.ipynb',
     'full':'07_advisor_full_features_colab.ipynb',
@@ -99,6 +99,8 @@ def build(phase):
 
     Sistem Python'una pip install yapılmaz. Ayrı Python + venv kullanılır; bütün
     bağımlılıklar sürüm ve SHA ile sabittir. Drive'daki indirme önbelleği tekrar kullanılır.
+    uv kilitleri ve paket onbellegi /content altinda tutulur. Drive kalici ciktilari
+    ve dogrulanmis kurucu dosyasini saklar. Yeni runtime paketleri yeniden indirebilir.
     Kurulum başarısızsa sonraki hücreye geçmeyin. Eğitim için Tesla T4 seçin.
     ''') )
     cells.append(cell('code','''

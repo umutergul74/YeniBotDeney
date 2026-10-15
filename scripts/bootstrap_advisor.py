@@ -28,7 +28,8 @@ def environment(cache, python_home):
                 'PIP_EXTRA_INDEX_URL', 'PIP_CONFIG_FILE'):
         result.pop(key, None)
     result.update(UV_CACHE_DIR=str(cache), UV_PYTHON_INSTALL_DIR=str(python_home),
-                  UV_LINK_MODE='copy', UV_NO_CONFIG='1', PYTHONNOUSERSITE='1')
+                  UV_LINK_MODE='copy', UV_NO_CONFIG='1', PYTHONNOUSERSITE='1',
+                  TMPDIR=str(cache.parent / 'tmp'))
     return result
 
 
@@ -60,7 +61,13 @@ def bootstrap(repo: Path, runtime: Path, cache: Path, receipt: Path) -> dict:
         with archive.open(entries[0]) as source, uv.open('wb') as target:
             shutil.copyfileobj(source, target)
     uv.chmod(0o700)
-    env = environment(cache / 'uv-cache', runtime / 'python')
+    # Drive/FUSE cannot provide uv's lock/persist/hardlink semantics.
+    # Only the verified bootstrap wheel is cached on Drive. All mutable uv
+    # state, Python installs, environments and temporary files stay local.
+    local_cache = runtime / 'uv-cache'
+    local_cache.mkdir(parents=True, exist_ok=True)
+    (runtime / 'tmp').mkdir(parents=True, exist_ok=True)
+    env = environment(local_cache, runtime / 'python')
     version = subprocess.check_output([str(uv), '--version'], text=True, env=env).split()
     if version[:2] != ['uv', uv_spec['version']]:
         raise ValueError('Unexpected bootstrap tool version')
@@ -80,7 +87,8 @@ def bootstrap(repo: Path, runtime: Path, cache: Path, receipt: Path) -> dict:
                    check=True, env=env)
     subprocess.run([str(executable), '-I', '-m', 'pip', 'check'], check=True, env=env)
     result = {'python': str(executable), 'profile_sha256': digest(repo / 'requirements/advisor-environment.json'),
-              'lock_sha256': digest(lock), 'python_version': profile['python'], 'host_packages_used': False}
+              'lock_sha256': digest(lock), 'python_version': profile['python'], 'host_packages_used': False,
+              'uv_cache': str(local_cache), 'temporary_files': str(runtime / 'tmp')}
     receipt.parent.mkdir(parents=True, exist_ok=True)
     receipt.write_text(json.dumps(result, indent=2), encoding='utf-8')
     print('Isolated research interpreter:', executable, flush=True)

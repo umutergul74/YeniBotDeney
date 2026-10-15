@@ -26,7 +26,7 @@ ayarları değiştirilmedi. Eski notebooklar `notebooks/archive/advisor_v1/` alt
 üretilmedi. Eylül 2026 artık görülmüştür; yeni araştırmanın final testi olarak
 yeniden kullanılamaz.
 
-Yeni notebooklar `advisor-notebooks-v2.0.0` sabit Git yayınına bağlıdır. Yayın
+Yeni notebooklar `advisor-notebooks-v2.0.1` sabit Git yayınına bağlıdır. Yayın
 etiketini taşımayın; sonraki kod değişikliğini yeni yayın ve yeni çalışma olarak
 yönetin. Aynı oturumda başka dalın kodunu import etmeyin. Python araştırma
 kodunu notebook kernel'ı yerine `-I` ile izole alt süreç yürütür.
@@ -41,7 +41,7 @@ Kök: `MyDrive/yeniBot/advisor_experiments/`.
 | `recovery_v2/<WORKSPACE_ID>/` | Eksik A/B–D tablolarının yeni ve hash doğrulamalı kopyası |
 | `research_v2/<WORKSPACE_ID>/` | Yeni ortamda bütün kontrol ve adayların ayrı sonuçları |
 | `archive_audit_v2/<WORKSPACE_ID>/` | Eski final sonucunun salt okunur denetim raporu |
-| `reproducibility_cache_v2/` | Hashli kurucu wheel'i ve izole ortam indirme önbelleği |
+| `reproducibility_cache_v2/` | Yalnizca hashli kurucu wheel; uv kilitleri ve paket onbellegi yerel disktedir |
 
 Workspace içi:
 
@@ -111,3 +111,18 @@ regresyonları; nihai gate olarak tek Linux tam CPU CI çalışması kullanılı
 Gerçek Colab kurulumu ve uzun eğitim kullanıcı oturumunda ayrıca doğrulanmalıdır.
 CI CPU kontrolleri, T4/CUDA yeniden üretimini doğrulamaz. Testler tamamlanmadan
 bu belge tek başına geçmiş bir başarı iddiası değildir.
+
+## v2.0.1 - Drive/FUSE installation fix
+
+uv cache, locks and temporary files now stay in local
+`/content/advisor_isolated_runtime/`. Drive/FUSE does not support all uv
+lock/persist operations. Drive `reproducibility_cache_v2` stores only the
+verified bootstrap wheel; the old `uv-cache` subdirectory is no longer used.
+Prepared data, models, configurations and logs are still saved to Drive.
+Packages may download again in a new runtime; local cache survives within it.
+
+After the v2.0.0 bootstrap error, open the v2.0.1 notebook in a new Colab
+runtime and run from the beginning. Do not delete Drive files. If preparation
+and training were never reached, the same WORKSPACE_ID can be used. Existing
+v2.0.0 workspaces with a frozen identity require a new WORKSPACE_ID for a new
+commit. The historical archive and package lock are unchanged.

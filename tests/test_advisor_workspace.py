@@ -36,9 +36,9 @@ def test_operation_records_failure_and_releases_writer(tmp_path):
                 with storage.operation(tmp_path,'train','session2'):pass
             raise RuntimeError('synthetic interruption')
     assert not (tmp_path/'.writer_lease').exists()
-    assert json.loads((tmp_path/'STATUS.json').read_text())['status']=='interrupted_or_failed'
+    assert json.loads((tmp_path/'STATUS.json').read_text(encoding='utf-8'))['status']=='interrupted_or_failed'
     with storage.operation(tmp_path,'prepare','session3'):pass
-    assert json.loads((tmp_path/'STATUS.json').read_text())['status']=='complete'
+    assert json.loads((tmp_path/'STATUS.json').read_text(encoding='utf-8'))['status']=='complete'
 
 
 def config(tmp_path):
@@ -178,7 +178,7 @@ def test_all_notebooks_are_thin_safe_and_archive_does_not_execute_test():
     for phase,name in [('basic','06_advisor_ablation_colab.ipynb'),('full','07_advisor_full_features_colab.ipynb'),
                        ('wavelet','08_advisor_wavelet_colab.ipynb'),('loss','09_advisor_losses_colab.ipynb'),
                        ('final','10_advisor_final_test_colab.ipynb')]:
-        notebook=json.loads((root/'notebooks'/name).read_text())
+        notebook=json.loads((root/'notebooks'/name).read_text(encoding='utf-8'))
         source='\n'.join(c['source'] for c in notebook['cells'] if c['cell_type']=='code')
         assert 'import torch' not in source and 'import pandas' not in source
         assert 'RESEARCH_PYTHON' in source and 'RELEASE_TAG' in source
@@ -195,10 +195,10 @@ def test_bootstrap_uses_hash_lock_and_never_host_pip_install():
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     env=module.environment(Path('/cache'),Path('/python'))
     assert 'PYTHONPATH' not in env and env['UV_NO_CONFIG']=='1'
-    profile=json.loads((root/'requirements/advisor-environment.json').read_text())
+    profile=json.loads((root/'requirements/advisor-environment.json').read_text(encoding='utf-8'))
     assert storage.sha256(root/profile['lock'])==profile['lock_sha256']
     assert profile['python']=='3.13.15'
-    lock=(root/profile['lock']).read_text()
+    lock=(root/profile['lock']).read_text(encoding='utf-8')
     assert '--hash=sha256:' in lock and 'torch==2.11.0' in lock
 
 
@@ -243,3 +243,42 @@ def test_source_archive_is_persistent_and_verified(tmp_path):
     archive.write_bytes(b'corrupted')
     with pytest.raises(ValueError,match='Archived source identity'):
         runtime.freeze_workspace_identity(repo,root,{'python':'fixed'})
+
+
+def test_bootstrap_keeps_all_uv_state_off_drive(tmp_path,monkeypatch):
+    root=Path(__file__).resolve().parents[1]
+    spec=importlib.util.spec_from_file_location('bootstrap_drive_test',root/'scripts/bootstrap_advisor.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    repo=tmp_path/'repo';(repo/'requirements').mkdir(parents=True)
+    lock=repo/'requirements/test.lock';lock.write_text('pip==26.2.1')
+    drive=tmp_path/'drive-shortcut';drive.mkdir()
+    runtime_root=tmp_path/'content-runtime'
+    wheel=drive/'seed.whl'
+    with zipfile.ZipFile(wheel,'w') as archive:archive.writestr('uv.data/scripts/uv',b'fake executable')
+    checksum=storage.sha256(wheel);wheel.rename(drive/('uv-'+checksum+'.whl'))
+    profile={'lock':'requirements/test.lock','lock_sha256':storage.sha256(lock),
+        'python':'3.13.15','uv':{'version':'0.13.0','sha256':checksum,'url':'must-not-download'}}
+    storage.atomic_json(repo/'requirements/advisor-environment.json',profile)
+    monkeypatch.setattr(module.platform,'system',lambda:'Linux')
+    monkeypatch.setattr(module.platform,'machine',lambda:'x86_64')
+    monkeypatch.setenv('UV_CACHE_DIR',str(drive/'bad-cache'))
+    monkeypatch.setenv('TMPDIR',str(drive/'bad-tmp'))
+    calls=[]
+    def check_env(env):
+        for key in ['UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','TMPDIR']:
+            path=Path(env[key]);assert path.is_relative_to(runtime_root)
+        assert Path(env['UV_CACHE_DIR']).is_dir() and Path(env['TMPDIR']).is_dir()
+    def output(command,**kwargs):
+        check_env(kwargs['env']);calls.append(command)
+        return 'uv 0.13.0' if command[-1]=='--version' else str(runtime_root/'python/bin/python')
+    def run(command,**kwargs):
+        check_env(kwargs['env']);calls.append(command)
+        if command[1]=='venv':
+            target=Path(command[-1]);target.mkdir()
+            (target/'pyvenv.cfg').write_text('include-system-site-packages = false')
+    monkeypatch.setattr(module.subprocess,'check_output',output)
+    monkeypatch.setattr(module.subprocess,'run',run)
+    result=module.bootstrap(repo,runtime_root,drive,tmp_path/'receipt.json')
+    assert result['uv_cache']==str(runtime_root/'uv-cache')
+    assert not (drive/'uv-cache').exists()
+    assert any('--require-hashes' in command for command in calls)
