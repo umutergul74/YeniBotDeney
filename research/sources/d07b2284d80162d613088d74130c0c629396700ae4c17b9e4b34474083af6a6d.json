@@ -1,0 +1,19 @@
+{
+  "source_sha256": "8468a33af3fbfdf724ffe94cbfd3b7d9690bb2430d7f5697afb32473ed37cab1",
+  "nested_zip_sha256": "873dc529182fd86ab529f61ff6bc0ddd5a8234b49cac9674daa0691e27fca659",
+  "shared_members_equal": 11,
+  "crc_ok": true,
+  "plan_hash_matches": true,
+  "freeze_entries_match_inventory": 160,
+  "available_inventory_members_verified": [
+    "artifacts/plan.json",
+    "artifacts/freeze.json"
+  ],
+  "inventory_entries": 162,
+  "missing_payload_warning": "Weights, raw data, row-level predictions and per-run metric files are NOT included; hashes alone do not verify their bytes.",
+  "training_log_groups": 18,
+  "training_log_epochs": 419,
+  "log_candidate_mapping": "Inferred from frozen candidate order and sequential code; log lines omit candidate ID.",
+  "no_test_outputs_in_package": true,
+  "scope": "aggregate review only; no model load, fitting, threshold reselection or test evaluation"
+}

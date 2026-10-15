@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**15 deney/plan · 23 geçmiş kaydı**
+**15 deney/plan · 24 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -22,7 +22,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-012-barrier-diagnostics](#exp-012-barrier-diagnostics) | Plan · ATR bariyerleri ve etiket dağılımı | completed | mixed |
 | [exp-013-barrier-expansion](#exp-013-barrier-expansion) | Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi | completed | mixed |
 | [exp-014-barrier-training](#exp-014-barrier-training) | Dört ATR bariyeri: GRU/BCE, ayrı epoch/eşik doğrulaması ve Ekim testi | abandoned | inconclusive |
-| [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | planned | pending |
+| [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | running | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -174,6 +174,66 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+single-split-calibration-20260810-20260830-441hours · B25; mean of 3 seeds; threshold selected on same calibration
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-015-six-barrier-training | — | — | 0.390023 | 1.000000 | — |
+
+## Kayıtlı sonuçlar · validation
+
+single-split-calibration-20260810-20260830-441hours · B11; mean of 3 seeds; threshold selected on same calibration
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-015-six-barrier-training | — | — | 0.512724 | 0.989583 | — |
+
+## Kayıtlı sonuçlar · validation
+
+single-split-calibration-20260810-20260830-441hours · B12; mean of 3 seeds; threshold selected on same calibration
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-015-six-barrier-training | — | — | 0.597732 | 1.000000 | — |
+
+## Kayıtlı sonuçlar · validation
+
+single-split-calibration-20260810-20260830-441hours · B152; mean of 3 seeds; threshold selected on same calibration
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-015-six-barrier-training | — | — | 0.460317 | 1.000000 | — |
+
+## Kayıtlı sonuçlar · validation
+
+single-split-calibration-20260810-20260830-441hours · B22; mean of 3 seeds; threshold selected on same calibration
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-015-six-barrier-training | — | — | 0.376803 | 0.997992 | — |
+
+## Kayıtlı sonuçlar · validation
+
+single-split-calibration-20260810-20260830-441hours · B32; mean of 3 seeds; threshold selected on same calibration
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-015-six-barrier-training | — | — | 0.242630 | 1.000000 | — |
 
 ## exp-001-a
 
@@ -929,27 +989,179 @@ Kampanya: `campaign-002` · Durum: **abandoned** · Sonuç: **inconclusive**
 
 Aynı GRU üzerinde önceki dört adayla 2/2 ve 3/2 bariyerlerinin doğrulama/test sonuçları nasıl karşılaştırılıyor?
 
-Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
 
 Önceki kayıtlar: exp-014-barrier-training
 
 **Yöntem:** {"architecture": "GRU", "horizon_hours": 10, "loss": "BCE", "same_bar_rule": "stop-first", "seeds": [42, 43, 44], "tp_sl_atr": [[2, 5], [1, 1], [1, 2], [1.5, 2], [2, 2], [3, 2]], "training_runs": 18}
 
-**Veri kimliği:** {"evaluation_scope": "planned six-candidate study; October test not executed per user confirmation", "labels_id": "barriers-six-h10", "raw_sha256": "f3a29be9f7a935ca144fe70a701b41072f30a1b2432b177faa309a8c37b404c6", "snapshot_id": "legacy-final-fit-raw", "split_id": "fixed-train-20251218-20260715-val-20260717-20260808-cal-20260810-20260830-test-20261002-20261014"}
+**Veri kimliği:** {"evaluation_scope": "Actual: single temporal split in 2025–2026; calibration only, 441 unique hours per seed. Not comparable to original 38-fold cohort.", "labels_id": "barriers-six-h10", "raw_sha256": "f3a29be9f7a935ca144fe70a701b41072f30a1b2432b177faa309a8c37b404c6", "snapshot_id": "legacy-final-fit-raw", "split_id": "fixed-train-20251218-20260715-val-20260717-20260808-cal-20260810-20260830-test-20261002-20261014"}
 
 **Seçim kuralı:** Epoch: validation BCE. Threshold: mean calibration F1, ties highest threshold. Candidate: calibration BCE skill, ties ID. Test cannot select.
 
-**Karar / öğrenilen:** Altı aday yeni sürüm ve yeni workspace ile çalıştırılacak; yeni sonuç yok. Ekim testinin görülmediği kullanıcı tarafından doğrulandı.
+**Karar / öğrenilen:** Eğitim ve kalibrasyon paketle doğrulandı; test yürütülmedi. Kullanıcı özgün 2022–2025 / 38-fold tasarımından sapmayı ve kendisinin belirlemediği F1 eşik kuralını reddetti. Mevcut sonuçlar keşif kanıtı olarak korunur; B11 seçim kararı benimsenmez. Önce yöntem incelemesi, test beklemede.
 
-**Henüz sonuç yok.**
+**validation** · single-split-calibration-20260810-20260830-441hours · B25; mean of 3 seeds; threshold selected on same calibration
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| all_positive_f1 | 0.561175 |
+| ap | 0.476936 |
+| ap_lift | 1.222842 |
+| bce | 0.733768 |
+| bce_reference | 0.682598 |
+| bce_skill | -0.074964 |
+| f1 | 0.561175 |
+| f1_at_05 | 0.325332 |
+| f1_gain | -0.000000 |
+| positive_rate | 0.390023 |
+| precision | 0.390023 |
+| precision_at_05 | 0.461294 |
+| predicted_positive_rate | 1.000000 |
+| predicted_positive_rate_at_05 | 0.215420 |
+| recall | 1.000000 |
+| recall_at_05 | 0.253876 |
+| threshold | 0.010000 |
+| train_prevalence | 0.311433 |
+
+**validation** · single-split-calibration-20260810-20260830-441hours · B11; mean of 3 seeds; threshold selected on same calibration
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| all_positive_f1 | 0.673684 |
+| ap | 0.490875 |
+| ap_lift | 0.966410 |
+| bce | 0.709722 |
+| bce_reference | 0.703215 |
+| bce_skill | -0.009254 |
+| f1 | 0.675463 |
+| f1_at_05 | 0.199734 |
+| f1_gain | 0.001779 |
+| positive_rate | 0.507937 |
+| precision | 0.512724 |
+| precision_at_05 | 0.424309 |
+| predicted_positive_rate | 0.980348 |
+| predicted_positive_rate_at_05 | 0.163265 |
+| recall | 0.989583 |
+| recall_at_05 | 0.136905 |
+| threshold | 0.255000 |
+| train_prevalence | 0.436809 |
+
+**validation** · single-split-calibration-20260810-20260830-441hours · B12; mean of 3 seeds; threshold selected on same calibration
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| all_positive_f1 | 0.745377 |
+| ap | 0.600563 |
+| ap_lift | 1.010871 |
+| bce | 0.698364 |
+| bce_reference | 0.681120 |
+| bce_skill | -0.025318 |
+| f1 | 0.748222 |
+| f1_at_05 | 0.672698 |
+| f1_gain | 0.002845 |
+| positive_rate | 0.594104 |
+| precision | 0.597732 |
+| precision_at_05 | 0.600282 |
+| predicted_positive_rate | 0.993953 |
+| predicted_positive_rate_at_05 | 0.758881 |
+| recall | 1.000000 |
+| recall_at_05 | 0.767176 |
+| threshold | 0.200000 |
+| train_prevalence | 0.540687 |
+
+**validation** · single-split-calibration-20260810-20260830-441hours · B152; mean of 3 seeds; threshold selected on same calibration
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| all_positive_f1 | 0.630435 |
+| ap | 0.444820 |
+| ap_lift | 0.966333 |
+| bce | 0.720912 |
+| bce_reference | 0.699447 |
+| bce_skill | -0.030689 |
+| f1 | 0.630435 |
+| f1_at_05 | 0.266331 |
+| f1_gain | 0.000000 |
+| positive_rate | 0.460317 |
+| precision | 0.460317 |
+| precision_at_05 | 0.390760 |
+| predicted_positive_rate | 1.000000 |
+| predicted_positive_rate_at_05 | 0.239607 |
+| recall | 1.000000 |
+| recall_at_05 | 0.206897 |
+| threshold | 0.130000 |
+| train_prevalence | 0.392606 |
+
+**validation** · single-split-calibration-20260810-20260830-441hours · B22; mean of 3 seeds; threshold selected on same calibration
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| all_positive_f1 | 0.546952 |
+| ap | 0.411127 |
+| ap_lift | 1.092212 |
+| bce | 0.765239 |
+| bce_reference | 0.678971 |
+| bce_skill | -0.127057 |
+| f1 | 0.547056 |
+| f1_at_05 | 0.319777 |
+| f1_gain | 0.000104 |
+| positive_rate | 0.376417 |
+| precision | 0.376803 |
+| precision_at_05 | 0.454243 |
+| predicted_positive_rate | 0.996977 |
+| predicted_positive_rate_at_05 | 0.202570 |
+| recall | 0.997992 |
+| recall_at_05 | 0.248996 |
+| threshold | 0.020000 |
+| train_prevalence | 0.291340 |
+
+**validation** · single-split-calibration-20260810-20260830-441hours · B32; mean of 3 seeds; threshold selected on same calibration
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| all_positive_f1 | 0.390511 |
+| ap | 0.262851 |
+| ap_lift | 1.083338 |
+| bce | 0.681339 |
+| bce_reference | 0.576978 |
+| bce_skill | -0.180876 |
+| f1 | 0.390511 |
+| f1_at_05 | 0.044983 |
+| f1_gain | -0.000000 |
+| positive_rate | 0.242630 |
+| precision | 0.242630 |
+| precision_at_05 | 0.283066 |
+| predicted_positive_rate | 1.000000 |
+| predicted_positive_rate_at_05 | 0.024943 |
+| recall | 1.000000 |
+| recall_at_05 | 0.024922 |
+| threshold | 0.000000 |
+| train_prevalence | 0.159534 |
 
 **Sınırlar / açık noktalar:**
 - 13-day single holdout, overlapping labels, no trading costs.
 - Previously seen August is development only; September excluded from evaluation.
 - Different label targets; no absolute strategy winner claim.
+- Protocol deviated from intended fixed historical dataset and walk-forward splits; F1 objective was introduced by assistant, not defined by user.
+- Package lacks row-level predictions/checkpoints; aggregate consistency and logs only.
+- All candidates have negative calibration BCE skill; automatic B11 selection lacks a reject-all gate.
 
 **Kanıt kopyaları:**
 - [research/analyses/barrier-training-20261015/PLAN.md](sources/712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32.md) · SHA256 `712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32`
 - [research/analyses/six-barrier-training-20261015/PLAN.md](sources/aff1479c2d0ba1ddd54a430e1a185fff9c9606d2be0645e1f6456e5ea376e144.md) · SHA256 `aff1479c2d0ba1ddd54a430e1a185fff9c9606d2be0645e1f6456e5ea376e144`
+- [research/analyses/six-barrier-review-20261016/REPORT.md](sources/1fd8ac1f809f907b849f5462065a73bd043375c4698108deb38b4e304ace6247.md) · SHA256 `1fd8ac1f809f907b849f5462065a73bd043375c4698108deb38b4e304ace6247`
+- [reports/six-barrier-review-20261016/audit.json](sources/d07b2284d80162d613088d74130c0c629396700ae4c17b9e4b34474083af6a6d.json) · SHA256 `d07b2284d80162d613088d74130c0c629396700ae4c17b9e4b34474083af6a6d`
+- [reports/six-barrier-review-20261016/review_metrics.csv](sources/7f08af8108431662623764fa671eb6c3deffbb7657f6ca503b37eae934c41b58.csv) · SHA256 `7f08af8108431662623764fa671eb6c3deffbb7657f6ca503b37eae934c41b58`
+- [reports/six-barrier-review-20261016/epochs_from_log.csv](sources/73d6f4cc6cbf414c0d767088a2e0939a74687812073a37f1774470ea3c24d82a.csv) · SHA256 `73d6f4cc6cbf414c0d767088a2e0939a74687812073a37f1774470ea3c24d82a`
+- [reports/six-barrier-review-20261016/received/artifacts/plan.json](sources/dcd7c6f4bc15838bd82d4bc08babc20ba00f596dd152a99fc482c6154e0d6afb.json) · SHA256 `dcd7c6f4bc15838bd82d4bc08babc20ba00f596dd152a99fc482c6154e0d6afb`
+- [reports/six-barrier-review-20261016/received/artifacts/freeze.json](sources/5ee50ec8a18785d95e7408caa4bd2e34764b88b0d09bc37247541ac69fd0c739.json) · SHA256 `5ee50ec8a18785d95e7408caa4bd2e34764b88b0d09bc37247541ac69fd0c739`
+- [reports/six-barrier-review-20261016/received/reports/calibration_comparison.csv](sources/e4b5a088a66b6f6b7b61ff8f926ac2bdbf1c61828db2388de1c8b94e10ae812b.csv) · SHA256 `e4b5a088a66b6f6b7b61ff8f926ac2bdbf1c61828db2388de1c8b94e10ae812b`
+- [reports/six-barrier-review-20261016/received/reports/B11_thresholds.csv](sources/19eb00af5f68a128bca78b955695f6ca5e99e0c4dd267f9549866a4ab05f9649.csv) · SHA256 `19eb00af5f68a128bca78b955695f6ca5e99e0c4dd267f9549866a4ab05f9649`
+- [reports/six-barrier-review-20261016/received/reports/B12_thresholds.csv](sources/aa9da425e64c95b0c6cc30ddf81128e4a0c4018cf6be550b38de1c08a7dea858.csv) · SHA256 `aa9da425e64c95b0c6cc30ddf81128e4a0c4018cf6be550b38de1c08a7dea858`
+- [reports/six-barrier-review-20261016/received/reports/B152_thresholds.csv](sources/299d1de9649a6c01f249a0e20aff1a0433d22b083c00a2bddf4315f53e2eb602.csv) · SHA256 `299d1de9649a6c01f249a0e20aff1a0433d22b083c00a2bddf4315f53e2eb602`
+- [reports/six-barrier-review-20261016/received/reports/B22_thresholds.csv](sources/20ba2c857cef8364444a38a17719f380b530eef404bf1b7144c33ea6446de517.csv) · SHA256 `20ba2c857cef8364444a38a17719f380b530eef404bf1b7144c33ea6446de517`
+- [reports/six-barrier-review-20261016/received/reports/B25_thresholds.csv](sources/e7b0f6f4015857651e33292deb92392f9085db5c345b0c24394283f8188f38ba.csv) · SHA256 `e7b0f6f4015857651e33292deb92392f9085db5c345b0c24394283f8188f38ba`
+- [reports/six-barrier-review-20261016/received/reports/B32_thresholds.csv](sources/bd2f3b33b05356231b5ce1390179f81fc513e83c63218ef06e4e4b9a1a839ea2.csv) · SHA256 `bd2f3b33b05356231b5ce1390179f81fc513e83c63218ef06e4e4b9a1a839ea2`
 
-[Son kayıt](events/000023.json) · revizyon 1 · Altı adaylı yeni bilimsel kapsam; 18 eğitim, aynı tarihler ve seçim kuralları.
+[Son kayıt](events/000024.json) · revizyon 2 · Kullanıcı eğitim paketini iletti; dönem ve F1 amacı sapmaları kaydedildi. Eğitim/kalibrasyon tamam, test yapılmadı; eski kanıtlar korunuyor.

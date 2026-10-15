@@ -1,0 +1,328 @@
+{
+  "previous_sha256": "fd08b506398520ec7f7228ba2e4837202e6edfc148b99599ae6d22c4287f38a4",
+  "reason": "Kullanıcı eğitim paketini iletti; dönem ve F1 amacı sapmaları kaydedildi. Eğitim/kalibrasyon tamam, test yapılmadı; eski kanıtlar korunuyor.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "Actual: single temporal split in 2025–2026; calibration only, 441 unique hours per seed. Not comparable to original 38-fold cohort.",
+      "labels_id": "barriers-six-h10",
+      "raw_sha256": "f3a29be9f7a935ca144fe70a701b41072f30a1b2432b177faa309a8c37b404c6",
+      "snapshot_id": "legacy-final-fit-raw",
+      "split_id": "fixed-train-20251218-20260715-val-20260717-20260808-cal-20260810-20260830-test-20261002-20261014"
+    },
+    "decision": "Eğitim ve kalibrasyon paketle doğrulandı; test yürütülmedi. Kullanıcı özgün 2022–2025 / 38-fold tasarımından sapmayı ve kendisinin belirlemediği F1 eşik kuralını reddetti. Mevcut sonuçlar keşif kanıtı olarak korunur; B11 seçim kararı benimsenmez. Önce yöntem incelemesi, test beklemede.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-training-20261015/PLAN.md",
+        "path": "sources/712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32.md",
+        "sha256": "712f6072f0a9443e3d879bec33544b78c76335855c9f764715c813d1769b2e32"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/six-barrier-training-20261015/PLAN.md",
+        "path": "sources/aff1479c2d0ba1ddd54a430e1a185fff9c9606d2be0645e1f6456e5ea376e144.md",
+        "sha256": "aff1479c2d0ba1ddd54a430e1a185fff9c9606d2be0645e1f6456e5ea376e144"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/six-barrier-review-20261016/REPORT.md",
+        "path": "sources/1fd8ac1f809f907b849f5462065a73bd043375c4698108deb38b4e304ace6247.md",
+        "sha256": "1fd8ac1f809f907b849f5462065a73bd043375c4698108deb38b4e304ace6247"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/audit.json",
+        "path": "sources/d07b2284d80162d613088d74130c0c629396700ae4c17b9e4b34474083af6a6d.json",
+        "sha256": "d07b2284d80162d613088d74130c0c629396700ae4c17b9e4b34474083af6a6d"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/review_metrics.csv",
+        "path": "sources/7f08af8108431662623764fa671eb6c3deffbb7657f6ca503b37eae934c41b58.csv",
+        "sha256": "7f08af8108431662623764fa671eb6c3deffbb7657f6ca503b37eae934c41b58"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/epochs_from_log.csv",
+        "path": "sources/73d6f4cc6cbf414c0d767088a2e0939a74687812073a37f1774470ea3c24d82a.csv",
+        "sha256": "73d6f4cc6cbf414c0d767088a2e0939a74687812073a37f1774470ea3c24d82a"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/artifacts/plan.json",
+        "path": "sources/dcd7c6f4bc15838bd82d4bc08babc20ba00f596dd152a99fc482c6154e0d6afb.json",
+        "sha256": "dcd7c6f4bc15838bd82d4bc08babc20ba00f596dd152a99fc482c6154e0d6afb"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/artifacts/freeze.json",
+        "path": "sources/5ee50ec8a18785d95e7408caa4bd2e34764b88b0d09bc37247541ac69fd0c739.json",
+        "sha256": "5ee50ec8a18785d95e7408caa4bd2e34764b88b0d09bc37247541ac69fd0c739"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/reports/calibration_comparison.csv",
+        "path": "sources/e4b5a088a66b6f6b7b61ff8f926ac2bdbf1c61828db2388de1c8b94e10ae812b.csv",
+        "sha256": "e4b5a088a66b6f6b7b61ff8f926ac2bdbf1c61828db2388de1c8b94e10ae812b"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/reports/B11_thresholds.csv",
+        "path": "sources/19eb00af5f68a128bca78b955695f6ca5e99e0c4dd267f9549866a4ab05f9649.csv",
+        "sha256": "19eb00af5f68a128bca78b955695f6ca5e99e0c4dd267f9549866a4ab05f9649"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/reports/B12_thresholds.csv",
+        "path": "sources/aa9da425e64c95b0c6cc30ddf81128e4a0c4018cf6be550b38de1c08a7dea858.csv",
+        "sha256": "aa9da425e64c95b0c6cc30ddf81128e4a0c4018cf6be550b38de1c08a7dea858"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/reports/B152_thresholds.csv",
+        "path": "sources/299d1de9649a6c01f249a0e20aff1a0433d22b083c00a2bddf4315f53e2eb602.csv",
+        "sha256": "299d1de9649a6c01f249a0e20aff1a0433d22b083c00a2bddf4315f53e2eb602"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/reports/B22_thresholds.csv",
+        "path": "sources/20ba2c857cef8364444a38a17719f380b530eef404bf1b7144c33ea6446de517.csv",
+        "sha256": "20ba2c857cef8364444a38a17719f380b530eef404bf1b7144c33ea6446de517"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/reports/B25_thresholds.csv",
+        "path": "sources/e7b0f6f4015857651e33292deb92392f9085db5c345b0c24394283f8188f38ba.csv",
+        "sha256": "e7b0f6f4015857651e33292deb92392f9085db5c345b0c24394283f8188f38ba"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "reports/six-barrier-review-20261016/received/reports/B32_thresholds.csv",
+        "path": "sources/bd2f3b33b05356231b5ce1390179f81fc513e83c63218ef06e4e4b9a1a839ea2.csv",
+        "sha256": "bd2f3b33b05356231b5ce1390179f81fc513e83c63218ef06e4e4b9a1a839ea2"
+      }
+    ],
+    "id": "exp-015-six-barrier-training",
+    "limitations": [
+      "13-day single holdout, overlapping labels, no trading costs.",
+      "Previously seen August is development only; September excluded from evaluation.",
+      "Different label targets; no absolute strategy winner claim.",
+      "Protocol deviated from intended fixed historical dataset and walk-forward splits; F1 objective was introduced by assistant, not defined by user.",
+      "Package lacks row-level predictions/checkpoints; aggregate consistency and logs only.",
+      "All candidates have negative calibration BCE skill; automatic B11 selection lacks a reject-all gate."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "horizon_hours": 10,
+      "loss": "BCE",
+      "same_bar_rule": "stop-first",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "tp_sl_atr": [
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1.5,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "training_runs": 18
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-014-barrier-training"
+    ],
+    "provenance": {
+      "calibration_completed": true,
+      "executed": true,
+      "execution_authorized": true,
+      "october_test_seen": false,
+      "phase": "analysis_before_test",
+      "source_zip_sha256": "8468a33af3fbfdf724ffe94cbfd3b7d9690bb2430d7f5697afb32473ed37cab1",
+      "test_executed": false,
+      "training_completed": true
+    },
+    "question": "Aynı GRU üzerinde önceki dört adayla 2/2 ve 3/2 bariyerlerinin doğrulama/test sonuçları nasıl karşılaştırılıyor?",
+    "results": [
+      {
+        "aggregation": "B25; mean of 3 seeds; threshold selected on same calibration",
+        "cohort": "single-split-calibration-20260810-20260830-441hours",
+        "metrics": {
+          "all_positive_f1": 0.5611745715141296,
+          "ap": 0.4769361150917806,
+          "ap_lift": 1.2228420488617606,
+          "bce": 0.7337679895574908,
+          "bce_reference": 0.68259787026591,
+          "bce_skill": -0.0749637839796466,
+          "f1": 0.5611745513866232,
+          "f1_at_05": 0.3253319175199998,
+          "f1_gain": -2.0127506439315823e-08,
+          "positive_rate": 0.3900226652622223,
+          "precision": 0.3900226757369614,
+          "precision_at_05": 0.4612939610821689,
+          "predicted_positive_rate": 1.0,
+          "predicted_positive_rate_at_05": 0.2154195011337868,
+          "recall": 1.0,
+          "recall_at_05": 0.253875968992248,
+          "threshold": 0.01,
+          "train_prevalence": 0.3114325899136025
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "B11; mean of 3 seeds; threshold selected on same calibration",
+        "cohort": "single-split-calibration-20260810-20260830-441hours",
+        "metrics": {
+          "all_positive_f1": 0.6736842393875122,
+          "ap": 0.4908751171089163,
+          "ap_lift": 0.9664103310057139,
+          "bce": 0.7097221597431419,
+          "bce_reference": 0.7032146066060876,
+          "bce_skill": -0.0092540073484274,
+          "f1": 0.6754631504274332,
+          "f1_at_05": 0.1997337419476935,
+          "f1_gain": 0.001778911039921005,
+          "positive_rate": 0.5079365372657776,
+          "precision": 0.5127242563928208,
+          "precision_at_05": 0.4243087557603686,
+          "predicted_positive_rate": 0.980347694633409,
+          "predicted_positive_rate_at_05": 0.1632653061224489,
+          "recall": 0.9895833333333334,
+          "recall_at_05": 0.1369047619047619,
+          "threshold": 0.255,
+          "train_prevalence": 0.4368093228852722
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "B12; mean of 3 seeds; threshold selected on same calibration",
+        "cohort": "single-split-calibration-20260810-20260830-441hours",
+        "metrics": {
+          "all_positive_f1": 0.7453769445419312,
+          "ap": 0.6005627453816365,
+          "ap_lift": 1.0108709118612804,
+          "bce": 0.6983643405540235,
+          "bce_reference": 0.6811197928495959,
+          "bce_skill": -0.025317936558974,
+          "f1": 0.748221572284308,
+          "f1_at_05": 0.6726978218562399,
+          "f1_gain": 0.002844627742376815,
+          "positive_rate": 0.5941042900085449,
+          "precision": 0.5977317518548061,
+          "precision_at_05": 0.6002820709508865,
+          "predicted_positive_rate": 0.9939531368102796,
+          "predicted_positive_rate_at_05": 0.7588813303099018,
+          "recall": 1.0,
+          "recall_at_05": 0.767175572519084,
+          "threshold": 0.2,
+          "train_prevalence": 0.5406871609403255
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "B152; mean of 3 seeds; threshold selected on same calibration",
+        "cohort": "single-split-calibration-20260810-20260830-441hours",
+        "metrics": {
+          "all_positive_f1": 0.6304347515106201,
+          "ap": 0.4448198279998989,
+          "ap_lift": 0.966332724827546,
+          "bce": 0.7209121062353238,
+          "bce_reference": 0.699446849208067,
+          "bce_skill": -0.0306889037409494,
+          "f1": 0.6304347826086957,
+          "f1_at_05": 0.2663308299656392,
+          "f1_gain": 3.1098075559121696e-08,
+          "positive_rate": 0.460317462682724,
+          "precision": 0.4603174603174603,
+          "precision_at_05": 0.3907596548776064,
+          "predicted_positive_rate": 1.0,
+          "predicted_positive_rate_at_05": 0.2396069538926681,
+          "recall": 1.0,
+          "recall_at_05": 0.2068965517241379,
+          "threshold": 0.13,
+          "train_prevalence": 0.3926059875426964
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "B22; mean of 3 seeds; threshold selected on same calibration",
+        "cohort": "single-split-calibration-20260810-20260830-441hours",
+        "metrics": {
+          "all_positive_f1": 0.5469522476196289,
+          "ap": 0.4111272622128619,
+          "ap_lift": 1.092211622537731,
+          "bce": 0.7652388112692462,
+          "bce_reference": 0.678970940550751,
+          "bce_skill": -0.1270567936950564,
+          "f1": 0.5470560432324921,
+          "f1_at_05": 0.3197770534025514,
+          "f1_gain": 0.00010379561286322225,
+          "positive_rate": 0.3764172196388244,
+          "precision": 0.3768029459431878,
+          "precision_at_05": 0.4542426938541348,
+          "predicted_positive_rate": 0.9969765684051398,
+          "predicted_positive_rate_at_05": 0.2025699168556311,
+          "recall": 0.997991967871486,
+          "recall_at_05": 0.2489959839357429,
+          "threshold": 0.02,
+          "train_prevalence": 0.2913401647578862
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "B32; mean of 3 seeds; threshold selected on same calibration",
+        "cohort": "single-split-calibration-20260810-20260830-441hours",
+        "metrics": {
+          "all_positive_f1": 0.3905109763145447,
+          "ap": 0.2628507036662246,
+          "ap_lift": 1.083337916410472,
+          "bce": 0.6813392673113429,
+          "bce_reference": 0.5769776427698062,
+          "bce_skill": -0.1808763751062246,
+          "f1": 0.3905109489051095,
+          "f1_at_05": 0.0449829467051993,
+          "f1_gain": -2.740943516599259e-08,
+          "positive_rate": 0.2426303923130035,
+          "precision": 0.2426303854875283,
+          "precision_at_05": 0.2830659536541889,
+          "predicted_positive_rate": 1.0,
+          "predicted_positive_rate_at_05": 0.0249433106575963,
+          "recall": 1.0,
+          "recall_at_05": 0.0249221183800623,
+          "threshold": 0.0,
+          "train_prevalence": 0.1595338557363873
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Epoch: validation BCE. Threshold: mean calibration F1, ties highest threshold. Candidate: calibration BCE skill, ties ID. Test cannot select.",
+    "status": "running",
+    "title": "Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE"
+  },
+  "recorded_at": "2026-10-15T21:47:29.541613+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 24
+}
