@@ -275,6 +275,77 @@ Loss mevcut protokolde wavelet kararını gerektirir; wavelet atlanarak loss ça
         (destination / name).write_text(json.dumps(notebook, ensure_ascii=False, indent=1) + '\n', encoding='utf-8', newline='\n')
 
 
+def build_barrier_workflow():
+    notebook = build('basic', render_only=True)
+    cells = notebook['cells'][:9]
+    cells[0] = cell('markdown', '''# Dört bariyer · eğitim → doğrulama → kilit → test
+
+2/5, 1/1, 1/2 ve 1.5/2 ATR; 10 saat ufuk; aynı mumda çift temas: zarar önce.
+Altı temel özellik, GRU, BCE, wavelet kapalı. Üç seed, toplam 12 eğitim.
+Bu yeni tek dönem çalışmasıdır; eski 38-fold sonuçlarıyla birleştirilmez.
+
+| Bölüm | UTC dönem | Görev |
+|---|---|---|
+| Eğitim | 18 Aralık 2025–15 Temmuz 2026 | Ağırlık ve scaler öğrenimi |
+| Doğrulama | 17 Temmuz–8 Ağustos 2026 | En düşük BCE ile epoch seçimi |
+| Eşik doğrulaması | 10–30 Ağustos 2026 | Ortalama F1 ile ortak aday eşiği |
+| Test | 2–14 Ekim 2026 | Kilitli 4 aday, 312 saat; seçim yapılmaz |
+
+Ağustos geçmişte görülmüştür; burada geliştirme verisidir. Eylül test edilmez.
+Test verisi yalnızca tüm modeller/eşikler kilitlendikten sonra indirilir.
+Kısa tek dönem testi kârlılık veya istatistiksel kesinlik kanıtı değildir.
+Farklı bariyerlerin etiketleri farklıdır; ham F1/AP/BCE tek başına kazanan belirlemez.
+
+**Colab Tesla T4** seçin. Drive: **icinbedava34@gmail.com** hesabını kontrol edin.
+Eski arşiv salt okunur. Bu notebook kendi yeni workspace'ini kullanır.
+Önce prepare → train → freeze → bundle; calibration raporunu inceleyin.
+Test için ayrı hücreyi, eşik/model değiştirmeden çalıştırın. Kesintide aynı ayarlarla devam edin.
+''')
+    cells[2]['source'] = cells[2]['source'].replace("MODE = 'recovery'", "MODE = 'research'")
+    for old, new in {
+        "WORKSPACE_ID = 'advisor_protocol_v2'": "WORKSPACE_ID = 'barriers_october_v1_001'",
+        "EXPERIMENTS = ['A']": "EXPERIMENTS = ['B25', 'B11', 'B12', 'B152']  # Her aday ayrı çalıştırılabilir; freeze tümünü ister.",
+        RELEASE: 'advisor-barriers-v1.0.0',
+        'umutergul74/yeniBot.git': 'umutergul74/YeniBotDeney.git',
+        '/content/advisor_reproducible_repo': '/content/advisor_barriers_repo',
+        '/content/advisor_isolated_runtime': '/content/advisor_barriers_runtime',
+    }.items():
+        cells[2]['source'] = cells[2]['source'].replace(old, new)
+    cells[2]['source'] += '\nALLOW_TEST = False\n'
+    cells[4]['source'] = cells[4]['source'].replace("'research':'research_v2'", "'research':'barrier_research_v1'")
+    cells[6]['source'] += "\nassert git('remote','get-url','origin') == REPO_URL, 'Yanlış depo'\n"
+    setup = cells[8]['source'].split('def execute_step(action):')[0]
+    cells[8]['source'] = setup + dedent('''
+    def execute_step(action):
+        command = [RESEARCH_PYTHON, '-I', str(REPO_DIR/'scripts/advisor_barrier_training.py'), action,
+                   '--root', str(ROOT), '--legacy', str(LEGACY_ROOT), '--session', SESSION,
+                   '--candidates', *EXPERIMENTS]
+        if ALLOW_TRAINING: command.append('--allow-training')
+        if ALLOW_TEST: command.append('--allow-test')
+        logged(command, action+'.log')
+    ''')
+    for title, description, code in [
+        ('5 · Hazırlık', 'Mevcut fit_raw dosyasının SHA kontrolü; Ekim verisi okunmaz. Eksik arşivde durur.', "execute_step('prepare')"),
+        ('6 · Eğitim', 'ALLOW_TRAINING=True yapın. Her epoch checkpoint Drive’da. Aynı workspace’e ikinci oturum yazdırmayın.',
+         "if ALLOW_TRAINING:\n    execute_step('train')\nelse:\n    print('Eğitim kapalı; ayarlarda ALLOW_TRAINING=True seçin.')"),
+        ('7 · Eşik seçimi ve değişmez model kilidi', '12 eğitim tamamlanmalıdır. Eşik: 0–1, adım 0.005; üç seed ortalama F1. Eşitlikte yüksek eşik. Aday sıralaması: kalibrasyon BCE skill; testten önce kaydedilir.',
+         "if ALLOW_TRAINING:\n    execute_step('freeze')\nelse:\n    print('Eğitim ve kilitleme henüz başlatılmadı.')"),
+        ('8 · Rapor ve yedek', 'Küçük ZIP modelleri içermez. Tam yedek için workspace’in tamamını koruyun.',
+         "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')"),
+        ('9 · Nihai test — ayrı adım', 'Önce calibration_REPORT.md ve calibration_thresholds.png dosyalarını inceleyin. ALLOW_TEST=True olduğunda yalnızca kilitli adaylar değerlendirilir. Sonuç kötü olsa da bu testte yeniden ayar yapılmaz.',
+         "if ALLOW_TEST:\n    execute_step('test')\n    execute_step('bundle')\nelse:\n    print('Test kapalı. Önce eğitim ve kilit; sonra yalnızca bu hücreyi çalıştırın.')"),
+    ]:
+        cells.extend([cell('markdown', '## '+title+'\n\n'+description), cell('code', code)])
+    for i, c in enumerate(cells):
+        c['id'] = f'barrier-study-{i:02d}'
+        if c['cell_type'] == 'code': compile(c['source'], f'barrier:{i}', 'exec')
+    notebook['cells'] = cells
+    notebook['metadata']['colab']['name'] = '04_barrier_study.ipynb'
+    notebook['metadata']['accelerator'] = 'GPU'
+    target = ROOT/'notebooks/workflows/04_barrier_study.ipynb'
+    target.write_text(json.dumps(notebook, ensure_ascii=False, indent=1)+'\n', encoding='utf-8', newline='\n')
+
+
 def build_all():
     archive=ROOT/'notebooks/archive/advisor_v1'
     archive.mkdir(parents=True,exist_ok=True)
@@ -290,6 +361,7 @@ def build_all():
     (archive/'SHA256SUMS').write_text('\n'.join(records)+'\n',encoding='utf-8',newline='\n')
     for phase in NAMES:print('Generated',build(phase))
     build_workflows()
+    build_barrier_workflow()
 
 
 if __name__=='__main__':build_all()

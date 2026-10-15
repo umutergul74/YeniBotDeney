@@ -4,15 +4,24 @@
 Bu notebooklar kayıt sisteminin yerine geçmez. Yeni öneri önce plan olarak
 kaydedilir; her yeni deney için yeni notebook oluşturmak gerekmez.
 Buradaki araştırma notebooku mevcut A–D/wavelet/loss protokolüne aittir;
-eşik/bariyer teşhisleri henüz uygulanmadı veya çalıştırılmadı.
+Eşik/bariyer teşhisleri tamamlandı; sonuçlar deney defterindedir.
+Yeni dört bariyerin eğitim karşılaştırması ayrı 04 girişindedir.
 
-Aktif kullanıcı akışı yalnızca **workflows/** içindeki üç notebooktur:
+Aktif kullanıcı akışı **workflows/** içindeki görev notebooklarıdır:
 
 | Notebook | Ne zaman? | Ne üretir? |
 |---|---|---|
 | [01 · Veri kurtarma](workflows/01_recover_data.ipynb) | Eski hazırlanmış tablolar eksikse | SHA doğrulanmış A ve B/C/D tabloları |
 | [02 · Araştırma](workflows/02_research.ipynb) | Sabit protokolü yeni izole ortamda çalıştırmak için | Seçilen aşamanın model, checkpoint ve raporları |
 | [03 · Arşiv denetimi](workflows/03_audit_archive.ipynb) | Tamamlanmış final dosyalarını doğrulamak için | Salt okunur denetim raporu |
+| [04 · Bariyer çalışması](workflows/04_barrier_study.ipynb) | 2/5, 1/1, 1/2, 1.5/2 model karşılaştırması | 12 eğitim, ayrı eşik doğrulaması, kilit ve 2–14 Ekim testi |
+
+**Güncel yeni deney için 04'ü kullanın.** [Deney planı](../research/analyses/barrier-training-20261015/PLAN.md).
+04, `advisor-barriers-v1.0.0` sabit yayınını ve yeni workspace'i kullanır.
+T4 seçin; eğitim için `ALLOW_TRAINING=True`. İlk çalışmada `ALLOW_TEST=False`
+kalsın. Kalibrasyon raporundan sonra `ALLOW_TEST=True` değişkenini ayarlayıp
+yalnızca son test hücresini çalıştırın. Eşik/model değiştirmeyin. Sonuçlar Drive
+`barrier_research_v1/<WORKSPACE_ID>/reports/` altında kalır. 01'i çalıştırmak gerekmez.
 
 Bunlar zorunlu bir 01 → 02 → 03 eğitim zinciri değildir. Kurtarma sonuçları
 research workspace'e otomatik taşınmaz; araştırma kendi girdilerini doğrular.
