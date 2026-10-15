@@ -1,0 +1,295 @@
+{
+  "previous_sha256": "51c01fd0c137d52eb99c4502e39b9fa7b8d05f69773fe89dc0df65c97d691a23",
+  "reason": "10 senaryo ortak veri üzerinde hesaplandı; önceki üç senaryo paritesi geçti. Kullanıcının dengeli değerlendirme tercihine göre adaylar raporlandı.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "development-validation-only; September 2026 excluded",
+      "labels_id": "barrier-expansion-10-scenarios-h10",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "development-33551-common-timestamps"
+    },
+    "decision": "Dengeli değerlendirmede sonraki validation için 1/1, 1/2, 1.5/2 kısa listesi; 2/5 kontrol korunur. Kesin model/strateji kazananı veya üretim bariyeri seçilmedi.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-expansion-20261015/PLAN.md",
+        "path": "sources/2604a9073883e1e754fb01cf3ecb82b720236bf044f74924f7efff74a9cc7c88.md",
+        "sha256": "2604a9073883e1e754fb01cf3ecb82b720236bf044f74924f7efff74a9cc7c88"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-expansion-20261015/REPORT.md",
+        "path": "sources/ea918d84ac163c10d04dd7e96bc817a6f112afd6ea8977ddc4a8eae460ae8cd2.md",
+        "sha256": "ea918d84ac163c10d04dd7e96bc817a6f112afd6ea8977ddc4a8eae460ae8cd2"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-expansion-20261015/results/barrier_comparison.csv",
+        "path": "sources/bf6f678dec468cb689d05acaac7277e7469b93b6f53ce8526c7b8b8de0a9f2a6.csv",
+        "sha256": "bf6f678dec468cb689d05acaac7277e7469b93b6f53ce8526c7b8b8de0a9f2a6"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-expansion-20261015/results/barrier_by_year.csv",
+        "path": "sources/dbd668b80f6cebea4e837d88e389e08d69fcbaf38f29a9662c5b831d51dfd411.csv",
+        "sha256": "dbd668b80f6cebea4e837d88e389e08d69fcbaf38f29a9662c5b831d51dfd411"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-expansion-20261015/results/manifest.json",
+        "path": "sources/378cbdf4aefe09cc4e48a72ab800a61d3558cd250b8ff029cb8ace72a1e7d0ee.json",
+        "sha256": "378cbdf4aefe09cc4e48a72ab800a61d3558cd250b8ff029cb8ace72a1e7d0ee"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-expansion-20261015/results/output_manifest.json",
+        "path": "sources/2dd82d3a29953679f99ef36b7b7dac82026568dd341b0ad05cf79b0899a80d10.json",
+        "sha256": "2dd82d3a29953679f99ef36b7b7dac82026568dd341b0ad05cf79b0899a80d10"
+      }
+    ],
+    "id": "exp-013-barrier-expansion",
+    "limitations": [
+      "Betimsel geliştirme analizi; gelecekteki fiyatlardan türeyen etiketler için koşullu getiri bağımsız model becerisi değildir.",
+      "Aynı saatlik mumda temas sırası bilinmiyor; zarar önce kuralı.",
+      "Masraf/funding/slippage yok."
+    ],
+    "method": {
+      "horizon_hours": 10,
+      "same_bar_rule": "stop-first",
+      "tp_sl_atr": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1.5,
+          1.5
+        ],
+        [
+          1.5,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "training": false
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-012-barrier-diagnostics"
+    ],
+    "provenance": {
+      "executed": true,
+      "origin": "user-authorized-expansion",
+      "run_id": "barrier-expansion-20261015"
+    },
+    "question": "Ek ATR bariyerleri sınıf dengesi, süre dolumu, temas belirsizliği ve brüt getiri bakımından hangi ödünleşimleri getiriyor?",
+    "results": [
+      {
+        "aggregation": "TP/SL 2/5",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.06557181604125063,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.551303835446715,
+          "positive_mean_fwd_pct": 1.3423786261696051,
+          "profit_first": 10387.0,
+          "profit_first_pct": 30.95883878274865,
+          "stop_first": 1971.0,
+          "timeout": 21193.0,
+          "timeout_mean_fwd_pct": -0.33867187199912885,
+          "timeout_pct": 63.16652260737385
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 2/2",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.3636255253196626,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.5018040672386721,
+          "positive_mean_fwd_pct": 1.376080500609156,
+          "profit_first": 9590.0,
+          "profit_first_pct": 28.583350719799707,
+          "stop_first": 9872.0,
+          "timeout": 14089.0,
+          "timeout_mean_fwd_pct": 0.0423760893219717,
+          "timeout_pct": 41.99278710023546
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 3/2",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.1847932997526154,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.32063034859715134,
+          "positive_mean_fwd_pct": 1.8817609328351927,
+          "profit_first": 5417.0,
+          "profit_first_pct": 16.145569431611577,
+          "stop_first": 10309.0,
+          "timeout": 17825.0,
+          "timeout_mean_fwd_pct": 0.2296841612975492,
+          "timeout_pct": 53.12807367887693
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 1/1",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 1.8866799797323477,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.5473545801730256,
+          "positive_mean_fwd_pct": 0.7576469738394764,
+          "profit_first": 14971.0,
+          "profit_first_pct": 44.62162081607106,
+          "stop_first": 15605.0,
+          "timeout": 2975.0,
+          "timeout_mean_fwd_pct": 0.029221348574830757,
+          "timeout_pct": 8.867097851032756
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 1/2",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.7183094393609728,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.796462840782392,
+          "positive_mean_fwd_pct": 0.7321983558871619,
+          "profit_first": 18248.0,
+          "profit_first_pct": 54.388840869124614,
+          "stop_first": 8089.0,
+          "timeout": 7214.0,
+          "timeout_mean_fwd_pct": -0.24280418618230099,
+          "timeout_pct": 21.50159458734464
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 1.5/1.5",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.7749396441238712,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.5687263999742171,
+          "positive_mean_fwd_pct": 1.0696997601350648,
+          "profit_first": 12362.0,
+          "profit_first_pct": 36.845399540997285,
+          "stop_first": 12610.0,
+          "timeout": 8579.0,
+          "timeout_mean_fwd_pct": 0.030045145110933577,
+          "timeout_pct": 25.570027718994965
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 1.5/2",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.5186134541444368,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.6301691475803972,
+          "positive_mean_fwd_pct": 1.0627219020483307,
+          "profit_first": 13182.0,
+          "profit_first_pct": 39.28943995708027,
+          "stop_first": 9270.0,
+          "timeout": 11099.0,
+          "timeout_mean_fwd_pct": -0.08742534551810234,
+          "timeout_pct": 33.080981192810945
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 2/1",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.79580340377336,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.37786050815253847,
+          "positive_mean_fwd_pct": 1.4109142115635671,
+          "profit_first": 7743.0,
+          "profit_first_pct": 23.07829870942744,
+          "stop_first": 18560.0,
+          "timeout": 7248.0,
+          "timeout_mean_fwd_pct": 0.32466060508249095,
+          "timeout_pct": 21.6029328484993
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 2/3",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.1847932997526154,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.5378404413446276,
+          "positive_mean_fwd_pct": 1.3574228124314656,
+          "profit_first": 10140.0,
+          "profit_first_pct": 30.222646120830973,
+          "stop_first": 5422.0,
+          "timeout": 17989.0,
+          "timeout_mean_fwd_pct": -0.1335005479254719,
+          "timeout_pct": 53.61688176209353
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 3/3",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_pct": 0.11027987243301243,
+          "n": 33551.0,
+          "negative_mean_fwd_pct": -0.339493195304814,
+          "positive_mean_fwd_pct": 1.859565257593453,
+          "profit_first": 5713.0,
+          "profit_first_pct": 17.027808411075675,
+          "stop_first": 5677.0,
+          "timeout": 22161.0,
+          "timeout_mean_fwd_pct": 0.05241051607305377,
+          "timeout_pct": 66.05168251318888
+        },
+        "split": "development"
+      }
+    ],
+    "selection_rule": "Kullanıcı dengeli değerlendirme istedi. Sınıf dengesine uzaklık, timeout ve çift temas için Pareto; getiri ve yıllık tutarlılık ayrı yorum. Nihai model/strateji kazananı seçilmez.",
+    "status": "completed",
+    "title": "Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi"
+  },
+  "recorded_at": "2026-10-15T19:16:42.760496+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 20
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "path": "research/analyses/barrier-expansion-20261015/results/barrier_by_year.csv",
+    "sha256": "dbd668b80f6cebea4e837d88e389e08d69fcbaf38f29a9662c5b831d51dfd411",
+    "bytes": 12323
+  },
+  {
+    "path": "research/analyses/barrier-expansion-20261015/results/barrier_comparison.csv",
+    "sha256": "bf6f678dec468cb689d05acaac7277e7469b93b6f53ce8526c7b8b8de0a9f2a6",
+    "bytes": 3628
+  },
+  {
+    "path": "research/analyses/barrier-expansion-20261015/results/barrier_comparison.png",
+    "sha256": "2982734b6896d60f91a82c8ec07b30cb14b7506d05ed26827bc27e87317a8653",
+    "bytes": 121010
+  },
+  {
+    "path": "research/analyses/barrier-expansion-20261015/results/barrier_tradeoffs.png",
+    "sha256": "9aeea4e561ec9de49d82d02a9a401c4d828677f5372ccad91cef17854005e305",
+    "bytes": 140897
+  },
+  {
+    "path": "research/analyses/barrier-expansion-20261015/results/manifest.json",
+    "sha256": "378cbdf4aefe09cc4e48a72ab800a61d3558cd250b8ff029cb8ace72a1e7d0ee",
+    "bytes": 1907
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp1.5_sl1.5.csv",
+    "sha256": "4e02a480261b89cd19e5fa5e05c57ec08a39a956bb0d2dab77e1d378fb075151",
+    "bytes": 2453443
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp1.5_sl2.csv",
+    "sha256": "1774783f8d56892a45f44f871b205ab993520d03828a70d6dd11fa7561734516",
+    "bytes": 2452379
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp1_sl1.csv",
+    "sha256": "bd744559f2f20f89e6d8e3614e48c7df0933b1abb46b7726cd1d3f6be3b17b8f",
+    "bytes": 2455459
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp1_sl2.csv",
+    "sha256": "dcf396618b727bf76122b3c5bb0c838536b3b449427a683e9ba238a8d4c9470a",
+    "bytes": 2450922
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp2_sl1.csv",
+    "sha256": "55717641ef856f343fb2890a28b2f385a26502bc15c3310b1ff0cc1e5e2f8822",
+    "bytes": 2458337
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp2_sl2.csv",
+    "sha256": "dda69ce2216ce262c6da661dcf476e080490722ed38eec9fc9f0aad191b39ab6",
+    "bytes": 2453676
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp2_sl3.csv",
+    "sha256": "f350f5a87f3a1fe0a45aaf313d40426f0f81e51328c92d11d9bcf7920248e289",
+    "bytes": 2453252
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp2_sl5.csv",
+    "sha256": "e75a2e7acba8dd9e3b32224e1196dfb7d14483c13718659f4ad327cf19093f2c",
+    "bytes": 2453033
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp3_sl2.csv",
+    "sha256": "d276cdddd5ece86281311f60452520e72539974115967a12706e4c32a4868198",
+    "bytes": 2454863
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp3_sl3.csv",
+    "sha256": "985e713ac08ea25e37b5fc6134134211487af8f3c34d213795460910c684ba2b",
+    "bytes": 2454479
+  }
+]

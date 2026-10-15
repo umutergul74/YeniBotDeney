@@ -1,0 +1,94 @@
+{
+  "previous_sha256": "132718385b6f3e82cf20e7d7cf8b85faaf74afdc0218ed53262c7317cdf15c11",
+  "reason": "Kullanıcı ek bariyerler ve dengeli değerlendirme istedi; yeni deney kaydı.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "development-validation-only; September 2026 excluded",
+      "labels_id": "barrier-expansion-10-scenarios-h10",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "development-33551-common-timestamps"
+    },
+    "decision": "Kullanıcı yürütme istedi; 7 ek senaryo ve 3 kontrol sonuç öncesi sabitlendi.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-expansion-20261015/PLAN.md",
+        "path": "sources/2604a9073883e1e754fb01cf3ecb82b720236bf044f74924f7efff74a9cc7c88.md",
+        "sha256": "2604a9073883e1e754fb01cf3ecb82b720236bf044f74924f7efff74a9cc7c88"
+      }
+    ],
+    "id": "exp-013-barrier-expansion",
+    "limitations": [
+      "Betimsel geliştirme analizi; gelecekteki fiyatlardan türeyen etiketler için koşullu getiri bağımsız model becerisi değildir.",
+      "Aynı saatlik mumda temas sırası bilinmiyor; zarar önce kuralı.",
+      "Masraf/funding/slippage yok."
+    ],
+    "method": {
+      "horizon_hours": 10,
+      "same_bar_rule": "stop-first",
+      "tp_sl_atr": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1.5,
+          1.5
+        ],
+        [
+          1.5,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "training": false
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-012-barrier-diagnostics"
+    ],
+    "provenance": {
+      "executed": false,
+      "origin": "user-authorized-expansion",
+      "run_id": "barrier-expansion-20261015"
+    },
+    "question": "Ek ATR bariyerleri sınıf dengesi, süre dolumu, temas belirsizliği ve brüt getiri bakımından hangi ödünleşimleri getiriyor?",
+    "results": [],
+    "selection_rule": "Kullanıcı dengeli değerlendirme istedi. Sınıf dengesine uzaklık, timeout ve çift temas için Pareto; getiri ve yıllık tutarlılık ayrı yorum. Nihai model/strateji kazananı seçilmez.",
+    "status": "running",
+    "title": "Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi"
+  },
+  "recorded_at": "2026-10-15T19:15:11.463865+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 19
+}

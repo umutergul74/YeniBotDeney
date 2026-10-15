@@ -1,5 +1,9 @@
 # Kampanya 002 — düşük recall/F1 teşhisi
 
+**Ek çalışma:** Kullanıcının isteğiyle exp-013 kaydında 7 yeni bariyer eklendi.
+[10 senaryolu karşılaştırma](../analyses/barrier-expansion-20261015/REPORT.md).
+1/1, 1/2 ve 1.5/2 sonraki validation için aday; yeni eğitim veya kesin seçim yok.
+
 **Durum: 15 Ekim 2026 kullanıcı isteğiyle iki analiz tamamlandı.**
 [Grafikler, tablolar ve sonuç raporu](../analyses/diagnostics-20261015/REPORT.md).
 Aşağıdaki metin özgün öneri/plan bağlamıdır; güncel yürütme ve kararlar deney

@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**12 deney/plan · 18 geçmiş kaydı**
+**13 deney/plan · 20 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -20,6 +20,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-010-final](#exp-010-final) | Donmuş A/W_OFF/BCE · Eylül 2026 final raporu | completed | mixed |
 | [exp-011-threshold-diagnostics](#exp-011-threshold-diagnostics) | Plan · Validation eşik–performans teşhisi | completed | mixed |
 | [exp-012-barrier-diagnostics](#exp-012-barrier-diagnostics) | Plan · ATR bariyerleri ve etiket dağılımı | completed | mixed |
+| [exp-013-barrier-expansion](#exp-013-barrier-expansion) | Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -78,6 +79,7 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-012-barrier-diagnostics | — | — | — | — | — |
+| exp-013-barrier-expansion | — | — | — | — | — |
 
 ## Kayıtlı sonuçlar · development
 
@@ -88,6 +90,7 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-012-barrier-diagnostics | — | — | — | — | — |
+| exp-013-barrier-expansion | — | — | — | — | — |
 
 ## Kayıtlı sonuçlar · development
 
@@ -98,6 +101,77 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-012-barrier-diagnostics | — | — | — | — | — |
+| exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 1/1
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 1/2
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 1.5/1.5
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 1.5/2
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 2/1
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 2/3
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-013-barrier-expansion | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 3/3
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-013-barrier-expansion | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -633,3 +707,186 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/diagnostics-20261015/results/output_manifest.json](sources/7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea.json) · SHA256 `7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea`
 
 [Son kayıt](events/000018.json) · revizyon 3 · Kullanıcı isteğiyle hesaplandı; hash/parite kontrolleri geçti, grafikler ve rapor eklendi.
+
+## exp-013-barrier-expansion
+
+**Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi**
+
+Ek ATR bariyerleri sınıf dengesi, süre dolumu, temas belirsizliği ve brüt getiri bakımından hangi ödünleşimleri getiriyor?
+
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-012-barrier-diagnostics
+
+**Yöntem:** {"horizon_hours": 10, "same_bar_rule": "stop-first", "tp_sl_atr": [[2, 5], [2, 2], [3, 2], [1, 1], [1, 2], [1.5, 1.5], [1.5, 2], [2, 1], [2, 3], [3, 3]], "training": false}
+
+**Veri kimliği:** {"evaluation_scope": "development-validation-only; September 2026 excluded", "labels_id": "barrier-expansion-10-scenarios-h10", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "development-33551-common-timestamps"}
+
+**Seçim kuralı:** Kullanıcı dengeli değerlendirme istedi. Sınıf dengesine uzaklık, timeout ve çift temas için Pareto; getiri ve yıllık tutarlılık ayrı yorum. Nihai model/strateji kazananı seçilmez.
+
+**Karar / öğrenilen:** Dengeli değerlendirmede sonraki validation için 1/1, 1/2, 1.5/2 kısa listesi; 2/5 kontrol korunur. Kesin model/strateji kazananı veya üretim bariyeri seçilmedi.
+
+**development** · development-33551-common-timestamps · TP/SL 2/5
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.065572 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.551304 |
+| positive_mean_fwd_pct | 1.342379 |
+| profit_first | 10387.000000 |
+| profit_first_pct | 30.958839 |
+| stop_first | 1971.000000 |
+| timeout | 21193.000000 |
+| timeout_mean_fwd_pct | -0.338672 |
+| timeout_pct | 63.166523 |
+
+**development** · development-33551-common-timestamps · TP/SL 2/2
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.363626 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.501804 |
+| positive_mean_fwd_pct | 1.376081 |
+| profit_first | 9590.000000 |
+| profit_first_pct | 28.583351 |
+| stop_first | 9872.000000 |
+| timeout | 14089.000000 |
+| timeout_mean_fwd_pct | 0.042376 |
+| timeout_pct | 41.992787 |
+
+**development** · development-33551-common-timestamps · TP/SL 3/2
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.184793 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.320630 |
+| positive_mean_fwd_pct | 1.881761 |
+| profit_first | 5417.000000 |
+| profit_first_pct | 16.145569 |
+| stop_first | 10309.000000 |
+| timeout | 17825.000000 |
+| timeout_mean_fwd_pct | 0.229684 |
+| timeout_pct | 53.128074 |
+
+**development** · development-33551-common-timestamps · TP/SL 1/1
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 1.886680 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.547355 |
+| positive_mean_fwd_pct | 0.757647 |
+| profit_first | 14971.000000 |
+| profit_first_pct | 44.621621 |
+| stop_first | 15605.000000 |
+| timeout | 2975.000000 |
+| timeout_mean_fwd_pct | 0.029221 |
+| timeout_pct | 8.867098 |
+
+**development** · development-33551-common-timestamps · TP/SL 1/2
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.718309 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.796463 |
+| positive_mean_fwd_pct | 0.732198 |
+| profit_first | 18248.000000 |
+| profit_first_pct | 54.388841 |
+| stop_first | 8089.000000 |
+| timeout | 7214.000000 |
+| timeout_mean_fwd_pct | -0.242804 |
+| timeout_pct | 21.501595 |
+
+**development** · development-33551-common-timestamps · TP/SL 1.5/1.5
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.774940 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.568726 |
+| positive_mean_fwd_pct | 1.069700 |
+| profit_first | 12362.000000 |
+| profit_first_pct | 36.845400 |
+| stop_first | 12610.000000 |
+| timeout | 8579.000000 |
+| timeout_mean_fwd_pct | 0.030045 |
+| timeout_pct | 25.570028 |
+
+**development** · development-33551-common-timestamps · TP/SL 1.5/2
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.518613 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.630169 |
+| positive_mean_fwd_pct | 1.062722 |
+| profit_first | 13182.000000 |
+| profit_first_pct | 39.289440 |
+| stop_first | 9270.000000 |
+| timeout | 11099.000000 |
+| timeout_mean_fwd_pct | -0.087425 |
+| timeout_pct | 33.080981 |
+
+**development** · development-33551-common-timestamps · TP/SL 2/1
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.795803 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.377861 |
+| positive_mean_fwd_pct | 1.410914 |
+| profit_first | 7743.000000 |
+| profit_first_pct | 23.078299 |
+| stop_first | 18560.000000 |
+| timeout | 7248.000000 |
+| timeout_mean_fwd_pct | 0.324661 |
+| timeout_pct | 21.602933 |
+
+**development** · development-33551-common-timestamps · TP/SL 2/3
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.184793 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.537840 |
+| positive_mean_fwd_pct | 1.357423 |
+| profit_first | 10140.000000 |
+| profit_first_pct | 30.222646 |
+| stop_first | 5422.000000 |
+| timeout | 17989.000000 |
+| timeout_mean_fwd_pct | -0.133501 |
+| timeout_pct | 53.616882 |
+
+**development** · development-33551-common-timestamps · TP/SL 3/3
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_pct | 0.110280 |
+| n | 33551.000000 |
+| negative_mean_fwd_pct | -0.339493 |
+| positive_mean_fwd_pct | 1.859565 |
+| profit_first | 5713.000000 |
+| profit_first_pct | 17.027808 |
+| stop_first | 5677.000000 |
+| timeout | 22161.000000 |
+| timeout_mean_fwd_pct | 0.052411 |
+| timeout_pct | 66.051683 |
+
+**Sınırlar / açık noktalar:**
+- Betimsel geliştirme analizi; gelecekteki fiyatlardan türeyen etiketler için koşullu getiri bağımsız model becerisi değildir.
+- Aynı saatlik mumda temas sırası bilinmiyor; zarar önce kuralı.
+- Masraf/funding/slippage yok.
+
+**Kanıt kopyaları:**
+- [research/analyses/barrier-expansion-20261015/PLAN.md](sources/2604a9073883e1e754fb01cf3ecb82b720236bf044f74924f7efff74a9cc7c88.md) · SHA256 `2604a9073883e1e754fb01cf3ecb82b720236bf044f74924f7efff74a9cc7c88`
+- [research/analyses/barrier-expansion-20261015/REPORT.md](sources/ea918d84ac163c10d04dd7e96bc817a6f112afd6ea8977ddc4a8eae460ae8cd2.md) · SHA256 `ea918d84ac163c10d04dd7e96bc817a6f112afd6ea8977ddc4a8eae460ae8cd2`
+- [research/analyses/barrier-expansion-20261015/results/barrier_comparison.csv](sources/bf6f678dec468cb689d05acaac7277e7469b93b6f53ce8526c7b8b8de0a9f2a6.csv) · SHA256 `bf6f678dec468cb689d05acaac7277e7469b93b6f53ce8526c7b8b8de0a9f2a6`
+- [research/analyses/barrier-expansion-20261015/results/barrier_by_year.csv](sources/dbd668b80f6cebea4e837d88e389e08d69fcbaf38f29a9662c5b831d51dfd411.csv) · SHA256 `dbd668b80f6cebea4e837d88e389e08d69fcbaf38f29a9662c5b831d51dfd411`
+- [research/analyses/barrier-expansion-20261015/results/manifest.json](sources/378cbdf4aefe09cc4e48a72ab800a61d3558cd250b8ff029cb8ace72a1e7d0ee.json) · SHA256 `378cbdf4aefe09cc4e48a72ab800a61d3558cd250b8ff029cb8ace72a1e7d0ee`
+- [research/analyses/barrier-expansion-20261015/results/output_manifest.json](sources/2dd82d3a29953679f99ef36b7b7dac82026568dd341b0ad05cf79b0899a80d10.json) · SHA256 `2dd82d3a29953679f99ef36b7b7dac82026568dd341b0ad05cf79b0899a80d10`
+
+[Son kayıt](events/000020.json) · revizyon 2 · 10 senaryo ortak veri üzerinde hesaplandı; önceki üç senaryo paritesi geçti. Kullanıcının dengeli değerlendirme tercihine göre adaylar raporlandı.

@@ -1,0 +1,91 @@
+{
+  "scenarios": [
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1.5,
+      1.5
+    ],
+    [
+      1.5,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      3
+    ]
+  ],
+  "objectives_minimized": [
+    "balance_distance_pp",
+    "timeout_pct",
+    "both_same_bar_pct"
+  ],
+  "pareto_candidates": [
+    "2/5",
+    "2/2",
+    "3/2",
+    "1/1",
+    "1/2",
+    "1.5/2",
+    "2/3"
+  ],
+  "scope": {
+    "n": 33551,
+    "start": "2022-03-01 04:00:00+00:00",
+    "end": "2025-12-28 02:00:00+00:00",
+    "excluded": 0
+  },
+  "inputs": [
+    {
+      "path": "evidence/prepared_recovery/v2.0.1/data/development_wavelet_off.parquet",
+      "sha256": "f6346a93ee4b97125d00e8d26223ba11a141806cdff675934e033a00940977a8"
+    },
+    {
+      "path": "evidence/drive_snapshot/colab_v1/inputs/market_snapshot_v1/btc_1h.parquet",
+      "sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c"
+    },
+    {
+      "path": "research/analyses/diagnostics-20261015/results/barrier_counts.csv",
+      "sha256": "5fcd96ab01ec20658c1a41727e532b19fb73cd3c199a703982945d4c9005c598"
+    }
+  ],
+  "script_sha256": "8710e4370740b23a7b0a5ff2d0594e898e43fa5cefb15439934305eeb352400b",
+  "shared_analysis_sha256": "e9c65c8fb022fd5ef517b4fcbe0f38d6bfa1c72ac82524d218a9c2cb6ed33577",
+  "label_code_sha256": "011459fd9c72c2912f3c8ffc96cbe8f506987bec7373b7182b623c2fdbaa3f85",
+  "python": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]",
+  "numpy": "2.2.6",
+  "pandas": "2.3.3",
+  "matplotlib": "3.10.7",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "git_commit": "17816b3aa8df661599dcff54dfe3e5628d8bee8b",
+  "training_operations": 0,
+  "test_evaluations": 0,
+  "old_scenario_parity": true,
+  "deployment_barrier_selected": false
+}

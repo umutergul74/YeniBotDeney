@@ -14,6 +14,9 @@ Notebooklar çalıştırma aracıdır; kalıcı hafıza sonuç/karar kayıtları
 - **[Kampanya 002](research/campaigns/002-diagnostics.md):** validation eşikleri
   ve 2/5, 2/2, 3/2 ATR bariyerleri. İki analiz tamamlandı:
   **[grafikler ve sonuç tablosu](research/analyses/diagnostics-20261015/REPORT.md)**.
+- **[10 bariyer senaryosu ve aday karşılaştırması](research/analyses/barrier-expansion-20261015/REPORT.md):**
+  7 ek senaryo tamamlandı; sonraki validation için 1/1, 1/2 ve 1.5/2 adayları.
+  Eğitim yapılmadı, üretim bariyeri seçilmedi.
 
 Kayıtlar Git'te sürümlenir. Düzeltmeler gerekçeli yeni revizyon olarak eklenir;
 önceki sonuç ve karar silinmez. Kanıt belgelerinin hashli kopyaları saklanır.
