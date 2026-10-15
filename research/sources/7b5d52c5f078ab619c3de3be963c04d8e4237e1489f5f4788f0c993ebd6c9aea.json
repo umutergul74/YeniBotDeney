@@ -1,0 +1,87 @@
+[
+  {
+    "path": "research/analyses/diagnostics-20261015/results/barrier_counts.csv",
+    "sha256": "5fcd96ab01ec20658c1a41727e532b19fb73cd3c199a703982945d4c9005c598",
+    "bytes": 434
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/barrier_distribution.png",
+    "sha256": "60e739052b63c76a02512322f584e4cf2c2e46159a668c019ab343091421b50e",
+    "bytes": 72221
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/input_manifest.json",
+    "sha256": "a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138",
+    "bytes": 29240
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/score_distribution.png",
+    "sha256": "21576f08081502d29e1bf14860f4414c1212fabc068d409d28d330886bd8fdb4",
+    "bytes": 59744
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/summary.json",
+    "sha256": "89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e",
+    "bytes": 3650
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/threshold_curves.png",
+    "sha256": "a641dd7fb7095f73ea238aa92422dc46b3914cdf43d6d6bdd2e23c983b8f5277",
+    "bytes": 156189
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/threshold_metrics.csv",
+    "sha256": "a64ae7d623920dc98ffd969fc1699b94321c5535ef463fbd76f5c8ad3281e1ac",
+    "bytes": 15880
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/threshold_pooled_metrics.csv",
+    "sha256": "621b3186283eaa186b8b7e70ef986b88737275de1d87d794b714d51a00277f75",
+    "bytes": 16051
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/threshold_seed_metrics.csv",
+    "sha256": "e20bf04beb1f0a6325e29b7e458185bb32f1a636bb704d7365f29e4366a21d97",
+    "bytes": 47864
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/threshold_summary.csv",
+    "sha256": "48f4288e9a5b205a300f543b27a2270a45923c6398335b9a4419a2aa652867c5",
+    "bytes": 462
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/timeout_returns_distribution.png",
+    "sha256": "9c23f3f5dc0668face63ce92a4424059eedc98af75d7e429c63b7df957459e6c",
+    "bytes": 101928
+  },
+  {
+    "path": "research/analyses/diagnostics-20261015/results/timeout_returns_summary.csv",
+    "sha256": "ddf27f6423ce5b0e6db2dde574c08eed3379554b1e38ad14339135db7124505b",
+    "bytes": 650
+  },
+  {
+    "path": "output/advisor_experiments/diagnostics-20261015/executed_analysis_source.py",
+    "sha256": "0c1086a776ee28946957907bd6c52c5801d8f8469ccbba5f8009784366acc9f0",
+    "bytes": 16155
+  },
+  {
+    "path": "output/advisor_experiments/diagnostics-20261015/labels_tp2_sl2_h10.csv",
+    "sha256": "17d79f8bdcd334574cd815839e9cd33f25e847106342fab27c0c1147afa80d4b",
+    "bytes": 2635349
+  },
+  {
+    "path": "output/advisor_experiments/diagnostics-20261015/labels_tp2_sl5_h10.csv",
+    "sha256": "167f678276b17d3e81a113a11c01af0b02969ee3cbb10ce5b20ff21e26fee0f6",
+    "bytes": 2634706
+  },
+  {
+    "path": "output/advisor_experiments/diagnostics-20261015/labels_tp3_sl2_h10.csv",
+    "sha256": "6e3e506cde2e22b43cc4c4f54278f7f2bf5c273554effc08a869d8407d274394",
+    "bytes": 2636536
+  },
+  {
+    "path": "output/advisor_experiments/diagnostics-20261015/threshold_fold_metrics.csv",
+    "sha256": "a5243f17487ddfbd142e56eadc6cdf645c1b147bf2713a7fd3c45f3cb422c098",
+    "bytes": 1700661
+  }
+]

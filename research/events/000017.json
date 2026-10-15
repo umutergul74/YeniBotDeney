@@ -1,0 +1,101 @@
+{
+  "previous_sha256": "5d64817e6681ce94dc2e581b50e527943884479d1e63b15c22951edb4d5ea00c",
+  "reason": "Kullanıcı isteğiyle hesaplandı; hash/parite kontrolleri geçti, grafikler ve rapor eklendi.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "development-validation-only; September 2026 excluded",
+      "labels_id": "legacy-tp2-sl5-atr-h10",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "legacy-walk-forward-38fold-3seed"
+    },
+    "decision": "0.50 yalnızca %6.29 pozitif karar üretiyor. Betimsel validation F1 maksimumu 0.265; recall artışı precision ve karar sayısı maliyetiyle geliyor. Üretim eşiği seçilmedi.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/PLAN.md",
+        "path": "sources/776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b.md",
+        "sha256": "776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/REPORT.md",
+        "path": "sources/1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e.md",
+        "sha256": "1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/results/summary.json",
+        "path": "sources/89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e.json",
+        "sha256": "89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/results/input_manifest.json",
+        "path": "sources/a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138.json",
+        "sha256": "a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/results/output_manifest.json",
+        "path": "sources/7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea.json",
+        "sha256": "7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea"
+      }
+    ],
+    "id": "exp-011-threshold-diagnostics",
+    "limitations": [
+      "Betimsel geliştirme/validation analizi; bağımsız test performansı değildir.",
+      "Yeni eğitim, inference veya Eylül 2026 testi yapılmadı.",
+      "Çıktı envanteri yol hatası hesaplama tekrarlanmadan düzeltildi."
+    ],
+    "method": {
+      "aggregation": "114 fold/seed metric mean",
+      "analysis": "precision/recall/F1 vs threshold",
+      "threshold_grid": "0..1 step 0.005; p>=threshold",
+      "training": false
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-010-final"
+    ],
+    "provenance": {
+      "executed": false,
+      "origin": "user-supplied-research-proposal"
+    },
+    "question": "Düşük recall/F1 sabit 0.5 eşik ve skor dağılımıyla nasıl ilişkili?",
+    "results": [
+      {
+        "aggregation": "threshold 0.5",
+        "cohort": "legacy-development-matched-38fold-3seed",
+        "metrics": {
+          "f1": 0.14241837336250826,
+          "positive_rate": 0.0629129362245338,
+          "precision": 0.41049925840761997,
+          "recall": 0.09683923322840894,
+          "threshold": 0.5
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "descriptive validation F1 maximum",
+        "cohort": "legacy-development-matched-38fold-3seed",
+        "metrics": {
+          "f1": 0.5038808536411843,
+          "positive_rate": 0.6545394952474599,
+          "precision": 0.37487935531280336,
+          "recall": 0.7837318738285227,
+          "threshold": 0.265
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.",
+    "status": "completed",
+    "title": "Plan · Validation eşik–performans teşhisi"
+  },
+  "recorded_at": "2026-10-15T16:33:27.776790+00:00",
+  "revision": 3,
+  "schema_version": 1,
+  "sequence": 17
+}

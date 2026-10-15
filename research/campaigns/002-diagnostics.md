@@ -1,6 +1,11 @@
 # Kampanya 002 — düşük recall/F1 teşhisi
 
-**Durum: öneri kaydı; çalıştırılmadı.** Kullanıcının ilettiği ikinci araştırma
+**Durum: 15 Ekim 2026 kullanıcı isteğiyle iki analiz tamamlandı.**
+[Grafikler, tablolar ve sonuç raporu](../analyses/diagnostics-20261015/REPORT.md).
+Aşağıdaki metin özgün öneri/plan bağlamıdır; güncel yürütme ve kararlar deney
+defterindeki eklemeli revizyonlardadır. Yeni eşik veya bariyer seçilmedi.
+
+Kullanıcının ilettiği ikinci araştırma
 önerisidir. Yeni özellik veya mimari denemeden önce nedenleri anlamayı hedefler.
 
 ## exp-011-threshold-diagnostics

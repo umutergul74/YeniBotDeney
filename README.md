@@ -12,7 +12,8 @@ Notebooklar çalıştırma aracıdır; kalıcı hafıza sonuç/karar kayıtları
 - **[Kampanya 001](research/campaigns/001-model-comparisons.md):** A–D → wavelet
   → loss → final. 10 tarihsel kayıt; yeniden eğitim yapılmadı.
 - **[Kampanya 002](research/campaigns/002-diagnostics.md):** validation eşikleri
-  ve 2/5, 2/2, 3/2 ATR bariyerleri. İki plan; henüz çalıştırılmadı.
+  ve 2/5, 2/2, 3/2 ATR bariyerleri. İki analiz tamamlandı:
+  **[grafikler ve sonuç tablosu](research/analyses/diagnostics-20261015/REPORT.md)**.
 
 Kayıtlar Git'te sürümlenir. Düzeltmeler gerekçeli yeni revizyon olarak eklenir;
 önceki sonuç ve karar silinmez. Kanıt belgelerinin hashli kopyaları saklanır.

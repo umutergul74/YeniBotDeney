@@ -25,7 +25,9 @@
   evidence, results and decisions. Append corrections; never rewrite published
   `research/events/` or `research/sources/`. New runs/methods get new IDs.
 - A proposal is not authorization to execute it. The threshold/barrier diagnostic
-  proposals are planned only until the user requests execution. Notebook changes
+  proposals were executed on explicit user request on 2026-10-15; results are in
+  `research/analyses/diagnostics-20261015/REPORT.md`. No deployment threshold or
+  barrier was selected. Further proposals require execution authorization. Notebook changes
   do not implicitly authorize training or analysis.
 - Routine task commits/pushes are authorized, but do not move frozen release tags
   or merge into main/advisor baseline without a separate explicit request.

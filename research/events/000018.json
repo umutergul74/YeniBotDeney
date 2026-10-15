@@ -1,0 +1,139 @@
+{
+  "previous_sha256": "0d3227c3cbd446e27cd4060fe70bdb6de15efcf042bd1f6cdf95415c42f061e2",
+  "reason": "Kullanıcı isteğiyle hesaplandı; hash/parite kontrolleri geçti, grafikler ve rapor eklendi.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "development-validation-only; September 2026 excluded",
+      "labels_id": "diagnostic-tp2sl5-tp2sl2-tp3sl2-h10",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "development-33551-common-timestamps"
+    },
+    "decision": "2/5 düzeninde %63.17 timeout. 2/2 ve 3/2 pozitif etiket oranını artırmadı. Pozitif getirili timeout da 0 etiketli; hedef getiri yönünden farklı. Bariyer seçilmedi.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/PLAN.md",
+        "path": "sources/776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b.md",
+        "sha256": "776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/REPORT.md",
+        "path": "sources/1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e.md",
+        "sha256": "1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/results/summary.json",
+        "path": "sources/89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e.json",
+        "sha256": "89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/results/input_manifest.json",
+        "path": "sources/a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138.json",
+        "sha256": "a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/results/output_manifest.json",
+        "path": "sources/7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea.json",
+        "sha256": "7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea"
+      }
+    ],
+    "id": "exp-012-barrier-diagnostics",
+    "limitations": [
+      "Betimsel geliştirme/validation analizi; bağımsız test performansı değildir.",
+      "Yeni eğitim, inference veya Eylül 2026 testi yapılmadı.",
+      "Çıktı envanteri yol hatası hesaplama tekrarlanmadan düzeltildi."
+    ],
+    "method": {
+      "analysis": "first-touch counts and timeout return distribution",
+      "horizon_hours": 10,
+      "same_bar_rule": null,
+      "tp_sl_atr": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "training": false
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-010-final"
+    ],
+    "provenance": {
+      "executed": false,
+      "origin": "user-supplied-research-proposal"
+    },
+    "question": "TP/SL seçimi ilk temas sınıflarını ve süre dolumu getirilerini nasıl etkiliyor?",
+    "results": [
+      {
+        "aggregation": "TP/SL 2/5",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_assigned_stop": 22,
+          "n": 33551,
+          "positive_label_pct": 30.95883878274865,
+          "profit_first": 10387,
+          "profit_pct": 30.95883878274865,
+          "stop_first": 1971,
+          "stop_pct": 5.8746386098775,
+          "timeout": 21193,
+          "timeout_pct": 63.16652260737385
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 2/2",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_assigned_stop": 122,
+          "n": 33551,
+          "positive_label_pct": 28.58335071979971,
+          "profit_first": 9590,
+          "profit_pct": 28.583350719799707,
+          "stop_first": 9872,
+          "stop_pct": 29.42386217996483,
+          "timeout": 14089,
+          "timeout_pct": 41.99278710023546
+        },
+        "split": "development"
+      },
+      {
+        "aggregation": "TP/SL 3/2",
+        "cohort": "development-33551-common-timestamps",
+        "metrics": {
+          "both_same_bar_assigned_stop": 62,
+          "n": 33551,
+          "positive_label_pct": 16.145569431611577,
+          "profit_first": 5417,
+          "profit_pct": 16.145569431611577,
+          "stop_first": 10309,
+          "stop_pct": 30.72635688951149,
+          "timeout": 17825,
+          "timeout_pct": 53.12807367887693
+        },
+        "split": "development"
+      }
+    ],
+    "selection_rule": "Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.",
+    "status": "completed",
+    "title": "Plan · ATR bariyerleri ve etiket dağılımı"
+  },
+  "recorded_at": "2026-10-15T16:33:27.862031+00:00",
+  "revision": 3,
+  "schema_version": 1,
+  "sequence": 18
+}

@@ -1,0 +1,65 @@
+{
+  "previous_sha256": "ffb3d8bace484e2032016a901da60fc1bfcc46a7d0e13d1cc00fa6bca2445a4d",
+  "reason": "Kullanıcı açıkça analizi istedi; sonuç öncesi plan ve veri kimliği kaydedildi.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "development-validation-only; September 2026 excluded",
+      "labels_id": "legacy-tp2-sl5-atr-h10",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "legacy-walk-forward-38fold-3seed"
+    },
+    "decision": "Kullanıcı 15 Ekim 2026 tarihinde yürütme istedi; analiz planı sabitlendi. Sonuç bekleniyor.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/diagnostics-20261015/PLAN.md",
+        "path": "sources/776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b.md",
+        "sha256": "776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b"
+      }
+    ],
+    "id": "exp-012-barrier-diagnostics",
+    "limitations": [
+      "Girdi manifestleri ve analiz planı henüz kesinleştirilmedi.",
+      "Yeni özellik/mimari denemesinden önce teşhis önerisi."
+    ],
+    "method": {
+      "analysis": "first-touch counts and timeout return distribution",
+      "horizon_hours": 10,
+      "same_bar_rule": null,
+      "tp_sl_atr": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "training": false
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-010-final"
+    ],
+    "provenance": {
+      "executed": false,
+      "origin": "user-supplied-research-proposal"
+    },
+    "question": "TP/SL seçimi ilk temas sınıflarını ve süre dolumu getirilerini nasıl etkiliyor?",
+    "results": [],
+    "selection_rule": "Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.",
+    "status": "running",
+    "title": "Plan · ATR bariyerleri ve etiket dağılımı"
+  },
+  "recorded_at": "2026-10-15T16:04:40.304953+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 16
+}

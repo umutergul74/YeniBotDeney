@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**12 deney/plan · 14 geçmiş kaydı**
+**12 deney/plan · 18 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -18,8 +18,8 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-008-bce-pearson](#exp-008-bce-pearson) | A üzerinde BCE + Pearson | completed | not_selected |
 | [exp-009-focal-pearson](#exp-009-focal-pearson) | A üzerinde focal + Pearson | completed | not_selected |
 | [exp-010-final](#exp-010-final) | Donmuş A/W_OFF/BCE · Eylül 2026 final raporu | completed | mixed |
-| [exp-011-threshold-diagnostics](#exp-011-threshold-diagnostics) | Plan · Validation eşik–performans teşhisi | planned | pending |
-| [exp-012-barrier-diagnostics](#exp-012-barrier-diagnostics) | Plan · ATR bariyerleri ve etiket dağılımı | planned | pending |
+| [exp-011-threshold-diagnostics](#exp-011-threshold-diagnostics) | Plan · Validation eşik–performans teşhisi | completed | mixed |
+| [exp-012-barrier-diagnostics](#exp-012-barrier-diagnostics) | Plan · ATR bariyerleri ve etiket dağılımı | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -48,6 +48,56 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-010-final | 0.590713 | 0.443801 | 0.379590 | 0.101010 | 0.143704 |
+
+## Kayıtlı sonuçlar · validation
+
+legacy-development-matched-38fold-3seed · threshold 0.5
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-011-threshold-diagnostics | — | — | 0.410499 | 0.096839 | — |
+
+## Kayıtlı sonuçlar · validation
+
+legacy-development-matched-38fold-3seed · descriptive validation F1 maximum
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-011-threshold-diagnostics | — | — | 0.374879 | 0.783732 | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 2/5
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-012-barrier-diagnostics | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 2/2
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-012-barrier-diagnostics | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · development
+
+development-33551-common-timestamps · TP/SL 3/2
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-012-barrier-diagnostics | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -464,27 +514,51 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 Düşük recall/F1 sabit 0.5 eşik ve skor dağılımıyla nasıl ilişkili?
 
-Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-010-final
 
-**Yöntem:** {"aggregation": null, "analysis": "precision/recall/F1 vs threshold", "threshold_grid": null, "training": false}
+**Yöntem:** {"aggregation": "114 fold/seed metric mean", "analysis": "precision/recall/F1 vs threshold", "threshold_grid": "0..1 step 0.005; p>=threshold", "training": false}
 
-**Veri kimliği:** {"evaluation_scope": "development-validation-only; September 2026 excluded", "labels_id": null, "raw_sha256": null, "snapshot_id": null, "split_id": null}
+**Veri kimliği:** {"evaluation_scope": "development-validation-only; September 2026 excluded", "labels_id": "legacy-tp2-sl5-atr-h10", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "legacy-walk-forward-38fold-3seed"}
 
 **Seçim kuralı:** Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.
 
-**Karar / öğrenilen:** Çalıştırılmadı. Validation girdileri, ızgara ve seçim amacı önce kaydedilecek.
+**Karar / öğrenilen:** 0.50 yalnızca %6.29 pozitif karar üretiyor. Betimsel validation F1 maksimumu 0.265; recall artışı precision ve karar sayısı maliyetiyle geliyor. Üretim eşiği seçilmedi.
 
-**Henüz sonuç yok.**
+**validation** · legacy-development-matched-38fold-3seed · threshold 0.5
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| f1 | 0.142418 |
+| positive_rate | 0.062913 |
+| precision | 0.410499 |
+| recall | 0.096839 |
+| threshold | 0.500000 |
+
+**validation** · legacy-development-matched-38fold-3seed · descriptive validation F1 maximum
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| f1 | 0.503881 |
+| positive_rate | 0.654539 |
+| precision | 0.374879 |
+| recall | 0.783732 |
+| threshold | 0.265000 |
 
 **Sınırlar / açık noktalar:**
-- Girdi manifestleri ve analiz planı henüz kesinleştirilmedi.
-- Yeni özellik/mimari denemesinden önce teşhis önerisi.
+- Betimsel geliştirme/validation analizi; bağımsız test performansı değildir.
+- Yeni eğitim, inference veya Eylül 2026 testi yapılmadı.
+- Çıktı envanteri yol hatası hesaplama tekrarlanmadan düzeltildi.
 
 **Kanıt kopyaları:**
+- [research/analyses/diagnostics-20261015/PLAN.md](sources/776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b.md) · SHA256 `776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b`
+- [research/analyses/diagnostics-20261015/REPORT.md](sources/1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e.md) · SHA256 `1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e`
+- [research/analyses/diagnostics-20261015/results/summary.json](sources/89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e.json) · SHA256 `89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e`
+- [research/analyses/diagnostics-20261015/results/input_manifest.json](sources/a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138.json) · SHA256 `a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138`
+- [research/analyses/diagnostics-20261015/results/output_manifest.json](sources/7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea.json) · SHA256 `7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea`
 
-[Son kayıt](events/000011.json) · revizyon 1 · Kullanıcının ilettiği ikinci öneri; yalnızca plan kaydı.
+[Son kayıt](events/000017.json) · revizyon 3 · Kullanıcı isteğiyle hesaplandı; hash/parite kontrolleri geçti, grafikler ve rapor eklendi.
 
 ## exp-012-barrier-diagnostics
 
@@ -492,24 +566,70 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 
 TP/SL seçimi ilk temas sınıflarını ve süre dolumu getirilerini nasıl etkiliyor?
 
-Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-010-final
 
 **Yöntem:** {"analysis": "first-touch counts and timeout return distribution", "horizon_hours": 10, "same_bar_rule": null, "tp_sl_atr": [[2, 5], [2, 2], [3, 2]], "training": false}
 
-**Veri kimliği:** {"evaluation_scope": "development-validation-only; September 2026 excluded", "labels_id": null, "raw_sha256": null, "snapshot_id": null, "split_id": null}
+**Veri kimliği:** {"evaluation_scope": "development-validation-only; September 2026 excluded", "labels_id": "diagnostic-tp2sl5-tp2sl2-tp3sl2-h10", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "development-33551-common-timestamps"}
 
 **Seçim kuralı:** Testte seçim yok. Betimsel teşhis; eşik/etiket kazananı henüz tanımlanmadı.
 
-**Karar / öğrenilen:** Çalıştırılmadı. Uygun tarih evreni, ATR ve temas kuralı belirlenmeden etiket üretilmeyecek.
+**Karar / öğrenilen:** 2/5 düzeninde %63.17 timeout. 2/2 ve 3/2 pozitif etiket oranını artırmadı. Pozitif getirili timeout da 0 etiketli; hedef getiri yönünden farklı. Bariyer seçilmedi.
 
-**Henüz sonuç yok.**
+**development** · development-33551-common-timestamps · TP/SL 2/5
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_assigned_stop | 22.000000 |
+| n | 33551.000000 |
+| positive_label_pct | 30.958839 |
+| profit_first | 10387.000000 |
+| profit_pct | 30.958839 |
+| stop_first | 1971.000000 |
+| stop_pct | 5.874639 |
+| timeout | 21193.000000 |
+| timeout_pct | 63.166523 |
+
+**development** · development-33551-common-timestamps · TP/SL 2/2
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_assigned_stop | 122.000000 |
+| n | 33551.000000 |
+| positive_label_pct | 28.583351 |
+| profit_first | 9590.000000 |
+| profit_pct | 28.583351 |
+| stop_first | 9872.000000 |
+| stop_pct | 29.423862 |
+| timeout | 14089.000000 |
+| timeout_pct | 41.992787 |
+
+**development** · development-33551-common-timestamps · TP/SL 3/2
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| both_same_bar_assigned_stop | 62.000000 |
+| n | 33551.000000 |
+| positive_label_pct | 16.145569 |
+| profit_first | 5417.000000 |
+| profit_pct | 16.145569 |
+| stop_first | 10309.000000 |
+| stop_pct | 30.726357 |
+| timeout | 17825.000000 |
+| timeout_pct | 53.128074 |
 
 **Sınırlar / açık noktalar:**
-- Girdi manifestleri ve analiz planı henüz kesinleştirilmedi.
-- Yeni özellik/mimari denemesinden önce teşhis önerisi.
+- Betimsel geliştirme/validation analizi; bağımsız test performansı değildir.
+- Yeni eğitim, inference veya Eylül 2026 testi yapılmadı.
+- Çıktı envanteri yol hatası hesaplama tekrarlanmadan düzeltildi.
 
 **Kanıt kopyaları:**
+- [research/analyses/diagnostics-20261015/PLAN.md](sources/776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b.md) · SHA256 `776f89062d53bd1477fe551a56eda7c122bcc9f4aab88c06463c78a0951d332b`
+- [research/analyses/diagnostics-20261015/REPORT.md](sources/1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e.md) · SHA256 `1d21019de2dc781c4e7c750d1d2146e194db48160361d62c74105dcdb074184e`
+- [research/analyses/diagnostics-20261015/results/summary.json](sources/89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e.json) · SHA256 `89f15242be426e4a050ed8f4cdaac39a9a2eb37155e2a23bde8875e9c36c6e9e`
+- [research/analyses/diagnostics-20261015/results/input_manifest.json](sources/a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138.json) · SHA256 `a1185105da09f8a9e99ef8d529f1042ce00f7cb63d38a8f3013858d2222fa138`
+- [research/analyses/diagnostics-20261015/results/output_manifest.json](sources/7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea.json) · SHA256 `7b5d52c5f078ab619c3de3be963c04d8e4237e1489f5f4788f0c993ebd6c9aea`
 
-[Son kayıt](events/000012.json) · revizyon 1 · Kullanıcının ilettiği ikinci öneri; yalnızca plan kaydı.
+[Son kayıt](events/000018.json) · revizyon 3 · Kullanıcı isteğiyle hesaplandı; hash/parite kontrolleri geçti, grafikler ve rapor eklendi.

@@ -17,8 +17,9 @@ Başlangıç noktası **[Deney defteri](INDEX.md)**. Notebooklar yalnızca deney
    ve teknik hata ile bitmiş deneyler de saklanır.
 6. Kayıt doğrulanır, defter üretilir, commit/push yapılır ve ayrıca yedek alınır.
 
-Bu tur yalnızca ortamı hazırladı. İki yeni teşhis önerisi **planned**;
-analiz, etiket üretimi, eğitim ve yeni test değerlendirmesi yapılmadı.
+İlk kurulumda iki teşhis önerisi yalnızca plan olarak saklandı. Kullanıcının
+sonraki açık isteğiyle 15 Ekim 2026'da [teşhisler tamamlandı](analyses/diagnostics-20261015/REPORT.md).
+Eğitim ve yeni test değerlendirmesi yapılmadı; yeni eşik/bariyer seçilmedi.
 
 ## Durum ile sonuç farklıdır
 
