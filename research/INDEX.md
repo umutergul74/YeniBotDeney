@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**16 deney/plan · 28 geçmiş kaydı**
+**16 deney/plan · 29 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -23,7 +23,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-013-barrier-expansion](#exp-013-barrier-expansion) | Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi | completed | mixed |
 | [exp-014-barrier-training](#exp-014-barrier-training) | Dört ATR bariyeri: GRU/BCE, ayrı epoch/eşik doğrulaması ve Ekim testi | abandoned | inconclusive |
 | [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | abandoned | mixed |
-| [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | planned | pending |
+| [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | running | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1173,7 +1173,7 @@ Kampanya: `campaign-002` · Durum: **abandoned** · Sonuç: **mixed**
 
 Sabit tarih/split/özellik/model altında hangi bariyerler precision, recall, sinyal sayısı ve dönem tutarlılığında seçicilik sağlıyor?
 
-Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
 
 Önceki kayıtlar: exp-015-six-barrier-training
 
@@ -1183,7 +1183,7 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 
 **Seçim kuralı:** Epoch minimum validation BCE. User explicitly chose descriptive precision 60/65/70 comparison without locking a target or threshold. No automatic winner; report support, recall and fold/seed stability.
 
-**Karar / öğrenilen:** Kullanıcının talebiyle A100 profili, yeni workspace ve başarılı rapor/yedek sonrası runtime.unassign eklendi. Bilimsel koşullar değişmedi; gerçek eğitim yürütülmedi.
+**Karar / öğrenilen:** User reported all training complete; Drive metadata audit found 680/684 fold directories with all four core files. B32 seed44 folds34-37 have missing artifacts. Recovery notebook prepared; no recovery/training executed here. Published results remain pending content verification.
 
 **Henüz sonuç yok.**
 
@@ -1197,5 +1197,7 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 - [research/analyses/selective-walkforward-20261016/PLAN.md](sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md) · SHA256 `f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf`
 - [research/analyses/selective-walkforward-20261016/PLAN.md](sources/93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0.md) · SHA256 `93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0`
 - [research/analyses/selective-walkforward-20261016/A100.md](sources/103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94.md) · SHA256 `103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94`
+- [research/analyses/drive-recovery-20261017/REPORT.md](sources/c4091d209690f73e94381e31af60ee0921ea6e2f9203bfbb7e3d16fb3d5ee08c.md) · SHA256 `c4091d209690f73e94381e31af60ee0921ea6e2f9203bfbb7e3d16fb3d5ee08c`
+- [research/analyses/drive-recovery-20261017/inventory.json](sources/d35c27f02eb1a199809f5571227a63b041e787d7c2a0f65c2837caa3b7955e78.json) · SHA256 `d35c27f02eb1a199809f5571227a63b041e787d7c2a0f65c2837caa3b7955e78`
 
-[Son kayıt](events/000028.json) · revizyon 3 · Kullanıcı A100, açık Agg backend ve başarılı tamamlanma sonrası otomatik runtime bırakma istedi.
+[Son kayıt](events/000029.json) · revizyon 4 · 17 October Drive transfer incident: append metadata inventory and recovery plan; preserve earlier history.

@@ -50,8 +50,10 @@ def test_unassign_only_after_successful_matching_work(case,monkeypatch,tmp_path)
     cells=notebook();ctx={};exec(cells[2]['source'],ctx)
     assert ctx['os'].environ['MPLBACKEND']=='Agg'
     setup=next(c['source'] for c in cells if c['cell_type']=='code' and 'def step_identity' in c['source'])
-    exec(setup[setup.index('def step_identity'):],ctx)
-    ctx.update(ROOT=tmp_path,RESEARCH_PYTHON='python',LEGACY_ROOT=tmp_path/'old',ALLOW_TRAINING=True)
+    import ast
+    tree=ast.parse(setup)
+    exec(compile(ast.Module(body=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in {'step_identity','execute_step'}],type_ignores=[]),'notebook','exec'),ctx)
+    ctx.update(ROOT=tmp_path,RESEARCH_PYTHON='python',LEGACY_ROOT=tmp_path/'old',ALLOW_TRAINING=True,RECOVER_EXISTING=False)
     def logged(command,name):
         if case=='failed_bundle' and name=='bundle.log':raise RuntimeError('failed ZIP')
     ctx['logged']=logged
@@ -64,13 +66,14 @@ def test_unassign_only_after_successful_matching_work(case,monkeypatch,tmp_path)
         calls.append('flush')
         if case=='failed_flush':raise RuntimeError('Drive upload failed')
     colab.drive=SimpleNamespace(flush_and_unmount=flush)
+    ctx['sync_verified']=lambda:calls.append('verified')
     monkeypatch.setitem(sys.modules,'google.colab',colab)
     code=cells[-1]['source']
     assert 'runtime.unassign()' in code
     if case in {'failed_bundle','failed_flush'}:
         with pytest.raises(RuntimeError):exec(code,ctx)
     else:exec(code,ctx)
-    assert calls==(['flush','closed'] if case=='success' else ['flush'] if case=='failed_flush' else [])
+    assert calls==(['verified','flush','closed'] if case=='success' else ['verified','flush'] if case=='failed_flush' else [])
 
 
 def test_prepare_explicitly_sets_agg_and_runtime_has_no_training_changes():

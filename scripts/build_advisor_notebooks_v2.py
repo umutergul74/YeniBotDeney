@@ -1,6 +1,7 @@
 """Generate thin, isolated-runtime advisor notebooks. Never import old builders."""
 from pathlib import Path
 import json
+import hashlib
 import subprocess
 from textwrap import dedent
 
@@ -298,7 +299,10 @@ Aynı validation epoch seçimi için de kullanıldığından sonuçlar iyimser g
 
 **Test komutu yoktur.** Eylül/Ekim okunmaz; final eğitim/test ayrı sonraki protokoldür.
 A100 (NVIDIA A100-SXM4-40GB) seçin. Drive hesabı: icinbedava34@gmail.com. Eski workspace'i koruyun;
-yeni varsayılan workspace ve advisor-selective-v1.1.0 sürümünü kullanın.
+Araştırma motoru advisor-selective-v1.1.0 olarak sabittir. Bu notebook mevcut
+selective_a100_v11_001 çalışmasının 17 Ekim aktarım kurtarması için açılır.
+RECOVER_EXISTING=True: hazırlık yerine denetim. Önce denetimi okuyun, sonra
+ALLOW_REPAIR=True ile 6. hücreden devam edin. Veri/model ayarlarını değiştirmeyin.
 Çıktılar/checkpointler Drive'da. Aynı workspace'e eşzamanlı iki runtime yazdırmayın.
 İnceleme ZIP'i satır bazlı validation tahminlerini içerir; tam model yedeği tüm workspace'tir.
 ''')
@@ -312,19 +316,31 @@ yeni varsayılan workspace ve advisor-selective-v1.1.0 sürümünü kullanın.
         '/content/advisor_isolated_runtime': '/content/advisor_selective_a100_v11_runtime',
     }.items():
         cells[2]['source'] = cells[2]['source'].replace(old, new)
-    cells[2]['source'] += '\nos.environ["MPLBACKEND"] = "Agg"\nAUTO_DISCONNECT = True\nSUCCESSFUL_STEPS = {}\n'
+    cells[2]['source'] += '\nos.environ["MPLBACKEND"] = "Agg"\nAUTO_DISCONNECT = True\nRECOVER_EXISTING = True  # 17 Ekim aktarım kurtarması; mevcut çalışma korunur.\nALLOW_REPAIR = False  # Denetimden sonra True yapın; yalnızca belirlenen eksikler.\nSUCCESSFUL_STEPS = {}\n'
     cells[4]['source'] = cells[4]['source'].replace("'research':'research_v2'", "'research':'selective_research_v1'")
     cells[6]['source'] += "\nassert git('remote','get-url','origin') == REPO_URL, 'Yanlış depo'\n"
     cells[7]['source'] = cells[7]['source'].replace('Tesla T4', 'NVIDIA A100-SXM4-40GB')
     setup = cells[8]['source'].split('def execute_step(action):')[0]
     cells[8]['source'] = setup + dedent('''
     def step_identity():
-        return (str(ROOT), RELEASE_TAG, tuple(EXPERIMENTS), ALLOW_TRAINING)
+        return (str(ROOT), RELEASE_TAG, tuple(EXPERIMENTS), ALLOW_TRAINING, RECOVER_EXISTING, ALLOW_REPAIR)
 
     def execute_step(action):
         order = ['prepare', 'train', 'report', 'bundle']
         for stale in order[order.index(action):]:
             SUCCESSFUL_STEPS.pop(stale, None)
+        if RECOVER_EXISTING:
+            if tuple(EXPERIMENTS) != ('B25','B11','B12','B152','B22','B32'):
+                raise ValueError('Recovery requires the six original candidates')
+            mapped = dict(prepare='audit', train='repair', report='report', bundle='bundle')[action]
+            if mapped == 'repair' and not ALLOW_REPAIR:
+                raise RuntimeError('ALLOW_REPAIR=False; audit only')
+            command = [RESEARCH_PYTHON, '-I', str(RECOVERY_HELPER), mapped, '--repo', str(REPO_DIR),
+                       '--root', str(ROOT), '--session', SESSION]
+            if ALLOW_REPAIR: command.append('--allow-repair')
+            logged(command, 'recovery_'+mapped+'.log')
+            SUCCESSFUL_STEPS[action] = step_identity()
+            return
         command = [RESEARCH_PYTHON, '-I', str(REPO_DIR/'scripts/advisor_selective.py'), action,
                    '--root', str(ROOT), '--legacy', str(LEGACY_ROOT), '--session', SESSION,
                    '--candidates', *EXPERIMENTS]
@@ -332,14 +348,45 @@ yeni varsayılan workspace ve advisor-selective-v1.1.0 sürümünü kullanın.
         logged(command, action+'.log')
         SUCCESSFUL_STEPS[action] = step_identity()
     ''')
+    helper_sha = hashlib.sha256((ROOT/'scripts/advisor_recover_selective.py').read_bytes()).hexdigest()
+    cells[8]['source'] += dedent(f"""
+    # Host-only launcher; research imports remain in the original pinned interpreter.
+    import urllib.request, hashlib
+    RECOVERY_HELPER = RUNTIME_DIR/'advisor_recover_selective.py'
+    helper_bytes = urllib.request.urlopen('https://raw.githubusercontent.com/umutergul74/YeniBotDeney/advisor-selective-recovery-v1.0.0/scripts/advisor_recover_selective.py').read()
+    assert hashlib.sha256(helper_bytes).hexdigest() == '{helper_sha}', 'Recovery helper hash mismatch'
+    RECOVERY_HELPER.write_bytes(helper_bytes)
+    """)
+    cells[8]['source'] += dedent("""
+    def sync_verified():
+        # A fresh mount must contain the same bytes before runtime release.
+        import hashlib
+        from google.colab import drive
+        def digest(path):
+            h = hashlib.sha256()
+            with path.open('rb') as stream:
+                for block in iter(lambda: stream.read(4*1024*1024), b''):
+                    h.update(block)
+            return h.hexdigest()
+        expected = {str(p.relative_to(ROOT)): digest(p) for p in ROOT.rglob('*') if p.is_file()}
+        if not expected: raise RuntimeError('Empty workspace; refusing shutdown')
+        print('Drive aktarımı ve yeniden bağlanarak dosya doğrulaması başlıyor.', flush=True)
+        drive.flush_and_unmount()
+        drive.mount('/content/drive')
+        for relative, checksum in expected.items():
+            p = ROOT/relative
+            if not p.is_file() or digest(p) != checksum:
+                raise RuntimeError('Buluttaki dosya eksik/farklı; oturum açık bırakıldı: '+relative)
+        print('Drive yeniden bağlandı: bütün dosya hashleri eşleşti.', flush=True)
+    """)
     for title, description, code in [
-        ('5 · Sabit kohort hazırlığı', 'Ham snapshot hashleri, 33.551 ortak saat, özellikler ve 38 fold doğrulanır. Yeni veri indirilmez.', "import os\nos.environ['MPLBACKEND'] = 'Agg'\nexecute_step('prepare')"),
-        ('6 · Eğitim', 'ALLOW_TRAINING=True seçin. Her aday 114 eğitim; checkpointler kalıcı. Aday listesi daraltılabilir.',
-         "if ALLOW_TRAINING:\n    execute_step('train')\nelse:\n    print('Eğitim kapalı; ayarlarda ALLOW_TRAINING=True seçin.')"),
+        ('5 · Sabit kohort / kurtarma denetimi', 'RECOVER_EXISTING=True ise yeni veri hazırlamaz; 684 foldun içeriklerini denetler. Ham snapshot hashleri, 33.551 ortak saat, özellikler ve 38 fold doğrulanır. Yeni veri indirilmez.', "import os\nos.environ['MPLBACKEND'] = 'Agg'\nexecute_step('prepare')"),
+        ('6 · Eksikleri tamamlama / eğitim', 'Kurtarma modunda 34 korunur (ağırlığı eksik), 35 geçmişi checkpointten çıkarılır, 36 sürdürülür, 37 yeniden eğitilir. Mevcut dosyalar ezilmez. Normal eğitim için ALLOW_TRAINING=True seçin. Her aday 114 eğitim; checkpointler kalıcı. Aday listesi daraltılabilir.',
+         "if ALLOW_TRAINING or (RECOVER_EXISTING and ALLOW_REPAIR):\n    execute_step('train')\nelse:\n    print('Eğitim kapalı; ayarlarda ALLOW_TRAINING=True seçin.')"),
         ('7 · Seçicilik raporu', 'Seçili adayların 38×3 koşusu tamamlanmalıdır. Eşik veya kazanan otomatik seçilmez. Precision hedefleri betimseldir.',
-         "if ALLOW_TRAINING:\n    execute_step('report')\nelse:\n    print('Rapor eğitim tamamlandıktan sonra hazırlanır.')"),
+         "if ALLOW_TRAINING or RECOVER_EXISTING:\n    execute_step('report')\nelse:\n    print('Rapor eğitim tamamlandıktan sonra hazırlanır.')"),
         ('8 · Ayrıntılı inceleme paketi', 'Validation tahminleri, history ve metrikler ZIP içinde. Ham veri/ağırlıklar için tüm workspace yedeklenir. Tüm seçili adayların eğitim, rapor ve ZIP adımları başarıyla tamamlanınca runtime otomatik bırakılır (AUTO_DISCONNECT=True). Hata varsa kapatılmaz.',
-         "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')\nif AUTO_DISCONNECT and ALLOW_TRAINING and all(SUCCESSFUL_STEPS.get(step) == step_identity() for step in ('prepare', 'train', 'report', 'bundle')):\n    from google.colab import drive, runtime\n    print('Drive aktarımı tamamlanıyor; bu sırada oturumu kapatmayın.', flush=True)\n    drive.flush_and_unmount()\n    runtime.unassign()\nelse:\n    print('Otomatik kapatma yapılmadı: bütün aşamalar bu ayarlarla başarıyla tamamlanmalı.')"),
+         "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')\nif AUTO_DISCONNECT and (ALLOW_TRAINING or (RECOVER_EXISTING and ALLOW_REPAIR)) and all(SUCCESSFUL_STEPS.get(step) == step_identity() for step in ('prepare', 'train', 'report', 'bundle')):\n    sync_verified()\n    from google.colab import drive, runtime\n    drive.flush_and_unmount()\n    runtime.unassign()\nelse:\n    print('Otomatik kapatma yapılmadı: bütün aşamalar bu ayarlarla başarıyla tamamlanmalı.')"),
     ]:
         cells.extend([cell('markdown', '## '+title+'\n\n'+description), cell('code', code)])
     for i, c in enumerate(cells):

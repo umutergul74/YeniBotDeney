@@ -1,5 +1,16 @@
 # Advisor notebookları v2 — tekrar üretilebilir çalışma düzeni
 
+## 17 Ekim Drive aktarım kurtarması
+
+4. notebook için `advisor-selective-recovery-v1.0.0` kullanılır. Araştırma
+motoru hâlâ `advisor-selective-v1.1.0` sürümündedir; çalışma ID değişmez.
+[Envanter ve kurtarma planı](../research/analyses/drive-recovery-20261017/REPORT.md).
+İlk beş aşama denetimdir. `ALLOW_REPAIR=True` yapıp yalnızca 6–8. aşamaları
+çalıştırın; ayarlar hücresini tekrar çalıştırmayın (oturum ID sıfırlanır).
+Normal eğitim ALLOW_TRAINING=False kalır. Başka runtime bu workspace’e yazmamalıdır.
+Son kapanış, Drive yeniden bağlandıktan sonra dosya hashleri eşleşmesine bağlıdır.
+
+
 ## Seçici sinyal çalışması — 16 Ekim 2026
 
 Güncel bariyer çalışması 04 notebookunun `advisor-selective-v1.1.0` sürümüdür.
