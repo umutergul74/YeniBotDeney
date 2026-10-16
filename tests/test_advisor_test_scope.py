@@ -76,6 +76,15 @@ class ScopeTests(unittest.TestCase):
         self.assertIn('tests/test_advisor_notebook_workflows.py', plan['tests'])
         self.assertTrue(plan['notebook_check'])
 
+    def test_selective_notebook_is_targeted_but_runtime_identity_stays_full(self):
+        paths = ['notebooks/workflows/04_barrier_study.ipynb']
+        plan = module.classify(paths)
+        self.assertEqual(plan['scope'], 'targeted')
+        self.assertTrue(plan['notebook_check'])
+        self.assertIn('tests/test_advisor_a100.py', plan['tests'])
+        self.assertIn('tests/test_advisor_notebook_workflows.py', plan['tests'])
+        self.assertEqual(module.classify(paths + [module.RUNTIME])['scope'], 'full')
+
     def test_ledger_metadata_needs_no_ml_but_science_still_requires_full(self):
         paths = ['scripts/advisor_lab.py', 'research/events/000001.json',
                  'research/INDEX.md', 'tests/test_advisor_lab.py']

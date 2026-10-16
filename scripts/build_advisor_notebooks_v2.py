@@ -315,6 +315,7 @@ yeni varsayılan workspace ve advisor-selective-v1.1.0 sürümünü kullanın.
     cells[2]['source'] += '\nos.environ["MPLBACKEND"] = "Agg"\nAUTO_DISCONNECT = True\nSUCCESSFUL_STEPS = {}\n'
     cells[4]['source'] = cells[4]['source'].replace("'research':'research_v2'", "'research':'selective_research_v1'")
     cells[6]['source'] += "\nassert git('remote','get-url','origin') == REPO_URL, 'Yanlış depo'\n"
+    cells[7]['source'] = cells[7]['source'].replace('Tesla T4', 'NVIDIA A100-SXM4-40GB')
     setup = cells[8]['source'].split('def execute_step(action):')[0]
     cells[8]['source'] = setup + dedent('''
     def step_identity():

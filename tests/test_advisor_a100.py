@@ -28,6 +28,7 @@ def test_runtime_accepts_only_declared_hardware(tmp_path,monkeypatch,hardware,gp
     monkeypatch.setattr(runtime.importlib.metadata,'distributions',lambda:[])
     monkeypatch.setattr(torch.cuda,'is_available',lambda:gpu is not None)
     monkeypatch.setattr(torch.cuda,'get_device_name',lambda _:gpu)
+    monkeypatch.setattr(torch.backends.cudnn,'version',lambda:91002)
     monkeypatch.setattr(runtime.subprocess,'check_output',lambda *a,**k:'test-driver')
     monkeypatch.setattr(runtime.subprocess,'run',lambda *a,**k:None)
     if not allowed:
@@ -70,6 +71,7 @@ def test_unassign_only_after_successful_matching_work(case,monkeypatch,tmp_path)
 
 def test_prepare_explicitly_sets_agg_and_runtime_has_no_training_changes():
     cells=notebook()
+    assert not any('Tesla T4' in c['source'] for c in cells)
     code=next(c['source'] for c in cells if c['cell_type']=='code' and "execute_step('prepare')" in c['source'])
     assert code.index("os.environ['MPLBACKEND'] = 'Agg'")<code.index("execute_step('prepare')")
     original={'training_gpu':'Tesla T4','lock':'unchanged'}

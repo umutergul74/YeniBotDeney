@@ -77,6 +77,10 @@ def classify(paths: list[str], *, runtime_environment_only=False, force_full=Fal
                       'notebooks/workflows/03_audit_archive.ipynb'}:
             notebook_check = True
             targets.add('tests/test_advisor_notebook_workflows.py')
+        elif path == 'notebooks/workflows/04_barrier_study.ipynb':
+            notebook_check = True
+            targets.add('tests/test_advisor_notebook_workflows.py')
+            targets.add('tests/test_advisor_a100.py')
         elif path in ADVISOR_NOTEBOOKS:
             notebook_check = True
             targets.add(WORKSPACE_TEST + '::test_all_notebooks_are_thin_safe_and_archive_does_not_execute_test')
