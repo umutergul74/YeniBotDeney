@@ -339,7 +339,7 @@ yeni varsayılan workspace ve advisor-selective-v1.1.0 sürümünü kullanın.
         ('7 · Seçicilik raporu', 'Seçili adayların 38×3 koşusu tamamlanmalıdır. Eşik veya kazanan otomatik seçilmez. Precision hedefleri betimseldir.',
          "if ALLOW_TRAINING:\n    execute_step('report')\nelse:\n    print('Rapor eğitim tamamlandıktan sonra hazırlanır.')"),
         ('8 · Ayrıntılı inceleme paketi', 'Validation tahminleri, history ve metrikler ZIP içinde. Ham veri/ağırlıklar için tüm workspace yedeklenir. Tüm seçili adayların eğitim, rapor ve ZIP adımları başarıyla tamamlanınca runtime otomatik bırakılır (AUTO_DISCONNECT=True). Hata varsa kapatılmaz.',
-         "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')\nif AUTO_DISCONNECT and ALLOW_TRAINING and all(SUCCESSFUL_STEPS.get(step) == step_identity() for step in ('prepare', 'train', 'report', 'bundle')):\n    from google.colab import runtime\n    runtime.unassign()\nelse:\n    print('Otomatik kapatma yapılmadı: bütün aşamalar bu ayarlarla başarıyla tamamlanmalı.')"),
+         "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')\nif AUTO_DISCONNECT and ALLOW_TRAINING and all(SUCCESSFUL_STEPS.get(step) == step_identity() for step in ('prepare', 'train', 'report', 'bundle')):\n    from google.colab import drive, runtime\n    print('Drive aktarımı tamamlanıyor; bu sırada oturumu kapatmayın.', flush=True)\n    drive.flush_and_unmount()\n    runtime.unassign()\nelse:\n    print('Otomatik kapatma yapılmadı: bütün aşamalar bu ayarlarla başarıyla tamamlanmalı.')"),
     ]:
         cells.extend([cell('markdown', '## '+title+'\n\n'+description), cell('code', code)])
     for i, c in enumerate(cells):

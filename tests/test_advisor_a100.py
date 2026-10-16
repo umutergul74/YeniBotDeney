@@ -45,7 +45,7 @@ def notebook():
     return json.loads(p.read_text(encoding='utf-8'))['cells']
 
 
-@pytest.mark.parametrize('case',['success','failed_report','failed_bundle','changed_candidates','training_disabled'])
+@pytest.mark.parametrize('case',['success','failed_report','failed_bundle','changed_candidates','training_disabled','failed_flush'])
 def test_unassign_only_after_successful_matching_work(case,monkeypatch,tmp_path):
     cells=notebook();ctx={};exec(cells[2]['source'],ctx)
     assert ctx['os'].environ['MPLBACKEND']=='Agg'
@@ -60,13 +60,17 @@ def test_unassign_only_after_successful_matching_work(case,monkeypatch,tmp_path)
     if case=='changed_candidates':ctx['EXPERIMENTS']=['B25']
     if case=='training_disabled':ctx['ALLOW_TRAINING']=False
     calls=[];colab=ModuleType('google.colab');colab.runtime=SimpleNamespace(unassign=lambda:calls.append('closed'))
+    def flush():
+        calls.append('flush')
+        if case=='failed_flush':raise RuntimeError('Drive upload failed')
+    colab.drive=SimpleNamespace(flush_and_unmount=flush)
     monkeypatch.setitem(sys.modules,'google.colab',colab)
     code=cells[-1]['source']
     assert 'runtime.unassign()' in code
-    if case=='failed_bundle':
+    if case in {'failed_bundle','failed_flush'}:
         with pytest.raises(RuntimeError):exec(code,ctx)
     else:exec(code,ctx)
-    assert calls==(['closed'] if case=='success' else [])
+    assert calls==(['flush','closed'] if case=='success' else ['flush'] if case=='failed_flush' else [])
 
 
 def test_prepare_explicitly_sets_agg_and_runtime_has_no_training_changes():
