@@ -381,6 +381,12 @@ Veri/model ayarlarını değiştirmeyin.
                 raise RuntimeError('Buluttaki dosya eksik/farklı; oturum açık bırakıldı: '+relative)
         print('Drive yeniden bağlandı: bütün dosya hashleri eşleşti.', flush=True)
     """)
+    environment, support = cells[8]['source'].split('def step_identity():', 1)
+    cells[8]['source'] = environment.rstrip() + '\n'
+    cells.extend([
+        cell('markdown', '## 4b · Kurtarma araçları\n\nPython ortamı bir önceki hücrede hazırlandı. Bu hücre kurtarma aracını indirip hashini doğrular; çalışma ve Drive doğrulama yardımcılarını tanımlar. İndirme hatasında yalnızca bu hücreyi tekrar çalıştırın. Eğitim başlatmaz.'),
+        cell('code', 'def step_identity():' + support),
+    ])
     for title, description, code in [
         ('5 · Sabit kohort / kurtarma denetimi', 'RECOVER_EXISTING=True ise yeni veri hazırlamaz; 684 foldun içeriklerini denetler. Ham snapshot hashleri, 33.551 ortak saat, özellikler ve 38 fold doğrulanır. Yeni veri indirilmez.', "import os\nos.environ['MPLBACKEND'] = 'Agg'\nexecute_step('prepare')"),
         ('6 · Eksikleri tamamlama / eğitim', 'Kurtarma modunda 34 korunur (ağırlığı eksik), 35 geçmişi checkpointten çıkarılır, 36 sürdürülür, 37 yeniden eğitilir. Mevcut dosyalar ezilmez. Normal eğitim için ALLOW_TRAINING=True seçin. Her aday 114 eğitim; checkpointler kalıcı. Aday listesi daraltılabilir.',

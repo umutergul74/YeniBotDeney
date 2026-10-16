@@ -11,6 +11,17 @@ def cells(name):
 
 
 class WorkflowTests(unittest.TestCase):
+    def test_selective_environment_and_recovery_download_are_separate(self):
+        notebook = cells('04_barrier_study.ipynb')
+        environment = notebook[8]['source']
+        support = next(c['source'] for c in notebook if 'def step_identity' in c['source'])
+        self.assertIn('bootstrap_advisor.py', environment)
+        self.assertNotIn('urlopen', environment)
+        self.assertNotIn('def execute_step', environment)
+        self.assertIn('urlopen', support)
+        self.assertIn('sha256(helper_bytes)', support)
+        self.assertNotIn('bootstrap_advisor.py', support)
+
     def test_all_cells_compile_and_pin_new_repository(self):
         for path in (ROOT / 'notebooks/workflows').glob('*.ipynb'):
             notebook = json.loads(path.read_text(encoding='utf-8'))
