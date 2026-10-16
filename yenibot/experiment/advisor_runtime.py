@@ -27,8 +27,18 @@ def clean_environment() -> dict:
     return env
 
 
-def runtime_identity(repo: Path, *, require_gpu: bool) -> dict:
+def hardware_profile(profile: dict, name: str) -> dict:
+    """Explicit opt-in; historical callers retain the original T4 profile."""
+    if name == 'default':
+        return profile
+    if name != 'selective-a100':
+        raise ValueError('Unknown hardware profile')
+    return {**profile, 'training_gpu': 'NVIDIA A100-SXM4-40GB'}
+
+
+def runtime_identity(repo: Path, *, require_gpu: bool, hardware: str = 'default') -> dict:
     profile = json.loads((repo / 'requirements/advisor-environment.json').read_text())
+    profile = hardware_profile(profile, hardware)
     if platform.system() != 'Linux' or platform.machine() != 'x86_64':
         raise ValueError('Training profile supports Linux x86_64 only; use Colab or matching Linux')
     if platform.python_version() != profile['python'] or sys.prefix == sys.base_prefix:
@@ -59,10 +69,13 @@ def runtime_identity(repo: Path, *, require_gpu: bool) -> dict:
             text=True, env=clean_environment()).strip().splitlines()
     subprocess.run([sys.executable, '-I', '-m', 'pip', 'check'], check=True,
                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=clean_environment())
-    return {'schema': 1, 'python': sys.version, 'platform': platform.platform(),
+    identity = {'schema': 1, 'python': sys.version, 'platform': platform.platform(),
             'machine': platform.machine(), 'packages': packages, 'gpu': gpu, 'driver': driver,
             'cuda': torch.version.cuda, 'cudnn': torch.backends.cudnn.version(),
             'lock_sha256': profile['lock_sha256']}
+    if hardware != 'default':
+        identity.update(hardware_profile=hardware, expected_gpu=profile['training_gpu'])
+    return identity
 
 
 def freeze_workspace_identity(repo: Path, root: Path, identity: dict) -> None:

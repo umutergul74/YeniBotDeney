@@ -42,6 +42,7 @@ def configuration(root, name):
 def protocol():
     cfg = read_config('configs/advisor_ablation.yaml')
     return {'experiment':'exp-016-selective-walk-forward', 'candidates':CANDIDATES,
+            'hardware_profile':'selective-a100', 'training_gpu':'NVIDIA A100-SXM4-40GB',
             'development':cfg['development'], 'walk_forward':cfg['walk_forward'],
             'model':cfg['model'], 'training':cfg['training'],
             'features':cfg['data']['basic_features'], 'sources':SOURCES,
@@ -295,7 +296,7 @@ def main():
     if args.action=='train' and not args.allow_training:parser.error('Training disabled')
     root,legacy=args.root.resolve(),args.legacy.resolve();separate_workspace(root,legacy)
     with operation(root,args.action,args.session):
-        freeze_workspace_identity(REPO,root,runtime_identity(REPO,require_gpu=True))
+        freeze_workspace_identity(REPO,root,runtime_identity(REPO,require_gpu=True,hardware='selective-a100'))
         immutable_json(root/'artifacts/plan.json',json.loads(json.dumps(protocol())))
         if args.action=='prepare':prepare(root,legacy)
         elif args.action=='train':train(root,args.candidates)

@@ -17,10 +17,10 @@ Aktif kullanıcı akışı **workflows/** içindeki görev notebooklarıdır:
 | [04 · Seçici sinyal](workflows/04_barrier_study.ipynb) | Altı bariyer, özgün 33.551 saat / 38 fold | Validation seçicilik raporları; test/eşik kilidi yok |
 
 **Güncel çalışma 04'tür:** [seçici sinyal planı](../research/analyses/selective-walkforward-20261016/PLAN.md).
-`advisor-selective-v1.0.0` yayını ve yeni `selective_walkforward_v1_001`
+`advisor-selective-v1.1.0` yayını ve yeni `selective_a100_v11_001`
 workspace'i kullanılır. Önceki tek ayrımlı bariyer notebookları farklı kohorttur;
 bu çalışma için kullanılmaz. Eski modeller ve sonuçlar korunur.
-T4 seçin; eğitim için `ALLOW_TRAINING=True`. Her aday 38×3=114 eğitim,
+A100 (NVIDIA A100-SXM4-40GB) seçin; eğitim için `ALLOW_TRAINING=True`. Her aday 38×3=114 eğitim,
 altısı toplam684; `EXPERIMENTS` ile bir veya birkaç aday seçip sırayla ilerleyin.
 Aynı adayı aynı workspace'te yeniden çağırmak uygun checkpointten devam eder.
 Prepare altı adayın ortak veri/split sözleşmesini denetler. Report yalnızca
@@ -69,3 +69,13 @@ tam model yedeği için workspace'in tamamını saklayın.
 Geliştirici: notebookları elle düzenlemek yerine
 `python scripts/build_advisor_notebooks_v2.py` ile üretin.
 Üç giriş aynı ortam/komut şablonunu paylaşır; bilimsel kod notebooklara taşınmaz.
+
+## Seçici çalışma A100 güncellemesi
+
+04 notebooku A100-SXM4-40GB profiline bağlıdır; eski T4 akışları değişmedi.
+Yeni kod için yeni varsayılan workspace kullanın, eski dosyaları silmeyin.
+MPLBACKEND=Agg ayarlarda ve prepare hücresinde açıkça atanır.
+AUTO_DISCONNECT=True: seçili adayların prepare/train/report/bundle adımları
+aynı ayarlarla başarılı olursa son hücre runtime.unassign() çağırır. Hata veya
+eğitim kapalıysa oturum otomatik bırakılmaz. Kapatmayı önlemek için False seçin.
+Veri, split, model, loss ve precision senaryoları değişmedi.

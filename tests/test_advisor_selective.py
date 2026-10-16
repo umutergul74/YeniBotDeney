@@ -82,4 +82,4 @@ def test_current_notebook_cannot_freeze_or_test():
     assert 'ALLOW_TEST' not in source and "execute_step('freeze')" not in source
     assert "execute_step('test')" not in source
     assert "execute_step('report')" in source
-    assert 'selective_walkforward_v1_001' in source
+    assert 'selective_a100_v11_001' in source

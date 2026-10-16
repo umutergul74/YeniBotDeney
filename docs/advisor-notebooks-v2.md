@@ -2,7 +2,7 @@
 
 ## Seçici sinyal çalışması — 16 Ekim 2026
 
-Güncel bariyer çalışması 04 notebookunun `advisor-selective-v1.0.0` sürümüdür.
+Güncel bariyer çalışması 04 notebookunun `advisor-selective-v1.1.0` sürümüdür.
 [Plan](../research/analyses/selective-walkforward-20261016/PLAN.md): özgün
 33.551 saat / 38 fold; altı aday, 684 eğitim. Önceki tek dönemli bariyer
 çalışmasının yerine geçer. Yeni workspace gerekir. F1 eşik seçimi ve otomatik
@@ -163,3 +163,13 @@ os.environ["MPLBACKEND"] = "Agg"
 This does not edit tracked sources or change data/model settings. Keep the same
 release across 06/07 in an existing workspace. A new release must use a new
 WORKSPACE_ID if an older release has already frozen that workspace identity.
+
+## Seçici çalışma A100 güncellemesi
+
+04 notebooku A100-SXM4-40GB profiline bağlıdır; eski T4 akışları değişmedi.
+Yeni kod için yeni varsayılan workspace kullanın, eski dosyaları silmeyin.
+MPLBACKEND=Agg ayarlarda ve prepare hücresinde açıkça atanır.
+AUTO_DISCONNECT=True: seçili adayların prepare/train/report/bundle adımları
+aynı ayarlarla başarılı olursa son hücre runtime.unassign() çağırır. Hata veya
+eğitim kapalıysa oturum otomatik bırakılmaz. Kapatmayı önlemek için False seçin.
+Veri, split, model, loss ve precision senaryoları değişmedi.

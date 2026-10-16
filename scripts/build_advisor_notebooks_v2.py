@@ -297,40 +297,48 @@ sinyalsiz dönemler, fold/seed istikrarı, SL/timeout ayrımı ve AP/BCE referan
 Aynı validation epoch seçimi için de kullanıldığından sonuçlar iyimser geliştirme sonuçlarıdır.
 
 **Test komutu yoktur.** Eylül/Ekim okunmaz; final eğitim/test ayrı sonraki protokoldür.
-T4 seçin. Drive hesabı: icinbedava34@gmail.com. Eski workspace'i koruyun;
-yeni varsayılan workspace ve advisor-selective-v1.0.0 sürümünü kullanın.
+A100 (NVIDIA A100-SXM4-40GB) seçin. Drive hesabı: icinbedava34@gmail.com. Eski workspace'i koruyun;
+yeni varsayılan workspace ve advisor-selective-v1.1.0 sürümünü kullanın.
 Çıktılar/checkpointler Drive'da. Aynı workspace'e eşzamanlı iki runtime yazdırmayın.
 İnceleme ZIP'i satır bazlı validation tahminlerini içerir; tam model yedeği tüm workspace'tir.
 ''')
     cells[2]['source'] = cells[2]['source'].replace("MODE = 'recovery'", "MODE = 'research'")
     for old, new in {
-        "WORKSPACE_ID = 'advisor_protocol_v2'": "WORKSPACE_ID = 'selective_walkforward_v1_001'",
+        "WORKSPACE_ID = 'advisor_protocol_v2'": "WORKSPACE_ID = 'selective_a100_v11_001'",
         "EXPERIMENTS = ['A']": "EXPERIMENTS = ['B25', 'B11', 'B12', 'B152', 'B22', 'B32']  # İsterseniz tek aday seçin; her aday 114 eğitimdir.",
-        RELEASE: 'advisor-selective-v1.0.0',
+        RELEASE: 'advisor-selective-v1.1.0',
         'umutergul74/yeniBot.git': 'umutergul74/YeniBotDeney.git',
-        '/content/advisor_reproducible_repo': '/content/advisor_selective_v1_repo',
-        '/content/advisor_isolated_runtime': '/content/advisor_selective_v1_runtime',
+        '/content/advisor_reproducible_repo': '/content/advisor_selective_a100_v11_repo',
+        '/content/advisor_isolated_runtime': '/content/advisor_selective_a100_v11_runtime',
     }.items():
         cells[2]['source'] = cells[2]['source'].replace(old, new)
+    cells[2]['source'] += '\nos.environ["MPLBACKEND"] = "Agg"\nAUTO_DISCONNECT = True\nSUCCESSFUL_STEPS = {}\n'
     cells[4]['source'] = cells[4]['source'].replace("'research':'research_v2'", "'research':'selective_research_v1'")
     cells[6]['source'] += "\nassert git('remote','get-url','origin') == REPO_URL, 'Yanlış depo'\n"
     setup = cells[8]['source'].split('def execute_step(action):')[0]
     cells[8]['source'] = setup + dedent('''
+    def step_identity():
+        return (str(ROOT), RELEASE_TAG, tuple(EXPERIMENTS), ALLOW_TRAINING)
+
     def execute_step(action):
+        order = ['prepare', 'train', 'report', 'bundle']
+        for stale in order[order.index(action):]:
+            SUCCESSFUL_STEPS.pop(stale, None)
         command = [RESEARCH_PYTHON, '-I', str(REPO_DIR/'scripts/advisor_selective.py'), action,
                    '--root', str(ROOT), '--legacy', str(LEGACY_ROOT), '--session', SESSION,
                    '--candidates', *EXPERIMENTS]
         if ALLOW_TRAINING: command.append('--allow-training')
         logged(command, action+'.log')
+        SUCCESSFUL_STEPS[action] = step_identity()
     ''')
     for title, description, code in [
-        ('5 · Sabit kohort hazırlığı', 'Ham snapshot hashleri, 33.551 ortak saat, özellikler ve 38 fold doğrulanır. Yeni veri indirilmez.', "execute_step('prepare')"),
+        ('5 · Sabit kohort hazırlığı', 'Ham snapshot hashleri, 33.551 ortak saat, özellikler ve 38 fold doğrulanır. Yeni veri indirilmez.', "import os\nos.environ['MPLBACKEND'] = 'Agg'\nexecute_step('prepare')"),
         ('6 · Eğitim', 'ALLOW_TRAINING=True seçin. Her aday 114 eğitim; checkpointler kalıcı. Aday listesi daraltılabilir.',
          "if ALLOW_TRAINING:\n    execute_step('train')\nelse:\n    print('Eğitim kapalı; ayarlarda ALLOW_TRAINING=True seçin.')"),
         ('7 · Seçicilik raporu', 'Seçili adayların 38×3 koşusu tamamlanmalıdır. Eşik veya kazanan otomatik seçilmez. Precision hedefleri betimseldir.',
          "if ALLOW_TRAINING:\n    execute_step('report')\nelse:\n    print('Rapor eğitim tamamlandıktan sonra hazırlanır.')"),
-        ('8 · Ayrıntılı inceleme paketi', 'Validation tahminleri, history ve metrikler ZIP içinde. Ham veri/ağırlıklar için tüm workspace yedeklenir.',
-         "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')"),
+        ('8 · Ayrıntılı inceleme paketi', 'Validation tahminleri, history ve metrikler ZIP içinde. Ham veri/ağırlıklar için tüm workspace yedeklenir. Tüm seçili adayların eğitim, rapor ve ZIP adımları başarıyla tamamlanınca runtime otomatik bırakılır (AUTO_DISCONNECT=True). Hata varsa kapatılmaz.',
+         "execute_step('bundle')\nprint('Raporlar:', ROOT/'reports')\nprint('Modeller:', ROOT/'runs')\nif AUTO_DISCONNECT and ALLOW_TRAINING and all(SUCCESSFUL_STEPS.get(step) == step_identity() for step in ('prepare', 'train', 'report', 'bundle')):\n    from google.colab import runtime\n    runtime.unassign()\nelse:\n    print('Otomatik kapatma yapılmadı: bütün aşamalar bu ayarlarla başarıyla tamamlanmalı.')"),
     ]:
         cells.extend([cell('markdown', '## '+title+'\n\n'+description), cell('code', code)])
     for i, c in enumerate(cells):

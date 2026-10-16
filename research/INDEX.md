@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**16 deney/plan · 27 geçmiş kaydı**
+**16 deney/plan · 28 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -1177,13 +1177,13 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 
 Önceki kayıtlar: exp-015-six-barrier-training
 
-**Yöntem:** {"architecture": "GRU", "automatic_threshold_selection": false, "candidates": ["B25", "B11", "B12", "B152", "B22", "B32"], "folds": 38, "horizon_hours": 10, "loss": "BCE", "precision_scenarios": [0.6, 0.65, 0.7], "purge_embargo": [24, 24], "same_bar_rule": "stop-first", "seeds": [42, 43, 44], "sequence_length": 64, "step_bars": 720, "train_validation_test_bars": [5040, 1080, 720], "training_runs": 684}
+**Yöntem:** {"architecture": "GRU", "automatic_threshold_selection": false, "candidates": ["B25", "B11", "B12", "B152", "B22", "B32"], "folds": 38, "hardware_profile": "selective-a100", "horizon_hours": 10, "loss": "BCE", "precision_scenarios": [0.6, 0.65, 0.7], "purge_embargo": [24, 24], "same_bar_rule": "stop-first", "seeds": [42, 43, 44], "sequence_length": 64, "step_bars": 720, "train_validation_test_bars": [5040, 1080, 720], "training_gpu": "NVIDIA A100-SXM4-40GB", "training_runs": 684}
 
 **Veri kimliği:** {"evaluation_scope": "planned historical validation diagnostics; no test command", "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"}
 
 **Seçim kuralı:** Epoch minimum validation BCE. User explicitly chose descriptive precision 60/65/70 comparison without locking a target or threshold. No automatic winner; report support, recall and fold/seed stability.
 
-**Karar / öğrenilen:** Kullanıcı %60/%65/%70 karşılaştırmasını seçti; hedef/eşik kilitlenmeyecek. Özgün veri/pencere düzenindeki notebook CI doğrulamasında; gerçek eğitim henüz çalıştırılmadı.
+**Karar / öğrenilen:** Kullanıcının talebiyle A100 profili, yeni workspace ve başarılı rapor/yedek sonrası runtime.unassign eklendi. Bilimsel koşullar değişmedi; gerçek eğitim yürütülmedi.
 
 **Henüz sonuç yok.**
 
@@ -1196,5 +1196,6 @@ Kampanya: `campaign-002` · Durum: **planned** · Sonuç: **pending**
 **Kanıt kopyaları:**
 - [research/analyses/selective-walkforward-20261016/PLAN.md](sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md) · SHA256 `f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf`
 - [research/analyses/selective-walkforward-20261016/PLAN.md](sources/93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0.md) · SHA256 `93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0`
+- [research/analyses/selective-walkforward-20261016/A100.md](sources/103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94.md) · SHA256 `103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94`
 
-[Son kayıt](events/000027.json) · revizyon 2 · Kullanıcı precision hedefini kilitlemeden %60/%65/%70 karşılaştırmasını açıkça seçti.
+[Son kayıt](events/000028.json) · revizyon 3 · Kullanıcı A100, açık Agg backend ve başarılı tamamlanma sonrası otomatik runtime bırakma istedi.
