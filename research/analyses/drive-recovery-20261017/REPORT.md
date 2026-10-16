@@ -2,7 +2,7 @@
 
 Hesap: icinbedava34@gmail.com. Çalışma: selective_a100_v11_001.
 Drive connector üzerinden altı aday, 18 seed ve 684 fold klasörünün doğrudan
-çocukları okundu. Listeleme hatası yok. inventory.json tüm gözlemleri saklar.
+çocukları okundu. Listeleme hatası yok. [Tam envanter](../../sources/d35c27f02eb1a199809f5571227a63b041e787d7c2a0f65c2837caa3b7955e78.json) tüm gözlemleri saklar.
 Bu bulut metadata denetimidir; dosyaların bilimsel doğruluğu veya checkpoint
 okunabilirliği henüz kanıtlanmış değildir. Notebook ayrıca içerik denetimi yapar.
 

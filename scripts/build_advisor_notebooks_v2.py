@@ -302,7 +302,9 @@ A100 (NVIDIA A100-SXM4-40GB) seçin. Drive hesabı: icinbedava34@gmail.com. Eski
 Araştırma motoru advisor-selective-v1.1.0 olarak sabittir. Bu notebook mevcut
 selective_a100_v11_001 çalışmasının 17 Ekim aktarım kurtarması için açılır.
 RECOVER_EXISTING=True: hazırlık yerine denetim. Önce denetimi okuyun, sonra
-ALLOW_REPAIR=True ile 6. hücreden devam edin. Veri/model ayarlarını değiştirmeyin.
+ayrı bir kod hücresinde `ALLOW_REPAIR=True` çalıştırıp 6. aşamadan devam edin.
+Ayarlar hücresini tekrar çalıştırmayın; oturum kimliğini sıfırlar.
+Veri/model ayarlarını değiştirmeyin.
 Çıktılar/checkpointler Drive'da. Aynı workspace'e eşzamanlı iki runtime yazdırmayın.
 İnceleme ZIP'i satır bazlı validation tahminlerini içerir; tam model yedeği tüm workspace'tir.
 ''')
@@ -323,7 +325,7 @@ ALLOW_REPAIR=True ile 6. hücreden devam edin. Veri/model ayarlarını değişti
     setup = cells[8]['source'].split('def execute_step(action):')[0]
     cells[8]['source'] = setup + dedent('''
     def step_identity():
-        return (str(ROOT), RELEASE_TAG, tuple(EXPERIMENTS), ALLOW_TRAINING, RECOVER_EXISTING, ALLOW_REPAIR)
+        return (str(ROOT), RELEASE_TAG, tuple(EXPERIMENTS), ALLOW_TRAINING, RECOVER_EXISTING)
 
     def execute_step(action):
         order = ['prepare', 'train', 'report', 'bundle']

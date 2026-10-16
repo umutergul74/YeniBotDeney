@@ -88,6 +88,8 @@ def test_recovery_launcher_does_not_call_regular_prepare_or_train(tmp_path):
     ctx['execute_step']('prepare')
     assert calls[-1][3]=='audit'
     with pytest.raises(RuntimeError):ctx['execute_step']('train')
+    audit_identity=ctx['SUCCESSFUL_STEPS']['prepare']
     ctx['ALLOW_REPAIR']=True
+    assert ctx['step_identity']()==audit_identity
     ctx['execute_step']('train')
     assert calls[-1][3]=='repair'

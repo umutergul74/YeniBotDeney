@@ -5,8 +5,8 @@
 4. notebook için `advisor-selective-recovery-v1.0.0` kullanılır. Araştırma
 motoru hâlâ `advisor-selective-v1.1.0` sürümündedir; çalışma ID değişmez.
 [Envanter ve kurtarma planı](../research/analyses/drive-recovery-20261017/REPORT.md).
-İlk beş aşama denetimdir. `ALLOW_REPAIR=True` yapıp yalnızca 6–8. aşamaları
-çalıştırın; ayarlar hücresini tekrar çalıştırmayın (oturum ID sıfırlanır).
+İlk beş aşama denetimdir. Ayrı bir kod hücresinde `ALLOW_REPAIR=True`
+çalıştırıp yalnızca 6–8. aşamalara devam edin; ayarlar hücresini tekrar çalıştırmayın (oturum ID sıfırlanır).
 Normal eğitim ALLOW_TRAINING=False kalır. Başka runtime bu workspace’e yazmamalıdır.
 Son kapanış, Drive yeniden bağlandıktan sonra dosya hashleri eşleşmesine bağlıdır.
 
