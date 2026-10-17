@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**16 deney/plan · 30 geçmiş kaydı**
+**17 deney/plan · 31 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -24,6 +24,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-014-barrier-training](#exp-014-barrier-training) | Dört ATR bariyeri: GRU/BCE, ayrı epoch/eşik doğrulaması ve Ekim testi | abandoned | inconclusive |
 | [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | abandoned | mixed |
 | [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | completed | mixed |
+| [exp-017-threshold-transfer](#exp-017-threshold-transfer) | Altı bariyer: validation eşik bölgeleri ve son model penceresine aktarım | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1204,3 +1205,38 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/selective-review-20261017/REPORT.md](sources/02a66f64fa51b6222473ad45304468581aa6ec149bba926e86d482269aa7e462.md) · SHA256 `02a66f64fa51b6222473ad45304468581aa6ec149bba926e86d482269aa7e462`
 
 [Son kayıt](events/000030.json) · revizyon 5 · User completed recovery; inspect validation evidence and preserve findings without new training or test evaluation.
+
+## exp-017-threshold-transfer
+
+**Altı bariyer: validation eşik bölgeleri ve son model penceresine aktarım**
+
+Genel validation eşik bölgeleri son fold modellerine taşınabiliyor mu?
+
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-016-selective-walk-forward
+
+**Yöntem:** {"changed_factor": "descriptive aggregation and threshold-neighborhood analysis only", "neighborhood": [-0.01, -0.005, 0, 0.005, 0.01], "new_training": false, "precision_goals": [0.6, 0.65, 0.7], "seeds": [42, 43, 44], "source_commit": "4bac0822b73d7050ab4718ab9ac1e7596d8a90c4", "source_zip_sha256": "76d09912ab27349d003041a4f2356fbe989cbd76601feaa4793d8e342ca16eff", "test_evaluations": 0}
+
+**Veri kimliği:** {"evaluation_scope": "historical validation only; all38 and last37 reported separately; no October data accessed", "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Descriptive: each seed pooled precision reaches goal at all five adjacent thresholds; show lowest eligible center and support. No minimum-support acceptance rule invented. No deployment threshold or test winner selected.
+
+**Karar / öğrenilen:** Validation threshold comparison completed. Propose common latest historical fold37 (not performance-selected) for existing-model transfer test; 18 best-epoch identities documented, weights not verified from ZIP. High-precision all-fold regions do not transfer reliably to last-fold models. Test lock not created; 0.40/0.50 reference and descriptive scenario comparison remain available.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Epoch selection and threshold diagnostics reuse validation.
+- Overlapping folds/seeds are not independent.
+- Sparse regions are not accepted policies; no primary precision/support target locked.
+- Historical models end validation in November 2025; October 2026 transfer includes model ageing.
+- Raw checkpoint weights not present in review ZIP.
+
+**Kanıt kopyaları:**
+- [research/analyses/threshold-transfer-20261017/REPORT.md](sources/e3a4801d3ca3c553ec655d75170c40afc3ffcd5c0bbb799a910d6d27f3aed7f6.md) · SHA256 `e3a4801d3ca3c553ec655d75170c40afc3ffcd5c0bbb799a910d6d27f3aed7f6`
+- [research/analyses/threshold-transfer-20261017/threshold_comparison.csv](sources/c6a2f64aaaefc32c4dc3fe035dc27fc058bc3a059e725fa0fbef55d71905e8fd.csv) · SHA256 `c6a2f64aaaefc32c4dc3fe035dc27fc058bc3a059e725fa0fbef55d71905e8fd`
+- [research/analyses/threshold-transfer-20261017/descriptive_regions.csv](sources/8e86b55942c478b796fd59f9e687203342a3a94941309ff684abbc2192daae0b.csv) · SHA256 `8e86b55942c478b796fd59f9e687203342a3a94941309ff684abbc2192daae0b`
+- [research/analyses/threshold-transfer-20261017/proposed_models.csv](sources/a42021346786b69300f04f24d85542302a11a56dbbdcdad0d728433479ff0036.csv) · SHA256 `a42021346786b69300f04f24d85542302a11a56dbbdcdad0d728433479ff0036`
+
+[Son kayıt](events/000031.json) · revizyon 1 · Authorized validation-only threshold comparison; preserve model-transfer limitations before test.
