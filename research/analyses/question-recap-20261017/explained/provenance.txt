@@ -1,0 +1,23 @@
+{
+  "change": "presentation only; no new analysis or training",
+  "inputs": [
+    {
+      "path": "six_barrier_timeout_returns.csv",
+      "sha256": "ef9d0102b54145c2093ab6275361b4917829d8545f6fdab1d1580c759a2e2024"
+    },
+    {
+      "path": "six_barrier_counts.csv",
+      "sha256": "b408a20b116d15bb61b41db494ca9a1b466fc09d9978592e1d009c520baa9e67"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "timeout_direction.png",
+      "sha256": "94fe23b8e6cadfa670a9668707ccf00c1e664c16555d583705ec9c3d61f711ae"
+    },
+    {
+      "path": "timeout_return_ranges.png",
+      "sha256": "d202fce26d520ed48598294bdd52b1298e1202d7e0bef59840d6c67a70eb660f"
+    }
+  ]
+}

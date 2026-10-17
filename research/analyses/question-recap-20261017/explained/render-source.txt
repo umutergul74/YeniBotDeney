@@ -1,0 +1,53 @@
+from pathlib import Path
+import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
+ROOT=Path.cwd()
+source=ROOT/'research/analyses/question-recap-20261017'
+out=source/'explained'
+d=pd.read_csv(source/'six_barrier_timeout_returns.csv')
+b=pd.read_csv(source/'six_barrier_counts.csv').set_index('barrier')
+plt.rcParams.update({'font.family':'DejaVu Sans','font.size':12,'axes.spines.top':False,'axes.spines.right':False,'axes.spines.left':False,'axes.spines.bottom':False,'figure.facecolor':'#f8fafc','axes.facecolor':'#f8fafc','text.color':'#172b4d','axes.labelcolor':'#172b4d','xtick.color':'#475569','ytick.color':'#172b4d'})
+def tr(x,dec=1):return f'{x:.{dec}f}'.replace('.',',')
+# Turkish counts without changing decimal barrier notation.
+labels=[r.barrier.replace('.',',')+' ATR\n'+format(int(r.n),',').replace(',','.')+' timeout' for r in d.itertuples()]
+y=np.arange(len(d))
+fig,ax=plt.subplots(figsize=(13,8.5))
+fig.subplots_adjust(left=.16,right=.96,top=.72,bottom=.19)
+fig.text(.05,.94,'TP veya SL’ye ulaşmadan süre dolarsa ne oluyor?',fontsize=22,weight='bold')
+fig.text(.05,.885,'Yalnızca 10 saat içinde hiçbir bariyere ulaşmayan örnekler gösteriliyor.\nHer satırı 100 timeout örneği gibi okuyun; oranların paydası o satırdaki timeout sayısıdır.',fontsize=13,linespacing=1.7)
+neg=100-d.positive_pct
+ax.barh(y,neg,color='#d98282',height=.62,label='Sıfır veya negatif kapanış (getiri ≤ 0)')
+ax.barh(y,d.positive_pct,left=neg,color='#36a99a',height=.62,label='Pozitif kapanış (getiri > 0)')
+for i,r in enumerate(d.itertuples()):
+    ax.text(neg.iloc[i]/2,i,'%'+tr(neg.iloc[i]),ha='center',va='center',fontsize=14,weight='bold',color='#562c32')
+    ax.text(neg.iloc[i]+r.positive_pct/2,i,'%'+tr(r.positive_pct),ha='center',va='center',fontsize=14,weight='bold',color='#083e37')
+ax.set_yticks(y,labels);ax.invert_yaxis();ax.set_xlim(0,100);ax.set_xticks([0,25,50,75,100]);ax.set_xlabel('Timeout örneklerinin yüzdesi',labelpad=10);ax.tick_params(length=0)
+ax.legend(loc='lower left',bbox_to_anchor=(-.12,1.025),ncol=2,frameon=False,fontsize=11)
+fig.text(.05,.095,'Örnek: 2/5’te her 100 timeout’un yaklaşık 38’i yükselişle kapanmış; yine de TP’ye ulaşmamış.',fontsize=12,weight='bold')
+fig.text(.05,.045,'Her satır farklı örneklerden oluşur. Bunlar modelin seçtiği işlemler veya strateji başarısı değildir.',fontsize=11,color='#475569')
+fig.savefig(out/'timeout_direction.png',dpi=160);plt.close(fig)
+
+fig,ax=plt.subplots(figsize=(13,9))
+fig.subplots_adjust(left=.16,right=.94,top=.70,bottom=.20)
+fig.text(.05,.94,'Timeout getirileri ne kadar düşüyor veya yükseliyor?',fontsize=21,weight='bold')
+fig.text(.05,.885,'Bütün bariyerler aynı getiri ölçeğinde. Sol taraf düşüş, sağ taraf yükseliş.\nDaire medyanı gösterir: örneklerin yarısı bu getirinin altında, yarısı üstündedir.',fontsize=13,linespacing=1.7)
+ax.axvspan(-2.4,0,color='#fbecec');ax.axvspan(0,1.95,color='#e6f4f0');ax.axvline(0,color='#64748b',lw=1.4,ls='--')
+for i,r in enumerate(d.itertuples()):
+    ax.plot([r.p05_pct,r.p95_pct],[i,i],color='#94a3b8',lw=3,solid_capstyle='round',label='Ortadaki %90 (%5–%95)' if i==0 else None)
+    ax.plot([r.p25_pct,r.p75_pct],[i,i],color='#477cb6',lw=12,solid_capstyle='butt',label='Ortadaki %50 (%25–%75)' if i==0 else None)
+    ax.scatter([r.median_pct],[i],s=85,color='#172b4d',edgecolor='white',zorder=4,label='Medyan' if i==0 else None)
+    ax.text(r.median_pct,i-.24,('%+' if r.median_pct>0 else '%')+tr(r.median_pct,3),ha='center',va='center',fontsize=11,weight='bold')
+    ax.text(r.p05_pct-.04,i,'%'+tr(r.p05_pct,2),ha='right',va='center',fontsize=10,color='#475569')
+    ax.text(r.p95_pct+.04,i,'%'+tr(r.p95_pct,2),ha='left',va='center',fontsize=10,color='#475569')
+ax.set_yticks(y,labels);ax.set_ylim(5.6,-.65);ax.set_xlim(-2.4,1.95)
+ax.set_xlabel('Giriş kapanışından 10 saat sonraki kapanışa brüt fiyat değişimi (%)',labelpad=14)
+ax.xaxis.set_major_formatter(FuncFormatter(lambda x,pos:tr(x,1)));ax.tick_params(length=0)
+ax.legend(loc='lower left',bbox_to_anchor=(-.12,1.035),ncol=3,frameon=False,fontsize=11)
+fig.text(.05,.105,'Örnek: 2/5 timeout’larının %90’ı yaklaşık −%2,11 ile +%0,97 arasında kapanmış.',fontsize=12,weight='bold')
+fig.text(.05,.055,'Her uçta kalan %5 bu grafikte gösterilmez; çizgiler minimum–maksimum veya güven aralığı değildir.\nÜcretler dahil değildir. Pozitif kapanan timeout da mevcut hedefte etiket 0’dır.',fontsize=11,color='#475569',linespacing=1.5)
+fig.savefig(out/'timeout_return_ranges.png',dpi=160);plt.close(fig)
+print('Two explanatory figures generated from existing summary tables.')
