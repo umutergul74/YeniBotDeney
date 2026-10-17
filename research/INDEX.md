@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**16 deney/plan · 29 geçmiş kaydı**
+**16 deney/plan · 30 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -23,7 +23,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-013-barrier-expansion](#exp-013-barrier-expansion) | Genişletilmiş 10 bariyer senaryosu · denge ve hedef teşhisi | completed | mixed |
 | [exp-014-barrier-training](#exp-014-barrier-training) | Dört ATR bariyeri: GRU/BCE, ayrı epoch/eşik doğrulaması ve Ekim testi | abandoned | inconclusive |
 | [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | abandoned | mixed |
-| [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | running | pending |
+| [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1173,17 +1173,17 @@ Kampanya: `campaign-002` · Durum: **abandoned** · Sonuç: **mixed**
 
 Sabit tarih/split/özellik/model altında hangi bariyerler precision, recall, sinyal sayısı ve dönem tutarlılığında seçicilik sağlıyor?
 
-Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-015-six-barrier-training
 
 **Yöntem:** {"architecture": "GRU", "automatic_threshold_selection": false, "candidates": ["B25", "B11", "B12", "B152", "B22", "B32"], "folds": 38, "hardware_profile": "selective-a100", "horizon_hours": 10, "loss": "BCE", "precision_scenarios": [0.6, 0.65, 0.7], "purge_embargo": [24, 24], "same_bar_rule": "stop-first", "seeds": [42, 43, 44], "sequence_length": 64, "step_bars": 720, "train_validation_test_bars": [5040, 1080, 720], "training_gpu": "NVIDIA A100-SXM4-40GB", "training_runs": 684}
 
-**Veri kimliği:** {"evaluation_scope": "planned historical validation diagnostics; no test command", "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"}
+**Veri kimliği:** {"evaluation_scope": "Historical validation diagnostics completed; 684 fold/seed results reviewed, no test evaluation.", "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"}
 
 **Seçim kuralı:** Epoch minimum validation BCE. User explicitly chose descriptive precision 60/65/70 comparison without locking a target or threshold. No automatic winner; report support, recall and fold/seed stability.
 
-**Karar / öğrenilen:** User reported all training complete; Drive metadata audit found 680/684 fold directories with all four core files. B32 seed44 folds34-37 have missing artifacts. Recovery notebook prepared; no recovery/training executed here. Published results remain pending content verification.
+**Karar / öğrenilen:** Recovery completed by user in Colab. Review ZIP verified: 2052 hashes, 684 prediction metric recalculations and epoch selections agree. B12 shows selective precision potential but temporal/seed instability and macro-vs-pooled differences remain. No threshold/barrier winner selected. Existing all-fold-nonempty scenario filter is not a user-approved acceptance rule; empty precision scenario files must not be interpreted as absence of any high-precision thresholds.
 
 **Henüz sonuç yok.**
 
@@ -1192,6 +1192,8 @@ Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
 - Overlapping folds/seeds are not independent samples.
 - Negative label includes timeout; not a pure TP-vs-SL classifier.
 - Precision acceptance and signal-support criteria not yet locked.
+- B32 seed44 fold34 weights unavailable; fold35 history reconstructed; fold36 resumed; fold37 retrained.
+- Raw prepared frames and model weights excluded from reviewed ZIP; not independently audited here.
 
 **Kanıt kopyaları:**
 - [research/analyses/selective-walkforward-20261016/PLAN.md](sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md) · SHA256 `f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf`
@@ -1199,5 +1201,6 @@ Kampanya: `campaign-002` · Durum: **running** · Sonuç: **pending**
 - [research/analyses/selective-walkforward-20261016/A100.md](sources/103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94.md) · SHA256 `103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94`
 - [research/analyses/drive-recovery-20261017/REPORT.md](sources/c4091d209690f73e94381e31af60ee0921ea6e2f9203bfbb7e3d16fb3d5ee08c.md) · SHA256 `c4091d209690f73e94381e31af60ee0921ea6e2f9203bfbb7e3d16fb3d5ee08c`
 - [research/analyses/drive-recovery-20261017/inventory.json](sources/d35c27f02eb1a199809f5571227a63b041e787d7c2a0f65c2837caa3b7955e78.json) · SHA256 `d35c27f02eb1a199809f5571227a63b041e787d7c2a0f65c2837caa3b7955e78`
+- [research/analyses/selective-review-20261017/REPORT.md](sources/02a66f64fa51b6222473ad45304468581aa6ec149bba926e86d482269aa7e462.md) · SHA256 `02a66f64fa51b6222473ad45304468581aa6ec149bba926e86d482269aa7e462`
 
-[Son kayıt](events/000029.json) · revizyon 4 · 17 October Drive transfer incident: append metadata inventory and recovery plan; preserve earlier history.
+[Son kayıt](events/000030.json) · revizyon 5 · User completed recovery; inspect validation evidence and preserve findings without new training or test evaluation.

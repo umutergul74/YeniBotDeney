@@ -1,0 +1,119 @@
+{
+  "previous_sha256": "7a3bae8d7acdcfd5af2442b06c83d575a82638ff9cd97c5fe362cf2eeae1ac97",
+  "reason": "User completed recovery; inspect validation evidence and preserve findings without new training or test evaluation.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "Historical validation diagnostics completed; 684 fold/seed results reviewed, no test evaluation.",
+      "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Recovery completed by user in Colab. Review ZIP verified: 2052 hashes, 684 prediction metric recalculations and epoch selections agree. B12 shows selective precision potential but temporal/seed instability and macro-vs-pooled differences remain. No threshold/barrier winner selected. Existing all-fold-nonempty scenario filter is not a user-approved acceptance rule; empty precision scenario files must not be interpreted as absence of any high-precision thresholds.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/selective-walkforward-20261016/PLAN.md",
+        "path": "sources/f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf.md",
+        "sha256": "f210515ad627820b44b0b146997bcac1e2460aee8a2f78a8ab94796c012a0bbf"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/selective-walkforward-20261016/PLAN.md",
+        "path": "sources/93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0.md",
+        "sha256": "93673fead076cdcc2cbf9a6ecadddb80e6b8accb843776aee4ccbb805e0902c0"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/selective-walkforward-20261016/A100.md",
+        "path": "sources/103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94.md",
+        "sha256": "103885ed998545f5f86522ee6d5d7eef48c74fba4bf85b2232575f4400077c94"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/drive-recovery-20261017/REPORT.md",
+        "path": "sources/c4091d209690f73e94381e31af60ee0921ea6e2f9203bfbb7e3d16fb3d5ee08c.md",
+        "sha256": "c4091d209690f73e94381e31af60ee0921ea6e2f9203bfbb7e3d16fb3d5ee08c"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/drive-recovery-20261017/inventory.json",
+        "path": "sources/d35c27f02eb1a199809f5571227a63b041e787d7c2a0f65c2837caa3b7955e78.json",
+        "sha256": "d35c27f02eb1a199809f5571227a63b041e787d7c2a0f65c2837caa3b7955e78"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/selective-review-20261017/REPORT.md",
+        "path": "sources/02a66f64fa51b6222473ad45304468581aa6ec149bba926e86d482269aa7e462.md",
+        "sha256": "02a66f64fa51b6222473ad45304468581aa6ec149bba926e86d482269aa7e462"
+      }
+    ],
+    "id": "exp-016-selective-walk-forward",
+    "limitations": [
+      "Validation used for epoch choice and diagnostics is optimistic.",
+      "Overlapping folds/seeds are not independent samples.",
+      "Negative label includes timeout; not a pure TP-vs-SL classifier.",
+      "Precision acceptance and signal-support criteria not yet locked.",
+      "B32 seed44 fold34 weights unavailable; fold35 history reconstructed; fold36 resumed; fold37 retrained.",
+      "Raw prepared frames and model weights excluded from reviewed ZIP; not independently audited here."
+    ],
+    "method": {
+      "architecture": "GRU",
+      "automatic_threshold_selection": false,
+      "candidates": [
+        "B25",
+        "B11",
+        "B12",
+        "B152",
+        "B22",
+        "B32"
+      ],
+      "folds": 38,
+      "hardware_profile": "selective-a100",
+      "horizon_hours": 10,
+      "loss": "BCE",
+      "precision_scenarios": [
+        0.6,
+        0.65,
+        0.7
+      ],
+      "purge_embargo": [
+        24,
+        24
+      ],
+      "same_bar_rule": "stop-first",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "sequence_length": 64,
+      "step_bars": 720,
+      "train_validation_test_bars": [
+        5040,
+        1080,
+        720
+      ],
+      "training_gpu": "NVIDIA A100-SXM4-40GB",
+      "training_runs": 684
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-015-six-barrier-training"
+    ],
+    "provenance": {
+      "executed": true,
+      "execution_authorized": true
+    },
+    "question": "Sabit tarih/split/özellik/model altında hangi bariyerler precision, recall, sinyal sayısı ve dönem tutarlılığında seçicilik sağlıyor?",
+    "results": [],
+    "selection_rule": "Epoch minimum validation BCE. User explicitly chose descriptive precision 60/65/70 comparison without locking a target or threshold. No automatic winner; report support, recall and fold/seed stability.",
+    "status": "completed",
+    "title": "Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi"
+  },
+  "recorded_at": "2026-10-17T12:15:31.737564+00:00",
+  "revision": 5,
+  "schema_version": 1,
+  "sequence": 30
+}
