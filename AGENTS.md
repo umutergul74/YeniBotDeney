@@ -1,39 +1,50 @@
-# Independent advisor research workspace
+# Advisor araştırma ortamı
 
-- This repository is independent from `../yeniBot`. Never merge main or copy its
-  working changes into this workspace implicitly.
-- Preserve the frozen advisor engine at baseline 741d1d4 and all old evidence.
-  New notebook infrastructure lives in `yenibot/experiment/advisor_*.py`.
-- Read `docs/advisor-notebooks-v2.md` before changing orchestration. Old
-  `colab_v1` and `evidence/` are read-only research evidence.
-- Never fit, select policies, retune thresholds, or run new comparisons on the
-  seen September 2026 final test. Notebook 10 audits existing files only.
-- Never overwrite mismatching prepared data, checkpoints, locks or manifests.
-- Start with git status and targeted rg. Preserve user changes. Use the existing
-  environment; no global package upgrades. No real training for verification.
-- Follow `docs/test-budget.md` and `scripts/advisor_test_scope.py`. Small bootstrap,
-  launcher/backend/environment and notebook fixes use mapped regressions only;
-  they do not automatically require a full training/orchestration gate.
-- Full checks remain available for scientific/artifact/dependency or broad changes,
-  explicit user requests and unknown code. Never weaken research thresholds.
-- Keep the notebooks thin. Python host packages must not enter research processes.
-- Independent reviewers are read-only and bounded; default to one agent.
-- This is a cumulative experiment laboratory. Start research planning from
-  `research/README.md` and `research/INDEX.md`, not from notebook numbering.
-  Preserve unsuccessful, failed and abandoned experiments as well as successes.
-  Record questions, parent experiments, data/label/split identity, selection rules,
-  evidence, results and decisions. Append corrections; never rewrite published
-  `research/events/` or `research/sources/`. New runs/methods get new IDs.
-- A proposal is not authorization to execute it. The threshold/barrier diagnostic
-  proposals were executed on explicit user request on 2026-10-15; results are in
-  `research/analyses/diagnostics-20261015/REPORT.md`. No deployment threshold or
-  barrier was selected. Further proposals require execution authorization. Notebook changes
-  do not implicitly authorize training or analysis.
-- Routine task commits/pushes are authorized, but do not move frozen release tags
-  or merge into main/advisor baseline without a separate explicit request.
+Bu depo `../yeniBot` projesinden bağımsız bir deney laboratuvarıdır. Amaç,
+seçici sinyal üreten modelleri adım adım karşılaştırmak ve bütün deneylerden
+öğrenilenleri korumaktır. Eski projenin kuralları buraya otomatik taşınmaz.
 
-## Persistent test-budget preference (2026-10-15)
+## Çalışma biçimi
 
-Small bootstrap/backend/launcher/notebook fixes use related regressions only;
-do not interpret them as broad orchestration changes. Follow the global standing
-preference and, in the advisor workspace, `docs/test-budget.md` for scope routing.
+- Önce `git status` ve ilgili dosyaları incele; kullanıcı değişikliklerini koru.
+- Araştırmaya `research/README.md` ve `research/INDEX.md` üzerinden başla.
+  Deney incelemesinde [yerel skill](.agents/skills/advisor-research-review/SKILL.md)
+  kullan; notebook numaralarını araştırma geçmişi yerine koyma.
+- İstenen işi en küçük anlaşılır değişiklikle tamamla. Gereksiz notebook,
+  yapılandırma, bağımlılık veya süreç ekleme. Varsayılan tek ajanla çalış.
+- Kullanıcının verdiği yetki kapsamında ilerle; aynı izni tekrar isteme.
+  Yalnızca önerilmiş bir deney veya notebook düzenlemesi, yeni eğitim ya da
+  final test çalıştırma izni değildir.
+
+## Araştırma ve kayıt
+
+- Veri, etiket, zaman bölmeleri ve seçim kurallarını sessizce değiştirme.
+  Yeni yöntem veya koşul için yeni deney/run kimliği aç; eski deneye bağla.
+- Başarılı, başarısız, yarım ve terk edilmiş deneyleri koru. Soru, koşullar,
+  kanıt, sonuç ve karar kaydedilsin. `research/events/` ve `research/sources/`
+  yayımlanmış kayıtlarına dokunma; düzeltmeleri yeni kayıt olarak ekle.
+- Scaler train üzerinde öğrenilir. Model/epoch/eşik seçimi validation ile
+  yapılır. Final test yalnızca önceden sabitlenmiş seçimi değerlendirir.
+- Görülmüş Eylül 2026 final testinde yeni karşılaştırma, eğitim veya seçim
+  yapma; yalnızca mevcut kanıtları raporla. Diğer dönemlerin uygunluğunu da
+  kullanım geçmişinden doğrula; tarihe bakarak görülmemiş sayma.
+- Başlangıç motorunu (`741d1d4`), eski `colab_v1` ve `evidence/` kanıtlarını
+  koru. Uyuşmayan veri, checkpoint, kilit veya manifestin üstüne yazma.
+
+## Kod, doğrulama ve Git
+
+- Notebooklar ince kalsın; yeni notebook altyapısı
+  `yenibot/experiment/advisor_*.py` altında olsun. Orkestrasyon değişikliğinde
+  `docs/advisor-notebooks-v2.md` oku; çalışmanın kendi sürüm/ortam kilidini esas al.
+- Mevcut ortamı kullan; global paket güncelleme. Araştırma alt süreçlerine
+  host Python paketlerini karıştırma. Doğrulama için gerçek eğitim başlatma.
+- Kontrolden önce değişen davranışı ve en küçük yararlı kontrol kapsamını belirt.
+  `docs/test-budget.md` ve `scripts/advisor_test_scope.py` kurallarını izle:
+  belge değişikliğinde diff/link/biçim kontrolü; küçük kod düzeltmesinde ilgili
+  regresyonlar. Bilimsel veri/etiket/bölme, sabit artifact sözleşmesi, bağımlılık
+  veya geniş kapsam değişikliğinde tam kontrolleri uygula. Geçen kontrolleri
+  gerekçesiz tekrarlama; eşikleri veya testleri gevşetme.
+- Göreve ait commit/push yetkisi vardır. Dondurulmuş release etiketlerini taşıma;
+  main veya advisor baseline'a birleştirme ayrıca açık istek gerektirir.
+- Drive/Colab için `icinbedava34@gmail.com` kullan; bağlayıcı kimliğini mümkünse
+  doğrula. Veri, model, sır veya büyük ZIP dosyalarını Git'e ekleme.
