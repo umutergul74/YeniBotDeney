@@ -1,0 +1,66 @@
+{
+  "previous_sha256": "97578d9e6f5be996d664f958583d7f388cf81af0d47e59303a28b316a491c82d",
+  "reason": "Record hypotheses and fixed diagnostic probes before computing results.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "existing historical validation only",
+      "labels_id": "six-barriers-h10",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original-38fold; diagnostic 500/10/507 slices only"
+    },
+    "decision": "Plan kaydı; çalıştırılmadı.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/root-cause-20261017/PLAN.md",
+        "path": "sources/e5f7fca25241fdd0b6a1581a2b497cd966a55ea00cb843370756042ac6f6907e.md",
+        "sha256": "e5f7fca25241fdd0b6a1581a2b497cd966a55ea00cb843370756042ac6f6907e"
+      }
+    ],
+    "id": "exp-019-root-cause-probes",
+    "limitations": [
+      "No independent holdout claim; existing epochs selected on full validation."
+    ],
+    "method": {
+      "assessment_rows": 507,
+      "calibration_rows": 500,
+      "changed_factor": "diagnostic-only post-processing probes; original GRU untouched",
+      "channels": [
+        "seed42",
+        "seed43",
+        "seed44",
+        "equal_seed_mean"
+      ],
+      "methods": [
+        "raw",
+        "positive_sigmoid",
+        "isotonic"
+      ],
+      "purge_rows": 10,
+      "seeds": [
+        42,
+        43,
+        44
+      ]
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-018-validation-stability"
+    ],
+    "provenance": {
+      "executed": false,
+      "execution_authorized": true
+    },
+    "question": "Kalibrasyon, seed ortalaması ve geçmiş puan kantili istikrarsızlığın hangi bölümünü açıklıyor?",
+    "results": [],
+    "selection_rule": "Fixed probes, no final-test selection; late validation remains contaminated by earlier full-validation epoch selection, exploratory only.",
+    "status": "planned",
+    "title": "Eski proje incelemesi ve validation üzerinde neden/çözüm yoklaması"
+  },
+  "recorded_at": "2026-10-17T17:13:14.723112+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 33
+}

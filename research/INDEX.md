@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**18 deney/plan · 32 geçmiş kaydı**
+**19 deney/plan · 34 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -26,6 +26,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | completed | mixed |
 | [exp-017-threshold-transfer](#exp-017-threshold-transfer) | Altı bariyer: validation eşik bölgeleri ve son model penceresine aktarım | completed | mixed |
 | [exp-018-validation-stability](#exp-018-validation-stability) | Puan dağılımı, sıralama gücü ve dönem/seed kararlılığı teşhisi | completed | mixed |
+| [exp-019-root-cause-probes](#exp-019-root-cause-probes) | Eski proje incelemesi ve validation üzerinde neden/çözüm yoklaması | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1277,3 +1278,45 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 - [reports/stability-20261017/analysis-source.txt](sources/28891434c59711511f4d6df50d0d2ab087127b3e54d3381436003e17caf7d7cc.txt) · SHA256 `28891434c59711511f4d6df50d0d2ab087127b3e54d3381436003e17caf7d7cc`
 
 [Son kayıt](events/000032.json) · revizyon 1 · Authorized diagnosis of validation score shift, discrimination and threshold recurrence; no training or test.
+
+## exp-019-root-cause-probes
+
+**Eski proje incelemesi ve validation üzerinde neden/çözüm yoklaması**
+
+Kalibrasyon, seed ortalaması ve geçmiş puan kantili istikrarsızlığın hangi bölümünü açıklıyor?
+
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-018-validation-stability
+
+**Yöntem:** {"adjacent_window_probe": "37 pairs x6 candidates,297 shared validation hours, old/new/mean comparisons", "assessment_rows": 507, "calibration_rows": 500, "changed_factor": "diagnostic-only post-processing probes; original GRU untouched", "channels": ["seed42", "seed43", "seed44", "equal_seed_mean"], "input_fingerprint": "03e1adfe0f87ffd151b1850cd71b1dab11a2fc3e208545090840692d11ba1b48", "methods": ["raw", "positive_sigmoid", "isotonic"], "new_gru_training": false, "purge_rows": 10, "seeds": [42, 43, 44], "test_evaluations": 0, "verified_prepared_sha256": "3792e9b687d086231588f4341b7fef80097a1f44c78dcf3073c201334b33f091"}
+
+**Veri kimliği:** {"evaluation_scope": "existing historical validation only", "labels_id": "six-barriers-h10", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-38fold; diagnostic 500/10/507 slices only"}
+
+**Seçim kuralı:** Fixed probes, no final-test selection; late validation remains contaminated by earlier full-validation epoch selection, exploratory only.
+
+**Karar / öğrenilen:** Verified feature drift and within-validation prevalence shift; B12 seed43 weak ranking precedes late drift. Calibration did not improve aggregate BCE in fixed pilot; equal seed averaging gives small gains but does not fix late fold37; adjacent-window averaging not a B12 solution. Old project had diagnostics/calibration/ensemble, not proof of solved stability. No production fix or test readiness claimed. Single-factor capacity pilot proposed but not run.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Existing epochs selected on full validation; late slice is exploratory, not independent holdout.
+- All calibration conclusions restricted to specified500-row fits; not universal rejection.
+- Feature/score associations are not causal attribution; GRU uses64-hour sequences.
+- Overlapping labels/folds/seeds are dependent.
+- No GRU checkpoint interventions or training; exact cause and reliable remedy remain unproven.
+- Old project local snapshot differed and was excluded; only matched Drive B12 table used for feature diagnostics.
+
+**Kanıt kopyaları:**
+- [research/analyses/root-cause-20261017/PLAN.md](sources/e5f7fca25241fdd0b6a1581a2b497cd966a55ea00cb843370756042ac6f6907e.md) · SHA256 `e5f7fca25241fdd0b6a1581a2b497cd966a55ea00cb843370756042ac6f6907e`
+- [research/analyses/root-cause-20261017/PLAN.md](sources/b8a746d886027e50db6de1b50f33cc11d0fe2c16ff9f32838656b6abef37a5e6.md) · SHA256 `b8a746d886027e50db6de1b50f33cc11d0fe2c16ff9f32838656b6abef37a5e6`
+- [research/analyses/root-cause-20261017/REPORT.md](sources/cf33d99283b094f3850324f3bad150c699a2dda96e0c50be872cc6877cafa9e7.md) · SHA256 `cf33d99283b094f3850324f3bad150c699a2dda96e0c50be872cc6877cafa9e7`
+- [research/analyses/root-cause-20261017/PROVENANCE.md](sources/6754274a168fd8655a82cfa8926bed774f808ebce4c486e96615e3f0ef95e795.md) · SHA256 `6754274a168fd8655a82cfa8926bed774f808ebce4c486e96615e3f0ef95e795`
+- [research/analyses/root-cause-20261017/probe_summary.csv](sources/dc94f491a25c088d6d22251bb1e262de5fa2b82d551c1124ff3edfa32783570e.csv) · SHA256 `dc94f491a25c088d6d22251bb1e262de5fa2b82d551c1124ff3edfa32783570e`
+- [research/analyses/root-cause-20261017/verified_feature_shift.csv](sources/7ffa30f1ed9801d2b716645798cd72614a457cbb7e90e17c9573dad1aadeb28d.csv) · SHA256 `7ffa30f1ed9801d2b716645798cd72614a457cbb7e90e17c9573dad1aadeb28d`
+- [research/analyses/root-cause-20261017/within_validation_drift.csv](sources/9a6e526ecf7661fccd21d80b68cc6915a96c366909c1984f0025f130d0f6f81e.csv) · SHA256 `9a6e526ecf7661fccd21d80b68cc6915a96c366909c1984f0025f130d0f6f81e`
+- [research/analyses/root-cause-20261017/epoch_objective_audit.csv](sources/b94633d2c70af77e59d7a9d4f2333c9789a42431c5c002fbd899339dbca5ac6e.csv) · SHA256 `b94633d2c70af77e59d7a9d4f2333c9789a42431c5c002fbd899339dbca5ac6e`
+- [research/analyses/root-cause-20261017/adjacent_window_probe.csv](sources/d0f96ece70d81c49ef3903f62b29198199e68d59fe5cf95380fa3179ab6254de.csv) · SHA256 `d0f96ece70d81c49ef3903f62b29198199e68d59fe5cf95380fa3179ab6254de`
+- [reports/root-cause-20261017/analysis-source.txt](sources/be02c3f82e2735b199593a2c0a75f7b2e12a7e387e935f373394093023782d84.txt) · SHA256 `be02c3f82e2735b199593a2c0a75f7b2e12a7e387e935f373394093023782d84`
+
+[Son kayıt](events/000034.json) · revizyon 2 · Complete authorized root-cause diagnosis and fixed solution probes, including negative results and verified prepared-data drift.
