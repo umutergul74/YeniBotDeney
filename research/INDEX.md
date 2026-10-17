@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**19 deney/plan · 34 geçmiş kaydı**
+**20 deney/plan · 35 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -27,6 +27,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-017-threshold-transfer](#exp-017-threshold-transfer) | Altı bariyer: validation eşik bölgeleri ve son model penceresine aktarım | completed | mixed |
 | [exp-018-validation-stability](#exp-018-validation-stability) | Puan dağılımı, sıralama gücü ve dönem/seed kararlılığı teşhisi | completed | mixed |
 | [exp-019-root-cause-probes](#exp-019-root-cause-probes) | Eski proje incelemesi ve validation üzerinde neden/çözüm yoklaması | completed | mixed |
+| [exp-020-original-questions-recap](#exp-020-original-questions-recap) | Özgün A/B/C/D eşik eğrileri ve altı bariyer dağılımı | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -238,6 +239,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-015-six-barrier-training | — | — | 0.242630 | 1.000000 | — |
+
+## Kayıtlı sonuçlar · validation
+
+A original38fold x3seed · equal fold/seed mean; fixed threshold0.5
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-020-original-questions-recap | — | — | 0.410499 | 0.096839 | — |
 
 ## exp-001-a
 
@@ -1320,3 +1331,52 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 - [reports/root-cause-20261017/analysis-source.txt](sources/be02c3f82e2735b199593a2c0a75f7b2e12a7e387e935f373394093023782d84.txt) · SHA256 `be02c3f82e2735b199593a2c0a75f7b2e12a7e387e935f373394093023782d84`
 
 [Son kayıt](events/000034.json) · revizyon 2 · Complete authorized root-cause diagnosis and fixed solution probes, including negative results and verified prepared-data drift.
+
+## exp-020-original-questions-recap
+
+**Özgün A/B/C/D eşik eğrileri ve altı bariyer dağılımı**
+
+İlk iki teşhis sorusunun kapsamı, sonuçları ve sonraki eğitimlerden farkı nedir?
+
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-011-threshold-diagnostics, exp-013-barrier-expansion, exp-016-selective-walk-forward, exp-019-root-cause-probes
+
+**Yöntem:** {"barriers": ["2/5", "1/1", "1/2", "1.5/2", "2/2", "3/2"], "changed_factor": "reporting and existing-prediction threshold diagnostics only", "folds": 38, "models": ["A", "B", "C", "D"], "prediction_files": 456, "python": "3.13.7", "seeds": [42, 43, 44], "test_evaluations": 0, "training_runs": 0}
+
+**Veri kimliği:** {"evaluation_scope": "validation predictions and development label distributions only", "labels_id": "original-ABCD-B25; existing-six-barriers-h10", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Betimsel validation eşik ızgarası 0:0.005:1; eşik seçilmedi, test okunmadı.
+
+**Karar / öğrenilen:** A-only prior diagnosis extended to original B/C/D. Six existing label distributions and timeout returns verified and consolidated. Separate label diagnostics from later 684 training results; seed/period instability remains unresolved. No new training or model proposal executed.
+
+**validation** · A original38fold x3seed · equal fold/seed mean; fixed threshold0.5
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| f1 | 0.142418 |
+| precision | 0.410499 |
+| recall | 0.096839 |
+| signal_rate | 0.062913 |
+
+**Sınırlar / açık noktalar:**
+- Epoch selection reused validation; curves are descriptive, not independent evaluation.
+- Overlapping folds and seeds are dependent.
+- Macro precision uses zero for empty groups for historical compatibility; active-only precision and empty counts supplied.
+- A features are not a subset of B/C/D; not a pure architecture comparison.
+- Full raw pipeline or model weights not re-audited.
+
+**Kanıt kopyaları:**
+- [research/analyses/question-recap-20261017/abcd_score_metrics.csv](sources/d8ce7d6fe9e9f345fbfd1e0f8abadf4a49d401044ad900159b213446ac752de0.csv) · SHA256 `d8ce7d6fe9e9f345fbfd1e0f8abadf4a49d401044ad900159b213446ac752de0`
+- [research/analyses/question-recap-20261017/abcd_seed_curves.csv](sources/77d983cb692a789100e861a6a0cb304340366875e58398a751a84f9b324eb9c1.csv) · SHA256 `77d983cb692a789100e861a6a0cb304340366875e58398a751a84f9b324eb9c1`
+- [research/analyses/question-recap-20261017/abcd_selected_thresholds.csv](sources/b77d37000aa025a6d6db17a9b3c879be9d49d9773d8192ac92e260caca4bc20c.csv) · SHA256 `b77d37000aa025a6d6db17a9b3c879be9d49d9773d8192ac92e260caca4bc20c`
+- [research/analyses/question-recap-20261017/abcd_thresholds.csv](sources/8dbeb61996237275d654d72ee3e52c1af32a3899dd80291c62140bc9f29eda9d.csv) · SHA256 `8dbeb61996237275d654d72ee3e52c1af32a3899dd80291c62140bc9f29eda9d`
+- [research/analyses/question-recap-20261017/analysis-source.txt](sources/d0c12ac640549f9c92db252b2c032c6d3b9db4f1d3e11981ff5974cce608d7b5.txt) · SHA256 `d0c12ac640549f9c92db252b2c032c6d3b9db4f1d3e11981ff5974cce608d7b5`
+- [research/analyses/question-recap-20261017/input-manifest.txt](sources/e57522ceaec1c863f406465e5e425caf84feac1839e642439059eef10fbb8ee3.txt) · SHA256 `e57522ceaec1c863f406465e5e425caf84feac1839e642439059eef10fbb8ee3`
+- [research/analyses/question-recap-20261017/output-manifest.txt](sources/28d3be1b7fe3fba16f8c7eab14ffdf152ab9673e3cc4974f96791b34bafdb0c7.txt) · SHA256 `28d3be1b7fe3fba16f8c7eab14ffdf152ab9673e3cc4974f96791b34bafdb0c7`
+- [research/analyses/question-recap-20261017/PLAN.md](sources/2b61004aa59d2ac692af154a168f1a5414512379914534cf24733c3a1dfcfd0d.md) · SHA256 `2b61004aa59d2ac692af154a168f1a5414512379914534cf24733c3a1dfcfd0d`
+- [research/analyses/question-recap-20261017/REPORT.md](sources/b741dbb3006f00d51099d8ffd14a48eb5915541638567eef274ddf9add5476ea.md) · SHA256 `b741dbb3006f00d51099d8ffd14a48eb5915541638567eef274ddf9add5476ea`
+- [research/analyses/question-recap-20261017/six_barrier_counts.csv](sources/b408a20b116d15bb61b41db494ca9a1b466fc09d9978592e1d009c520baa9e67.csv) · SHA256 `b408a20b116d15bb61b41db494ca9a1b466fc09d9978592e1d009c520baa9e67`
+- [research/analyses/question-recap-20261017/six_barrier_timeout_returns.csv](sources/ef9d0102b54145c2093ab6275361b4917829d8545f6fdab1d1580c759a2e2024.csv) · SHA256 `ef9d0102b54145c2093ab6275361b4917829d8545f6fdab1d1580c759a2e2024`
+
+[Son kayıt](events/000035.json) · revizyon 1 · Complete original four-model threshold diagnostics and consolidate six existing barrier distributions; no training/test.

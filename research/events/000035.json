@@ -1,0 +1,150 @@
+{
+  "previous_sha256": "6397af30d3129072947c787b7412a80529ab252c55363e238917468c6c4ce9f5",
+  "reason": "Complete original four-model threshold diagnostics and consolidate six existing barrier distributions; no training/test.",
+  "record": {
+    "campaign": "campaign-002",
+    "data": {
+      "evaluation_scope": "validation predictions and development label distributions only",
+      "labels_id": "original-ABCD-B25; existing-six-barriers-h10",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "A-only prior diagnosis extended to original B/C/D. Six existing label distributions and timeout returns verified and consolidated. Separate label diagnostics from later 684 training results; seed/period instability remains unresolved. No new training or model proposal executed.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/abcd_score_metrics.csv",
+        "path": "sources/d8ce7d6fe9e9f345fbfd1e0f8abadf4a49d401044ad900159b213446ac752de0.csv",
+        "sha256": "d8ce7d6fe9e9f345fbfd1e0f8abadf4a49d401044ad900159b213446ac752de0"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/abcd_seed_curves.csv",
+        "path": "sources/77d983cb692a789100e861a6a0cb304340366875e58398a751a84f9b324eb9c1.csv",
+        "sha256": "77d983cb692a789100e861a6a0cb304340366875e58398a751a84f9b324eb9c1"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/abcd_selected_thresholds.csv",
+        "path": "sources/b77d37000aa025a6d6db17a9b3c879be9d49d9773d8192ac92e260caca4bc20c.csv",
+        "sha256": "b77d37000aa025a6d6db17a9b3c879be9d49d9773d8192ac92e260caca4bc20c"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/abcd_thresholds.csv",
+        "path": "sources/8dbeb61996237275d654d72ee3e52c1af32a3899dd80291c62140bc9f29eda9d.csv",
+        "sha256": "8dbeb61996237275d654d72ee3e52c1af32a3899dd80291c62140bc9f29eda9d"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/analysis-source.txt",
+        "path": "sources/d0c12ac640549f9c92db252b2c032c6d3b9db4f1d3e11981ff5974cce608d7b5.txt",
+        "sha256": "d0c12ac640549f9c92db252b2c032c6d3b9db4f1d3e11981ff5974cce608d7b5"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/input-manifest.txt",
+        "path": "sources/e57522ceaec1c863f406465e5e425caf84feac1839e642439059eef10fbb8ee3.txt",
+        "sha256": "e57522ceaec1c863f406465e5e425caf84feac1839e642439059eef10fbb8ee3"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/output-manifest.txt",
+        "path": "sources/28d3be1b7fe3fba16f8c7eab14ffdf152ab9673e3cc4974f96791b34bafdb0c7.txt",
+        "sha256": "28d3be1b7fe3fba16f8c7eab14ffdf152ab9673e3cc4974f96791b34bafdb0c7"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/PLAN.md",
+        "path": "sources/2b61004aa59d2ac692af154a168f1a5414512379914534cf24733c3a1dfcfd0d.md",
+        "sha256": "2b61004aa59d2ac692af154a168f1a5414512379914534cf24733c3a1dfcfd0d"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/REPORT.md",
+        "path": "sources/b741dbb3006f00d51099d8ffd14a48eb5915541638567eef274ddf9add5476ea.md",
+        "sha256": "b741dbb3006f00d51099d8ffd14a48eb5915541638567eef274ddf9add5476ea"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/six_barrier_counts.csv",
+        "path": "sources/b408a20b116d15bb61b41db494ca9a1b466fc09d9978592e1d009c520baa9e67.csv",
+        "sha256": "b408a20b116d15bb61b41db494ca9a1b466fc09d9978592e1d009c520baa9e67"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/question-recap-20261017/six_barrier_timeout_returns.csv",
+        "path": "sources/ef9d0102b54145c2093ab6275361b4917829d8545f6fdab1d1580c759a2e2024.csv",
+        "sha256": "ef9d0102b54145c2093ab6275361b4917829d8545f6fdab1d1580c759a2e2024"
+      }
+    ],
+    "id": "exp-020-original-questions-recap",
+    "limitations": [
+      "Epoch selection reused validation; curves are descriptive, not independent evaluation.",
+      "Overlapping folds and seeds are dependent.",
+      "Macro precision uses zero for empty groups for historical compatibility; active-only precision and empty counts supplied.",
+      "A features are not a subset of B/C/D; not a pure architecture comparison.",
+      "Full raw pipeline or model weights not re-audited."
+    ],
+    "method": {
+      "barriers": [
+        "2/5",
+        "1/1",
+        "1/2",
+        "1.5/2",
+        "2/2",
+        "3/2"
+      ],
+      "changed_factor": "reporting and existing-prediction threshold diagnostics only",
+      "folds": 38,
+      "models": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "prediction_files": 456,
+      "python": "3.13.7",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "test_evaluations": 0,
+      "training_runs": 0
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-011-threshold-diagnostics",
+      "exp-013-barrier-expansion",
+      "exp-016-selective-walk-forward",
+      "exp-019-root-cause-probes"
+    ],
+    "provenance": {
+      "executed": true,
+      "origin": "user-authorized consolidation of original two questions"
+    },
+    "question": "İlk iki teşhis sorusunun kapsamı, sonuçları ve sonraki eğitimlerden farkı nedir?",
+    "results": [
+      {
+        "aggregation": "equal fold/seed mean; fixed threshold0.5",
+        "cohort": "A original38fold x3seed",
+        "metrics": {
+          "f1": 0.14241837336250826,
+          "precision": 0.41049925840761997,
+          "recall": 0.09683923322840894,
+          "signal_rate": 0.0629129362245338
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Betimsel validation eşik ızgarası 0:0.005:1; eşik seçilmedi, test okunmadı.",
+    "status": "completed",
+    "title": "Özgün A/B/C/D eşik eğrileri ve altı bariyer dağılımı"
+  },
+  "recorded_at": "2026-10-17T20:38:14.790686+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 35
+}
