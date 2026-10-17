@@ -1,0 +1,80 @@
+=== analyze.py ===
+from pathlib import Path
+import zipfile,io,json,hashlib
+import numpy as np,pandas as pd
+from sklearn.metrics import average_precision_score,roc_auc_score,log_loss
+out=Path('research/analyses/stability-20261017');src=Path('reports/review-20261017/source.zip')
+assert hashlib.sha256(src.read_bytes()).hexdigest()=='76d09912ab27349d003041a4f2356fbe989cbd76601feaa4793d8e342ca16eff'
+z=zipfile.ZipFile(src);rows=[];pairs=[];bins=[];stability=[];preds={};checks=0
+for c in ['B25','B11','B12','B152','B22','B32']:
+ metrics=pd.read_csv(io.BytesIO(z.read(f'reports/{c}/metrics_by_fold_seed.csv')))
+ curves=pd.read_csv(io.BytesIO(z.read(f'reports/{c}/thresholds_by_fold_seed.csv')))
+ for n in z.namelist():
+  if not n.startswith('runs/'+c+'_') or not n.endswith('/validation_predictions.parquet'):continue
+  p=pd.read_parquet(io.BytesIO(z.read(n)));m=json.loads(z.read(n.replace('validation_predictions.parquet','validation_metrics.json')));h=pd.read_csv(io.BytesIO(z.read(n.replace('validation_predictions.parquet','history.csv'))));seed=m['seed'];fold=m['fold'];preds[c,fold,seed]=p
+  assert len(p)==1017 and p.timestamp.is_unique and p.timestamp.is_monotonic_increasing
+  assert p.probability.between(0,1).all() and np.isfinite(p.probability).all()
+  y=p.label.to_numpy();s=p.probability.to_numpy();r=metrics[(metrics.seed==seed)&(metrics.fold==fold)].iloc[0]
+  ap=average_precision_score(y,s);bce=log_loss(y,s,labels=[0,1]);assert np.isclose(ap,r.ap) and np.isclose(bce,r.bce);checks+=1
+  # Equal top fraction is diagnostic of ordering, not an operational threshold.
+  k=int(np.ceil(len(y)*.1));order=np.argsort(-s,kind='stable');top=y[order[:k]].mean()
+  row={'candidate':c,'fold':fold,'seed':seed,'validation_start':str(p.timestamp.iloc[0]),'validation_end':str(p.timestamp.iloc[-1]),'prevalence':y.mean(),'train_prevalence':r.train_prevalence,'ap':ap,'ap_gain':ap-y.mean(),'ap_lift':ap/y.mean(),'auc':roc_auc_score(y,s),'bce':bce,'bce_reference':r.bce_reference,'bce_skill':r.bce_skill,'best_epoch':m['best_epoch'],'epochs_trained':m['epochs_trained'],'mean_score':s.mean(),'score_std':s.std(),'score_min':s.min(),'score_max':s.max(),'score_q50':np.quantile(s,.5),'score_q90':np.quantile(s,.9),'score_q99':np.quantile(s,.99),'mean_score_minus_prevalence':s.mean()-y.mean(),'mean_score_positive':s[y==1].mean(),'mean_score_negative':s[y==0].mean(),'top10_precision':top,'top10_lift':top/y.mean(),'last_bce':h.bce.iloc[-1],'best_bce':h.bce.min(),'last_train_bce':h.train_bce.iloc[-1],'best_train_bce':h.loc[h.epoch==m['best_epoch'],'train_bce'].iloc[0]}
+  rows.append(row)
+  for i in range(10):
+   mask=(s>=i/10)&((s<(i+1)/10) if i<9 else (s<=1))
+   bins.append({'candidate':c,'fold':fold,'seed':seed,'low':i/10,'n':int(mask.sum()),'mean_score':s[mask].mean() if mask.any() else np.nan,'positive_rate':y[mask].mean() if mask.any() else np.nan})
+ for fold in range(38):
+  for a,b in [(42,43),(42,44),(43,44)]:
+   pa,pb=preds[c,fold,a],preds[c,fold,b];assert pa.timestamp.equals(pb.timestamp) and np.array_equal(pa.label,pb.label)
+   pairs.append({'candidate':c,'fold':fold,'seed_a':a,'seed_b':b,'rank_correlation':pa.probability.corr(pb.probability,method='spearman'),'mean_absolute_score_difference':np.abs(pa.probability-pb.probability).mean()})
+ for t in [.4,.5,.575,.62,.64,.705,.755]:
+  g=curves[np.isclose(curves.threshold,t)]
+  assert len(g)==114
+  for goal in [.6,.65,.7]:
+   for support in [1,10,30,100]:
+    ok=(g.precision>=goal)&(g.signals>=support)
+    complete=g.assign(ok=ok).groupby('fold').ok.all()
+    stability.append({'candidate':c,'threshold':t,'precision_goal':goal,'minimum_signals_per_fold_seed':support,'successful_fold_seeds':int(ok.sum()),'successful_all3_seed_folds':int(complete.sum()),'active_fold_seeds':int((g.signals>0).sum()),'total_signals_overlapping':int(g.signals.sum()),'pooled_precision':g.tp.sum()/g.signals.sum() if g.signals.sum() else np.nan,'signals_median':g.signals.median(),'signal_top5_fold_share':g.groupby('fold').signals.sum().nlargest(5).sum()/g.signals.sum() if g.signals.sum() else np.nan})
+ print(c,'complete',flush=True)
+df=pd.DataFrame(rows);df.to_csv(out/'fold_seed_diagnostics.csv',index=False);pd.DataFrame(pairs).to_csv(out/'seed_agreement.csv',index=False);pd.DataFrame(bins).to_csv(out/'score_bins.csv',index=False);pd.DataFrame(stability).to_csv(out/'threshold_stability.csv',index=False)
+summary=[]
+for c,g in df.groupby('candidate',sort=False):
+ a=g[g.fold<37];b=g[g.fold==37]
+ summary.append({'candidate':c,**{f'previous_{col}':a[col].mean() for col in ['prevalence','ap','ap_gain','auc','bce_skill','score_max','top10_precision']},**{f'last_{col}':b[col].mean() for col in ['prevalence','ap','ap_gain','auc','bce_skill','score_max','top10_precision']},'positive_ap_gain_count':int((g.ap_gain>0).sum()),'positive_bce_skill_count':int((g.bce_skill>0).sum())})
+pd.DataFrame(summary).to_csv(out/'period_summary.csv',index=False)
+print('VERIFIED',checks,'model predictions')
+print(df[(df.candidate=='B12')&(df.fold==37)].to_string(index=False))
+print(pd.DataFrame(summary).round(4).to_string(index=False))
+
+=== figures.py ===
+from pathlib import Path
+import pandas as pd,numpy as np,zipfile,io
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+p=Path('research/analyses/stability-20261017');d=pd.read_csv(p/'fold_seed_diagnostics.csv');s=pd.read_csv(p/'threshold_stability.csv');summary=pd.read_csv(p/'period_summary.csv');z=zipfile.ZipFile('reports/review-20261017/source.zip')
+plt.rcParams.update({'font.family':'DejaVu Sans','font.size':10})
+fig,ax=plt.subplots(1,2,figsize=(12,4.7))
+b=d[d.candidate=='B12']
+for seed,color in zip([42,43,44],['#2674b5','#d97706','#38934e']):
+ g=b[b.seed==seed].sort_values('fold');ax[0].plot(g.fold,g.score_max,label=f'Seed {seed}',color=color);ax[0].scatter([37],[g[g.fold==37].score_max.iloc[0]],color=color)
+ax[0].axhline(.7,color='black',ls='--',label='0,70 eşik');ax[0].set(xlabel='Dönem (fold)',ylabel='En yüksek validation puanı',title='1/2 bariyeri: 0,70 her modelde aşılmıyor');ax[0].legend()
+x=np.arange(len(summary));ax[1].bar(x-.18,summary.previous_ap_gain*100,.36,label='Önceki 37 dönem');ax[1].bar(x+.18,summary.last_ap_gain*100,.36,label='Son dönem');ax[1].axhline(0,color='black',lw=.8);ax[1].set_xticks(x,summary.candidate);ax[1].set(ylabel='AP − pozitif oranı (yüzde puan)',title='Son dönemde tüm bariyerler bozulmuyor');ax[1].legend()
+for a in ax:a.grid(axis='y',alpha=.2)
+fig.tight_layout();fig.savefig(p/'scores_and_discrimination.png',dpi=160);plt.close(fig)
+curves=pd.read_csv(io.BytesIO(z.read('reports/B12/thresholds_by_fold_seed.csv')))
+fig,axs=plt.subplots(3,1,figsize=(13,7),sharex=True)
+for ax,t,goal in zip(axs,[.575,.705,.755],[.6,.65,.7]):
+ g=curves[np.isclose(curves.threshold,t)].copy();g['ok']=(g.precision>=goal)&(g.signals>=30)
+ counts=g.groupby('fold').ok.sum().reindex(range(38));bars=ax.bar(counts.index,counts,color='#2674b5');bars[-1].set_color('#d97706');ax.set(ylim=(0,3.5),yticks=[0,1,2,3],ylabel='Seed sayısı',title=f'Eşik {t:.3f} — precision ≥ %{int(goal*100)}, en az 30 sinyal / seed');ax.grid(axis='y',alpha=.2)
+axs[-1].set_xlabel('Dönem (fold); turuncu: son dönem');fig.suptitle('1/2 bariyeri: yüksek precision her dönemde tekrarlanmıyor\n30 sinyal burada destek duyarlılığı örneğidir; kabul kuralı veya bağımsız örnek garantisi değildir');fig.tight_layout();fig.savefig(p/'threshold_recurrence.png',dpi=160);plt.close(fig)
+# Reconstruction checks independent of the report summary calculations.
+assert len(d)==684 and not d.duplicated(['candidate','fold','seed']).any()
+assert len(s)==6*7*3*4
+for t in [.575,.705,.755]:
+ g=curves[np.isclose(curves.threshold,t)]
+ assert int(g.signals.sum())==int(s[(s.candidate=='B12')&np.isclose(s.threshold,t)].iloc[0].total_signals_overlapping)
+last=b[b.fold==37]
+print('B12 bestepoch1 previous',int((b[b.fold<37].best_epoch==1).sum()),'/111')
+print('B12 previous score median/std',b[b.fold<37][['mean_score','score_std']].mean().to_dict())
+print('Outputs:',len(d),'diagnostics,',len(s),'support comparisons; checks passed')

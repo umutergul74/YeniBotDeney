@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**17 deney/plan · 31 geçmiş kaydı**
+**18 deney/plan · 32 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -25,6 +25,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-015-six-barrier-training](#exp-015-six-barrier-training) | Altı ATR bariyeri: B25/B11/B12/B152/B22/B32 · GRU/BCE | abandoned | mixed |
 | [exp-016-selective-walk-forward](#exp-016-selective-walk-forward) | Özgün 38-fold kohortta altı bariyer · seçici sinyal incelemesi | completed | mixed |
 | [exp-017-threshold-transfer](#exp-017-threshold-transfer) | Altı bariyer: validation eşik bölgeleri ve son model penceresine aktarım | completed | mixed |
+| [exp-018-validation-stability](#exp-018-validation-stability) | Puan dağılımı, sıralama gücü ve dönem/seed kararlılığı teşhisi | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1240,3 +1241,39 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/threshold-transfer-20261017/proposed_models.csv](sources/a42021346786b69300f04f24d85542302a11a56dbbdcdad0d728433479ff0036.csv) · SHA256 `a42021346786b69300f04f24d85542302a11a56dbbdcdad0d728433479ff0036`
 
 [Son kayıt](events/000031.json) · revizyon 1 · Authorized validation-only threshold comparison; preserve model-transfer limitations before test.
+
+## exp-018-validation-stability
+
+**Puan dağılımı, sıralama gücü ve dönem/seed kararlılığı teşhisi**
+
+Son dönemde sinyal kaybı puan ölçeğinden mi, ayırt etme kaybından mı; yüksek precision dönemlerde tekrarlanıyor mu?
+
+Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-017-threshold-transfer
+
+**Yöntem:** {"analysis": "score distributions, AP/prevalence, ROC AUC, BCE skill, top102 ranking, seed rank agreement, fixed-threshold recurrence", "folds": 38, "new_training": false, "precision_goals": [0.6, 0.65, 0.7], "seeds": [42, 43, 44], "source_zip_sha256": "76d09912ab27349d003041a4f2356fbe989cbd76601feaa4793d8e342ca16eff", "support_sensitivity": [1, 10, 30, 100], "test_evaluations": 0, "thresholds": [0.4, 0.5, 0.575, 0.62, 0.64, 0.705, 0.755]}
+
+**Veri kimliği:** {"evaluation_scope": "historical validation only; no September or October evaluation", "labels_id": "six-barriers-h10-tp-positive-sl-timeout-negative", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original-33551-hours-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** No model/threshold selected. Previously discussed thresholds only. Support sensitivity is descriptive, not a new acceptance constraint. Top102 ranking is retrospective diagnostic, not a live strategy.
+
+**Karar / öğrenilen:** B12 last-fold scores narrow and all maxima stay below .70; seed43 also has weak ranking (AUC .4642) while seeds42/44 retain top-tail discrimination. B11 last-fold degrades across all seeds; other barriers do not uniformly degrade. B12 all-three-seed recurrence with >=30 signals is 15/38 at .575/60%, 2/38 at .705/65%, 0/38 at .755/70%. Keep final test closed pending a justified model/policy; no automatic retraining.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Same validation used for epoch choice and diagnostics; optimistic.
+- Overlapping windows, labels and seeds are not independent; no confidence intervals or significance claim.
+- No raw-feature or checkpoint analysis; causal explanation not established.
+- High precision with small support is not acceptance evidence.
+- AP/BCE compare different targets across barriers; no automatic winner.
+
+**Kanıt kopyaları:**
+- [research/analyses/stability-20261017/REPORT.md](sources/c94f3e9be2616f7230e097de9352479033f8b810022fa45dc4c862ae0c956d14.md) · SHA256 `c94f3e9be2616f7230e097de9352479033f8b810022fa45dc4c862ae0c956d14`
+- [research/analyses/stability-20261017/PROVENANCE.md](sources/4939e78d970a206240eb50221e4cef7acfaa3c0ce5b4004a842ce2abe0464009.md) · SHA256 `4939e78d970a206240eb50221e4cef7acfaa3c0ce5b4004a842ce2abe0464009`
+- [research/analyses/stability-20261017/fold_seed_diagnostics.csv](sources/e3780d896d2e424762d832a89017275e7ce3e54fdbb0c36e4355f42c876d0f36.csv) · SHA256 `e3780d896d2e424762d832a89017275e7ce3e54fdbb0c36e4355f42c876d0f36`
+- [research/analyses/stability-20261017/threshold_stability.csv](sources/7f8cfe0e5bd18ff1158e795212c76edc41fdcbddc4ceb5bfa9e9406e4a198c99.csv) · SHA256 `7f8cfe0e5bd18ff1158e795212c76edc41fdcbddc4ceb5bfa9e9406e4a198c99`
+- [reports/stability-20261017/analysis-source.txt](sources/28891434c59711511f4d6df50d0d2ab087127b3e54d3381436003e17caf7d7cc.txt) · SHA256 `28891434c59711511f4d6df50d0d2ab087127b3e54d3381436003e17caf7d7cc`
+
+[Son kayıt](events/000032.json) · revizyon 1 · Authorized diagnosis of validation score shift, discrimination and threshold recurrence; no training or test.
