@@ -1,0 +1,74 @@
+{
+  "previous_sha256": "831a744d0465cae859ecfe594ee74da043ed0720a0db6679d2fe614d6d2ea9e8",
+  "reason": "User selected A6/B37/C37/D37; register before Colab training.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "User chose four structures; prepare isolated A100 notebook, rerun A control in same environment, preserve historical runs. No real training executed.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/feature-comparison-20261018/PLAN.md",
+        "path": "sources/93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1.md",
+        "sha256": "93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1"
+      }
+    ],
+    "id": "exp-021-feature-comparison",
+    "limitations": [
+      "A vs C/D changes both inputs and architecture; do not claim pure architecture effect.",
+      "Parameter budgets differ; no universal architecture ranking.",
+      "Validation reused for epoch selection; folds/seeds dependent.",
+      "Colab training and real Drive reconstruction not yet executed."
+    ],
+    "method": {
+      "architectures": [
+        "gru",
+        "gru",
+        "tcn",
+        "tcn_gru"
+      ],
+      "changed_factor": "B/C/D34→37; original6 inputs preserved as subset",
+      "feature_counts": [
+        6,
+        37,
+        37,
+        37
+      ],
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "original_engine_unchanged": true,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "training_runs_planned": 456
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-001-a",
+      "exp-002-b",
+      "exp-003-c",
+      "exp-004-d",
+      "exp-020-original-questions-recap"
+    ],
+    "provenance": {
+      "executed": false,
+      "origin": "user-selected four-structure correction"
+    },
+    "question": "A özelliklerini içeren37 girdiyle GRU/TCN/hibrit nasıl karşılaştırılır; aynı GRU içinde6→37 özellik etkisi nedir?",
+    "results": [],
+    "selection_rule": "Original min-validation-BCE epoch rule; four candidates compared by macro validation BCE; threshold curves descriptive, no automatic threshold.",
+    "status": "planned",
+    "title": "A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma"
+  },
+  "recorded_at": "2026-10-18T19:52:50.062751+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 36
+}

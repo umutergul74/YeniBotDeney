@@ -14,9 +14,10 @@ Aktif kullanıcı akışı **workflows/** içindeki görev notebooklarıdır:
 | [01 · Veri kurtarma](workflows/01_recover_data.ipynb) | Eski hazırlanmış tablolar eksikse | SHA doğrulanmış A ve B/C/D tabloları |
 | [02 · Araştırma](workflows/02_research.ipynb) | Sabit protokolü yeni izole ortamda çalıştırmak için | Seçilen aşamanın model, checkpoint ve raporları |
 | [03 · Arşiv denetimi](workflows/03_audit_archive.ipynb) | Tamamlanmış final dosyalarını doğrulamak için | Salt okunur denetim raporu |
+| [05 · Özellik kapsamı düzeltmesi](workflows/05_feature_comparison.ipynb) | A6/B37/C37/D37; tek 2/5 bariyer, A100 | Eşit özellik kapsamıyla456 train/validation sonucu; test yok |
 | [04 · Seçici sinyal](workflows/04_barrier_study.ipynb) | Altı bariyer, özgün 33.551 saat / 38 fold | Validation seçicilik raporları; test/eşik kilidi yok |
 
-**Güncel çalışma 04'tür:** [seçici sinyal planı](../research/analyses/selective-walkforward-20261016/PLAN.md).
+**Altı bariyer çalışması 04'tür:** [seçici sinyal planı](../research/analyses/selective-walkforward-20261016/PLAN.md).
 `advisor-selective-v1.1.0` yayını ve yeni `selective_a100_v11_001`
 workspace'i kullanılır. Önceki tek ayrımlı bariyer notebookları farklı kohorttur;
 bu çalışma için kullanılmaz. Eski modeller ve sonuçlar korunur.
@@ -39,6 +40,12 @@ Bu sürüm sıfırdan yeni piyasa verisi indiren bir araştırma protokolü sunm
 Bir oturum bir aşamadır. Aynı sürüm ve workspace ile aşama değiştirilebilir;
 aynı workspace'e eşzamanlı iki oturum yazamaz. Eğitim varsayılan kapalıdır.
 basic 114, full 342, wavelet 114, loss 456 fold/seed çalışması planlar.
+
+## Özellik karşılaştırmasını düzeltme
+
+18 Ekim çalışması için **05** kullanılır: [tasarım ve sabit koşullar](../research/analyses/feature-comparison-20261018/PLAN.md).
+A–B özellik genişletmesini, B/C/D aynı37 girdiyle mimari farkını ölçer.
+A kontrolü dahil dört yapı aynı yeni A100 workspace'inde çalışır.
 
 ## Eski 08, 09, 10 ne oldu?
 

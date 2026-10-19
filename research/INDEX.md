@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**20 deney/plan · 35 geçmiş kaydı**
+**21 deney/plan · 36 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -28,6 +28,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-018-validation-stability](#exp-018-validation-stability) | Puan dağılımı, sıralama gücü ve dönem/seed kararlılığı teşhisi | completed | mixed |
 | [exp-019-root-cause-probes](#exp-019-root-cause-probes) | Eski proje incelemesi ve validation üzerinde neden/çözüm yoklaması | completed | mixed |
 | [exp-020-original-questions-recap](#exp-020-original-questions-recap) | Özgün A/B/C/D eşik eğrileri ve altı bariyer dağılımı | completed | mixed |
+| [exp-021-feature-comparison](#exp-021-feature-comparison) | A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1380,3 +1381,34 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/question-recap-20261017/six_barrier_timeout_returns.csv](sources/ef9d0102b54145c2093ab6275361b4917829d8545f6fdab1d1580c759a2e2024.csv) · SHA256 `ef9d0102b54145c2093ab6275361b4917829d8545f6fdab1d1580c759a2e2024`
 
 [Son kayıt](events/000035.json) · revizyon 1 · Complete original four-model threshold diagnostics and consolidate six existing barrier distributions; no training/test.
+
+## exp-021-feature-comparison
+
+**A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma**
+
+A özelliklerini içeren37 girdiyle GRU/TCN/hibrit nasıl karşılaştırılır; aynı GRU içinde6→37 özellik etkisi nedir?
+
+Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-001-a, exp-002-b, exp-003-c, exp-004-d, exp-020-original-questions-recap
+
+**Yöntem:** {"architectures": ["gru", "gru", "tcn", "tcn_gru"], "changed_factor": "B/C/D34→37; original6 inputs preserved as subset", "feature_counts": [6, 37, 37, 37], "hardware": "NVIDIA A100-SXM4-40GB", "original_engine_unchanged": true, "seeds": [42, 43, 44], "training_runs_planned": 456}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Original min-validation-BCE epoch rule; four candidates compared by macro validation BCE; threshold curves descriptive, no automatic threshold.
+
+**Karar / öğrenilen:** User chose four structures; prepare isolated A100 notebook, rerun A control in same environment, preserve historical runs. No real training executed.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- A vs C/D changes both inputs and architecture; do not claim pure architecture effect.
+- Parameter budgets differ; no universal architecture ranking.
+- Validation reused for epoch selection; folds/seeds dependent.
+- Colab training and real Drive reconstruction not yet executed.
+
+**Kanıt kopyaları:**
+- [research/analyses/feature-comparison-20261018/PLAN.md](sources/93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1.md) · SHA256 `93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1`
+
+[Son kayıt](events/000036.json) · revizyon 1 · User selected A6/B37/C37/D37; register before Colab training.

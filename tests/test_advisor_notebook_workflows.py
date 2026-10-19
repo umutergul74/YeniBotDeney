@@ -30,7 +30,11 @@ class WorkflowTests(unittest.TestCase):
                 compile(source, path.name, 'exec')
             joined = '\n'.join(code)
             self.assertIn('umutergul74/YeniBotDeney.git', joined)
-            self.assertIn('advisor-selective-v1.1.0' if path.name == '04_barrier_study.ipynb' else 'advisor-notebooks-v2.1.0', joined)
+            release = {
+                '04_barrier_study.ipynb': 'advisor-selective-v1.1.0',
+                '05_feature_comparison.ipynb': 'advisor-feature-comparison-v1.0.0',
+            }.get(path.name, 'advisor-notebooks-v2.1.0')
+            self.assertIn(release, joined)
             self.assertNotIn('import torch', joined)
             self.assertNotIn('evaluate-test', joined)
             self.assertTrue(all(not c.get('outputs') for c in notebook['cells']))
