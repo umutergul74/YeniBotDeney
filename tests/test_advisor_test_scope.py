@@ -15,6 +15,15 @@ class ScopeTests(unittest.TestCase):
         self.assertEqual(plan['scope'], 'docs')
         self.assertEqual(plan['tests'], [])
 
+    def test_feature_report_views_are_focused_but_engine_changes_are_full(self):
+        paths = ['yenibot/experiment/advisor_feature_report.py',
+                 'scripts/build_advisor_feature_notebook.py',
+                 'notebooks/workflows/05_feature_comparison.ipynb']
+        plan = module.classify(paths)
+        self.assertEqual(plan['scope'], 'targeted')
+        self.assertIn('tests/test_advisor_feature_report.py', plan['tests'])
+        self.assertEqual(module.classify(paths + ['yenibot/experiment/advisor_feature_comparison.py'])['scope'], 'full')
+
     def test_bootstrap_and_backend_regression_select_only_related_tests(self):
         plan = module.classify(['scripts/bootstrap_advisor.py', 'scripts/advisor_workspace.py'])
         self.assertEqual(plan['scope'], 'targeted')

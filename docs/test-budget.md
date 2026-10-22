@@ -11,6 +11,7 @@ This applies to local work and CI, including future sessions.
 | Bootstrap | Two bootstrap regressions |
 | Notebook launcher/backend | Parameterized launcher import regression |
 | Notebook generator/cells | Notebook structure/syntax and regeneration check |
+| Separate feature-comparison report views | Synthetic metric/aggregation/render checks, feature notebook and workflow regressions; frozen engine remains full-scope |
 | Runtime environment only | Environment and launcher regressions |
 | Runtime identity/frozen artifacts, data/labels/splits, scientific config, dependencies | Full suite once after stabilization |
 | Unmapped code | Conservative full suite; add a justified focused mapping when appropriate |

@@ -70,6 +70,14 @@ def classify(paths: list[str], *, runtime_environment_only=False, force_full=Fal
             if path == 'scripts/build_advisor_notebooks_v2.py':
                 targets.add('tests/test_advisor_notebook_workflows.py')
             notebook_check |= 'build_advisor' in path
+        elif path == 'yenibot/experiment/advisor_feature_report.py':
+            # Separate descriptive views only; frozen training/data contracts untouched.
+            targets.add('tests/test_advisor_feature_report.py')
+        elif path in {'scripts/build_advisor_feature_notebook.py',
+                      'notebooks/workflows/05_feature_comparison.ipynb'}:
+            targets.update({'tests/test_advisor_feature_report.py',
+                            'tests/test_advisor_feature_comparison.py',
+                            'tests/test_advisor_notebook_workflows.py'})
         elif path == RUNTIME and runtime_environment_only:
             targets.update(WORKSPACE_TEST + '::' + name for name in ENVIRONMENT_TESTS)
         elif path in {'notebooks/workflows/01_recover_data.ipynb',

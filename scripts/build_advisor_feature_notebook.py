@@ -1,5 +1,6 @@
 """Build the thin Colab entry for the four-structure feature correction."""
 import json
+import hashlib
 from pathlib import Path
 from textwrap import dedent
 
@@ -7,6 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def build():
+    report_hash=hashlib.sha256((ROOT/'yenibot/experiment/advisor_feature_report.py').read_bytes()).hexdigest()
     cells=[]
     def cell(kind,text):
         record={'cell_type':kind,'metadata':{},'source':dedent(text).strip()+'\n'}
@@ -34,6 +36,7 @@ def build():
     ALLOW_TRAINING=True  # 4 x38 x3 eğitim; False yalnız hazırlık/rapor içindir.
     AUTO_DISCONNECT=True
     RELEASE='advisor-feature-comparison-v1.0.0'
+    REPORT_RELEASE='advisor-feature-reports-v1.0.0'  # Rapor kodu ayrı; eğitim sürümü korunur.
     REPO=Path('/content/advisor_feature_comparison_repo')
     RUNTIME=Path('/content/advisor_feature_comparison_runtime')
     SUCCESS=set()
@@ -89,10 +92,41 @@ def build():
     cell('code',"step('prepare')")
     cell('markdown','## A, B, C, D eğitimleri — aynı A100 ortamında\nTamamlanan foldlar korunur; yarım eğitimler aynı kimlikle devam eder.')
     cell('code',"step('train')")
-    cell('markdown','## Validation raporları — dört yapı tamamlanmadan eksik ortalama üretilmez')
-    cell('code',"step('report')\nfrom IPython.display import display,Image\ndisplay(Image(filename=str(ROOT/'reports/thresholds.png')))\nprint((ROOT/'reports/validation_summary.csv').read_text())")
+    cell('markdown','''
+    ## Açıklanabilir validation raporları
+    Dört yapı tamamlanmadan ortalama üretilmez. Eğitim aynı sabit v1 sürümünde kalır;
+    yalnız rapor yardımcısı ayrı sürüm ve SHA256 ile indirilir. Eski eğitim klasörünü
+    değiştirmeyin. Tamamlanan foldlar atlanır, kalanlar mevcut checkpoint'ten sürer.
+    Önce 0,50 referans tablosunu; sonra eşik, seed ve dönem grafiklerini okuyun.
+    Sinyal yoksa precision boş bırakılır. Toplam sinyallerin precision'ı ile yalnız
+    sinyal veren foldların precision ortalaması ayrı CSV sütunlarıdır.
+    Seed/fold toplamları bağımsız veya benzersiz işlem sayısı değildir.
+    ''')
+    cell('code',f'''
+    import urllib.request
+    SUCCESS.difference_update(['report','bundle'])
+    helper=RUNTIME/'feature_report_v1.py'
+    url=f'https://raw.githubusercontent.com/umutergul74/YeniBotDeney/{{REPORT_RELEASE}}/yenibot/experiment/advisor_feature_report.py'
+    payload=urllib.request.urlopen(url,timeout=60).read()
+    assert hashlib.sha256(payload).hexdigest()=='{report_hash}', 'Rapor yardımcısı hash uyuşmazlığı'
+    helper.write_bytes(payload)
+    logged([PYTHON,'-I',str(helper),'--repo',str(REPO),'--root',str(ROOT)],'explained_report.log')
+    SUCCESS.add('report')
+    from IPython.display import display,Image,Markdown
+    import csv
+    REPORTS=ROOT/'reports/explained_v1'
+    display(Markdown((REPORTS/'README.md').read_text()))
+    for name in ['01_threshold_comparison.png','02_seed_thresholds.png','03_period_stability.png']:
+        display(Image(filename=str(REPORTS/name)))
+    print('Son fold / 0,50 referansı (precision boşsa sinyal yoktur):')
+    with (REPORTS/'latest_fold_thresholds.csv').open() as stream:
+        for row in csv.DictReader(stream):
+            if float(row['threshold'])==0.5:
+                print({{k:row[k] for k in ['model','seed','validation_end','precision','recall','f1','signals']}})
+    ''')
     cell('markdown','## Review ZIP, Drive doğrulaması ve otomatik kapanış\nAğırlıklar ZIP dışında, runs klasöründe kalır. Yeniden bağlanınca dosyalar eşleşmezse oturum kapanmaz.')
     cell('code','''
+    if 'report' not in SUCCESS:raise RuntimeError('Önce açıklanabilir rapor hücresini tamamlayın')
     step('bundle')
     if not {'report','bundle'}<=SUCCESS:raise RuntimeError('Rapor/ZIP tamamlanmadı')
     def digest(path):

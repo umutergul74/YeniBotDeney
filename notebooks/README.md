@@ -45,6 +45,11 @@ basic 114, full 342, wavelet 114, loss 456 fold/seed çalışması planlar.
 
 18 Ekim çalışması için **05** kullanılır: [tasarım ve sabit koşullar](../research/analyses/feature-comparison-20261018/PLAN.md).
 A–B özellik genişletmesini, B/C/D aynı37 girdiyle mimari farkını ölçer.
+
+22 Ekim [rapor güncellemesi](../research/analyses/feature-comparison-20261018/REPORTING.md)
+eğitim sürümünü sabit tutar; mevcut A/B sonuçları yeniden eğitilmez.
+`reports/explained_v1` altında seed/dönem grafikleri, sinyal desteği ve son fold
+tabloları bulunur. Rapor yardımcısı ayrı sürüm ve SHA256 ile doğrulanır.
 A kontrolü dahil dört yapı aynı yeni A100 workspace'inde çalışır.
 
 ## Eski 08, 09, 10 ne oldu?
