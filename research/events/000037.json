@@ -1,0 +1,153 @@
+{
+  "previous_sha256": "386719201aeaca0ec1fcce963a623ec6b567e5813eb7bc5c670ce32c6f1756e6",
+  "reason": "Complete requested literature and archived-validation economic diagnostics without training or final test.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "archived validation predictions only; unique hours per seed 27657",
+      "labels_id": "tp2-sl5 / tp1-sl1 / tp2-sl2 h10 stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "No documented special rationale for 2/5 found. Positive overall gross signal returns coexist with weak last-fold performance and aggregation sensitivity; no winner or final test.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/PLAN.md",
+        "path": "sources/eb4750b6e8d12314d63d3a082c2cb71faaa9409f4e043e4c2b3a859ac701e1fb.md",
+        "sha256": "eb4750b6e8d12314d63d3a082c2cb71faaa9409f4e043e4c2b3a859ac701e1fb"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/LITERATURE.md",
+        "path": "sources/54dff36d0700d2ef30281085c25a7bdf5ad8ccec43bc0310cc0ba0a0daa93214.md",
+        "sha256": "54dff36d0700d2ef30281085c25a7bdf5ad8ccec43bc0310cc0ba0a0daa93214"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/REPORT.md",
+        "path": "sources/706e27414f8369ab2bb47e6fcd4c2468f5579ca1fc57bc80a35d0cd1ebd0a456.md",
+        "sha256": "706e27414f8369ab2bb47e6fcd4c2468f5579ca1fc57bc80a35d0cd1ebd0a456"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/selected_thresholds.csv",
+        "path": "sources/8d95b7f865bb83562eb945f857cf127369743dc5b8505272fc02d9929a1db9b8.csv",
+        "sha256": "8d95b7f865bb83562eb945f857cf127369743dc5b8505272fc02d9929a1db9b8"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/fold_macro_threshold05.csv",
+        "path": "sources/920b2ec801b9df25bbbf2af9618196f5c7bf72b6454edc389ef179e83b7017aa.csv",
+        "sha256": "920b2ec801b9df25bbbf2af9618196f5c7bf72b6454edc389ef179e83b7017aa"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/last_fold_threshold05.csv",
+        "path": "sources/491d848213f6362c94b8a1cb72ce5599948d0788c4378512692d9c258250c253.csv",
+        "sha256": "491d848213f6362c94b8a1cb72ce5599948d0788c4378512692d9c258250c253"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/input_manifest.json",
+        "path": "sources/2b99953ab813c5a2e41254b3fa70450e10bf2576b0226d04b612f881f0a48585.json",
+        "sha256": "2b99953ab813c5a2e41254b3fa70450e10bf2576b0226d04b612f881f0a48585"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/checks.json",
+        "path": "sources/db19147660b34af13acb5de62f4d525a571235330c0d98e635631dbb4f63126c.json",
+        "sha256": "db19147660b34af13acb5de62f4d525a571235330c0d98e635631dbb4f63126c"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261022/output_manifest.json",
+        "path": "sources/8471f1e5f7ac729d95c9a9f3cc6b7d03f068aeb971060b793edc63ee7a1ebfd0.json",
+        "sha256": "8471f1e5f7ac729d95c9a9f3cc6b7d03f068aeb971060b793edc63ee7a1ebfd0"
+      }
+    ],
+    "id": "exp-022-barrier-economics",
+    "limitations": [
+      "Epoch selection reused validation; not independent evaluation.",
+      "Overlapping hypothetical hourly positions, no portfolio simulation or costs.",
+      "Seed averages are not independent samples; high thresholds have few signals.",
+      "Primary aggregation differs from historical equal-fold means; both reported."
+    ],
+    "method": {
+      "architecture": "A6 GRU",
+      "candidates": [
+        "B25",
+        "B11",
+        "B22"
+      ],
+      "costs": "excluded",
+      "final_test": false,
+      "folds": 38,
+      "new_training": false,
+      "primary_aggregation": "latest validation fold per timestamp within each seed; equal seed means",
+      "secondary_aggregation": "equal active fold/seed groups",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "threshold_grid": "0..1 by 0.01"
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-018-validation-stability",
+      "exp-020-original-questions-recap"
+    ],
+    "provenance": {
+      "analysis_date": "2026-10-22",
+      "source_review_sha256": "76d09912ab27349d003041a4f2356fbe989cbd76601feaa4793d8e342ca16eff"
+    },
+    "question": "Başlangıç 2/5 oranının gerekçesi var mı; farklı eşiklerde sinyallerin ekonomik anlamı ve dönem kararlılığı nasıl?",
+    "results": [
+      {
+        "aggregation": "equal seed means after timestamp deduplication",
+        "cohort": "B11; 27657 hours/seed; threshold 0.50",
+        "metrics": {
+          "exit_lift_pp": 0.0256521604961986,
+          "exit_mean_pct": 0.0216299169378833,
+          "exit_win_pct": 51.65584417800227,
+          "h10_mean_pct": 0.1025210312785318,
+          "signals_mean": 5620.333333333333
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal seed means after timestamp deduplication",
+        "cohort": "B22; 27657 hours/seed; threshold 0.50",
+        "metrics": {
+          "exit_lift_pp": 0.0895444524862219,
+          "exit_mean_pct": 0.1046214970470031,
+          "exit_win_pct": 53.23371836748007,
+          "h10_mean_pct": 0.2596347265360973,
+          "signals_mean": 537.0
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal seed means after timestamp deduplication",
+        "cohort": "B25; 27657 hours/seed; threshold 0.50",
+        "metrics": {
+          "exit_lift_pp": 0.0691852979610864,
+          "exit_mean_pct": 0.1022369244407497,
+          "exit_win_pct": 60.81321788594886,
+          "h10_mean_pct": 0.2104272131895382,
+          "signals_mean": 1646.6666666666667
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Descriptive fixed grid, 0.5 reference; no barrier or threshold selected.",
+    "status": "completed",
+    "title": "2/5, 1/1 ve 2/2: validation sinyallerinin brüt getirileri"
+  },
+  "recorded_at": "2026-10-22T19:24:11.536838+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 37
+}

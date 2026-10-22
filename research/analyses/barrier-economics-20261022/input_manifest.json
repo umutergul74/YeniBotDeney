@@ -1,0 +1,22 @@
+[
+  {
+    "path": "reports/review-20261017/source.zip",
+    "sha256": "76d09912ab27349d003041a4f2356fbe989cbd76601feaa4793d8e342ca16eff"
+  },
+  {
+    "path": "evidence/prepared_recovery/v2.0.1/data/development_wavelet_off.parquet",
+    "sha256": "f6346a93ee4b97125d00e8d26223ba11a141806cdff675934e033a00940977a8"
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp2_sl5.csv",
+    "sha256": "e75a2e7acba8dd9e3b32224e1196dfb7d14483c13718659f4ad327cf19093f2c"
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp1_sl1.csv",
+    "sha256": "bd744559f2f20f89e6d8e3614e48c7df0933b1abb46b7726cd1d3f6be3b17b8f"
+  },
+  {
+    "path": "output/advisor_experiments/barrier-expansion-20261015/labels_tp2_sl2.csv",
+    "sha256": "dda69ce2216ce262c6da661dcf476e080490722ed38eec9fc9f0aad191b39ab6"
+  }
+]
