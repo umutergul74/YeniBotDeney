@@ -1,0 +1,159 @@
+{
+  "previous_sha256": "353e1df9069fb21961684727af90d6bdb8d520df87b90b77778b9c0d750a9075",
+  "reason": "Add B12 to requested positive-signal return diagnostics; preserve previous three candidates exactly.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "archived validation predictions only; unique hours per seed 27657",
+      "labels_id": "tp2-sl5 / tp1-sl1 / tp2-sl2 h10 stop-first / tp1-sl2 h10 stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "B12 added with identical validation methodology. Overall positive mean returns coexist with negative last-fold returns in all seeds at 0.50; no threshold or barrier selected.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/PLAN.md",
+        "path": "sources/9ff3ae7ed3c46da1ffc138e84da3e7f29ad2903930caeb2a195013b3d262ae65.md",
+        "sha256": "9ff3ae7ed3c46da1ffc138e84da3e7f29ad2903930caeb2a195013b3d262ae65"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/REPORT.md",
+        "path": "sources/0c32b97ae78bc83dddec1c22ec4a37d07932ecebca315f7d20230a3b8289b96b.md",
+        "sha256": "0c32b97ae78bc83dddec1c22ec4a37d07932ecebca315f7d20230a3b8289b96b"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/selected_thresholds.csv",
+        "path": "sources/199cf6674f904902a571a8e460d25bf209bc8d0787b2340678e20bb5dbf73930.csv",
+        "sha256": "199cf6674f904902a571a8e460d25bf209bc8d0787b2340678e20bb5dbf73930"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/fold_macro_threshold05.csv",
+        "path": "sources/c593f125db84ad9603c3231d63f37ebeaaaeac03a6e30bf81acf5ad9be92c6ac.csv",
+        "sha256": "c593f125db84ad9603c3231d63f37ebeaaaeac03a6e30bf81acf5ad9be92c6ac"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/last_fold_threshold05.csv",
+        "path": "sources/ad9cd041fa76ca7165a77294c8888b2fca6c87c5ab70b5fd09979a584491e5ef.csv",
+        "sha256": "ad9cd041fa76ca7165a77294c8888b2fca6c87c5ab70b5fd09979a584491e5ef"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/input_manifest.json",
+        "path": "sources/81b241c22da7d039384763a8a14fff36fbd2738da2227f3cc57629e2146205fa.json",
+        "sha256": "81b241c22da7d039384763a8a14fff36fbd2738da2227f3cc57629e2146205fa"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/checks.json",
+        "path": "sources/459fec04cac7f351c590e984eb9fd88fee58e26bba6be477ca17f0669cdb1dc4.json",
+        "sha256": "459fec04cac7f351c590e984eb9fd88fee58e26bba6be477ca17f0669cdb1dc4"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/barrier-economics-20261023/output_manifest.json",
+        "path": "sources/46615414d18a9c9cb96e1c682fee72ae20252809b8e18449ca19aa3dcf3cfd8c.json",
+        "sha256": "46615414d18a9c9cb96e1c682fee72ae20252809b8e18449ca19aa3dcf3cfd8c"
+      }
+    ],
+    "id": "exp-023-barrier-economics-b12",
+    "limitations": [
+      "Epoch selection reused validation; not independent evaluation.",
+      "Overlapping hypothetical hourly positions, no portfolio simulation or costs.",
+      "Seed averages are not independent samples; high thresholds have few signals.",
+      "Primary aggregation differs from historical equal-fold means; both reported."
+    ],
+    "method": {
+      "architecture": "A6 GRU",
+      "candidates": [
+        "B25",
+        "B11",
+        "B22",
+        "B12"
+      ],
+      "costs": "excluded",
+      "final_test": false,
+      "folds": 38,
+      "new_training": false,
+      "primary_aggregation": "latest validation fold per timestamp within each seed; equal seed means",
+      "secondary_aggregation": "equal active fold/seed groups",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "threshold_grid": "0..1 by 0.01"
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-022-barrier-economics"
+    ],
+    "provenance": {
+      "analysis_date": "2026-10-23",
+      "source_review_sha256": "76d09912ab27349d003041a4f2356fbe989cbd76601feaa4793d8e342ca16eff"
+    },
+    "question": "Pozitif model sinyallerinin gerçekleşen getirileri 1/2 bariyerinde nasıl değişiyor?",
+    "results": [
+      {
+        "aggregation": "equal seed means after timestamp deduplication",
+        "cohort": "B11; 27657 hours/seed; threshold 0.50",
+        "metrics": {
+          "exit_lift_pp": 0.0256521604961986,
+          "exit_mean_pct": 0.0216299169378833,
+          "exit_win_pct": 51.65584417800227,
+          "h10_mean_pct": 0.1025210312785318,
+          "signals_mean": 5620.333333333333
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal seed means after timestamp deduplication",
+        "cohort": "B12; 27657 hours/seed; threshold 0.50",
+        "metrics": {
+          "exit_lift_pp": 0.0161406959564704,
+          "exit_mean_pct": 0.0287486529517917,
+          "exit_win_pct": 63.54975824032587,
+          "h10_mean_pct": 0.095956534882796,
+          "signals_mean": 20716.33333333333
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal seed means after timestamp deduplication",
+        "cohort": "B22; 27657 hours/seed; threshold 0.50",
+        "metrics": {
+          "exit_lift_pp": 0.0895444524862219,
+          "exit_mean_pct": 0.1046214970470031,
+          "exit_win_pct": 53.23371836748007,
+          "h10_mean_pct": 0.2596347265360973,
+          "signals_mean": 537.0
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal seed means after timestamp deduplication",
+        "cohort": "B25; 27657 hours/seed; threshold 0.50",
+        "metrics": {
+          "exit_lift_pp": 0.0691852979610864,
+          "exit_mean_pct": 0.1022369244407497,
+          "exit_win_pct": 60.81321788594886,
+          "h10_mean_pct": 0.2104272131895382,
+          "signals_mean": 1646.6666666666667
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Descriptive fixed grid, 0.5 reference; no barrier or threshold selected.",
+    "status": "completed",
+    "title": "Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi"
+  },
+  "recorded_at": "2026-10-23T17:10:32.524725+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 38
+}

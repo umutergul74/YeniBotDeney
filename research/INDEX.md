@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**22 deney/plan · 37 geçmiş kaydı**
+**23 deney/plan · 38 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -30,6 +30,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-020-original-questions-recap](#exp-020-original-questions-recap) | Özgün A/B/C/D eşik eğrileri ve altı bariyer dağılımı | completed | mixed |
 | [exp-021-feature-comparison](#exp-021-feature-comparison) | A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma | planned | pending |
 | [exp-022-barrier-economics](#exp-022-barrier-economics) | 2/5, 1/1 ve 2/2: validation sinyallerinin brüt getirileri | completed | mixed |
+| [exp-023-barrier-economics-b12](#exp-023-barrier-economics-b12) | Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -261,6 +262,7 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-022-barrier-economics | — | — | — | — | — |
+| exp-023-barrier-economics-b12 | — | — | — | — | — |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -271,6 +273,7 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-022-barrier-economics | — | — | — | — | — |
+| exp-023-barrier-economics-b12 | — | — | — | — | — |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -281,6 +284,17 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-022-barrier-economics | — | — | — | — | — |
+| exp-023-barrier-economics-b12 | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+B12; 27657 hours/seed; threshold 0.50 · equal seed means after timestamp deduplication
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-023-barrier-economics-b12 | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -1510,3 +1524,79 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/barrier-economics-20261022/output_manifest.json](sources/8471f1e5f7ac729d95c9a9f3cc6b7d03f068aeb971060b793edc63ee7a1ebfd0.json) · SHA256 `8471f1e5f7ac729d95c9a9f3cc6b7d03f068aeb971060b793edc63ee7a1ebfd0`
 
 [Son kayıt](events/000037.json) · revizyon 1 · Complete requested literature and archived-validation economic diagnostics without training or final test.
+
+## exp-023-barrier-economics-b12
+
+**Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi**
+
+Pozitif model sinyallerinin gerçekleşen getirileri 1/2 bariyerinde nasıl değişiyor?
+
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-022-barrier-economics
+
+**Yöntem:** {"architecture": "A6 GRU", "candidates": ["B25", "B11", "B22", "B12"], "costs": "excluded", "final_test": false, "folds": 38, "new_training": false, "primary_aggregation": "latest validation fold per timestamp within each seed; equal seed means", "secondary_aggregation": "equal active fold/seed groups", "seeds": [42, 43, 44], "threshold_grid": "0..1 by 0.01"}
+
+**Veri kimliği:** {"evaluation_scope": "archived validation predictions only; unique hours per seed 27657", "labels_id": "tp2-sl5 / tp1-sl1 / tp2-sl2 h10 stop-first / tp1-sl2 h10 stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Descriptive fixed grid, 0.5 reference; no barrier or threshold selected.
+
+**Karar / öğrenilen:** B12 added with identical validation methodology. Overall positive mean returns coexist with negative last-fold returns in all seeds at 0.50; no threshold or barrier selected.
+
+**validation** · B11; 27657 hours/seed; threshold 0.50 · equal seed means after timestamp deduplication
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| exit_lift_pp | 0.025652 |
+| exit_mean_pct | 0.021630 |
+| exit_win_pct | 51.655844 |
+| h10_mean_pct | 0.102521 |
+| signals_mean | 5620.333333 |
+
+**validation** · B12; 27657 hours/seed; threshold 0.50 · equal seed means after timestamp deduplication
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| exit_lift_pp | 0.016141 |
+| exit_mean_pct | 0.028749 |
+| exit_win_pct | 63.549758 |
+| h10_mean_pct | 0.095957 |
+| signals_mean | 20716.333333 |
+
+**validation** · B22; 27657 hours/seed; threshold 0.50 · equal seed means after timestamp deduplication
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| exit_lift_pp | 0.089544 |
+| exit_mean_pct | 0.104621 |
+| exit_win_pct | 53.233718 |
+| h10_mean_pct | 0.259635 |
+| signals_mean | 537.000000 |
+
+**validation** · B25; 27657 hours/seed; threshold 0.50 · equal seed means after timestamp deduplication
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| exit_lift_pp | 0.069185 |
+| exit_mean_pct | 0.102237 |
+| exit_win_pct | 60.813218 |
+| h10_mean_pct | 0.210427 |
+| signals_mean | 1646.666667 |
+
+**Sınırlar / açık noktalar:**
+- Epoch selection reused validation; not independent evaluation.
+- Overlapping hypothetical hourly positions, no portfolio simulation or costs.
+- Seed averages are not independent samples; high thresholds have few signals.
+- Primary aggregation differs from historical equal-fold means; both reported.
+
+**Kanıt kopyaları:**
+- [research/analyses/barrier-economics-20261023/PLAN.md](sources/9ff3ae7ed3c46da1ffc138e84da3e7f29ad2903930caeb2a195013b3d262ae65.md) · SHA256 `9ff3ae7ed3c46da1ffc138e84da3e7f29ad2903930caeb2a195013b3d262ae65`
+- [research/analyses/barrier-economics-20261023/REPORT.md](sources/0c32b97ae78bc83dddec1c22ec4a37d07932ecebca315f7d20230a3b8289b96b.md) · SHA256 `0c32b97ae78bc83dddec1c22ec4a37d07932ecebca315f7d20230a3b8289b96b`
+- [research/analyses/barrier-economics-20261023/selected_thresholds.csv](sources/199cf6674f904902a571a8e460d25bf209bc8d0787b2340678e20bb5dbf73930.csv) · SHA256 `199cf6674f904902a571a8e460d25bf209bc8d0787b2340678e20bb5dbf73930`
+- [research/analyses/barrier-economics-20261023/fold_macro_threshold05.csv](sources/c593f125db84ad9603c3231d63f37ebeaaaeac03a6e30bf81acf5ad9be92c6ac.csv) · SHA256 `c593f125db84ad9603c3231d63f37ebeaaaeac03a6e30bf81acf5ad9be92c6ac`
+- [research/analyses/barrier-economics-20261023/last_fold_threshold05.csv](sources/ad9cd041fa76ca7165a77294c8888b2fca6c87c5ab70b5fd09979a584491e5ef.csv) · SHA256 `ad9cd041fa76ca7165a77294c8888b2fca6c87c5ab70b5fd09979a584491e5ef`
+- [research/analyses/barrier-economics-20261023/input_manifest.json](sources/81b241c22da7d039384763a8a14fff36fbd2738da2227f3cc57629e2146205fa.json) · SHA256 `81b241c22da7d039384763a8a14fff36fbd2738da2227f3cc57629e2146205fa`
+- [research/analyses/barrier-economics-20261023/checks.json](sources/459fec04cac7f351c590e984eb9fd88fee58e26bba6be477ca17f0669cdb1dc4.json) · SHA256 `459fec04cac7f351c590e984eb9fd88fee58e26bba6be477ca17f0669cdb1dc4`
+- [research/analyses/barrier-economics-20261023/output_manifest.json](sources/46615414d18a9c9cb96e1c682fee72ae20252809b8e18449ca19aa3dcf3cfd8c.json) · SHA256 `46615414d18a9c9cb96e1c682fee72ae20252809b8e18449ca19aa3dcf3cfd8c`
+
+[Son kayıt](events/000038.json) · revizyon 1 · Add B12 to requested positive-signal return diagnostics; preserve previous three candidates exactly.

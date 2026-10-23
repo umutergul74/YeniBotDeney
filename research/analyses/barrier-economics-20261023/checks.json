@@ -1,0 +1,9 @@
+{
+  "prediction_files": 456,
+  "groups": 456,
+  "raw_predictions_per_candidate": 115938,
+  "unique_hours_per_seed": 27657,
+  "test_files_read": 0,
+  "tests": "synthetic metric checks; SHA256; cohort/label/return/protocol/0.5 parity passed",
+  "prior_candidate_tables_identical": 6
+}

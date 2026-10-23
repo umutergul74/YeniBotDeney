@@ -1,0 +1,54 @@
+[
+  {
+    "path": "analyze.py",
+    "sha256": "3f9d5b1dac3f3395689735823b12c17b5aacbacf2dd0f1495f145775d3620d53"
+  },
+  {
+    "path": "checks.json",
+    "sha256": "459fec04cac7f351c590e984eb9fd88fee58e26bba6be477ca17f0669cdb1dc4"
+  },
+  {
+    "path": "exit_thresholds.png",
+    "sha256": "212ddb6a9774671bc28b521adec7b29ad646ecbff1a3d03de2ff41da9778d7f7"
+  },
+  {
+    "path": "fold_macro_threshold05.csv",
+    "sha256": "c593f125db84ad9603c3231d63f37ebeaaaeac03a6e30bf81acf5ad9be92c6ac"
+  },
+  {
+    "path": "h10_thresholds.png",
+    "sha256": "c6ee3580eefdd6468562ab65eb3499f0ed30ce05ec075a99888d4323fd89f937"
+  },
+  {
+    "path": "input_manifest.json",
+    "sha256": "81b241c22da7d039384763a8a14fff36fbd2738da2227f3cc57629e2146205fa"
+  },
+  {
+    "path": "last_fold_threshold05.csv",
+    "sha256": "ad9cd041fa76ca7165a77294c8888b2fca6c87c5ab70b5fd09979a584491e5ef"
+  },
+  {
+    "path": "PLAN.md",
+    "sha256": "9ff3ae7ed3c46da1ffc138e84da3e7f29ad2903930caeb2a195013b3d262ae65"
+  },
+  {
+    "path": "REPORT.md",
+    "sha256": "0c32b97ae78bc83dddec1c22ec4a37d07932ecebca315f7d20230a3b8289b96b"
+  },
+  {
+    "path": "seed_thresholds.csv",
+    "sha256": "2e9e519170e2547df83232a7661310d55dee91fdf19e23aec19a3f5efa94a0de"
+  },
+  {
+    "path": "selected_thresholds.csv",
+    "sha256": "199cf6674f904902a571a8e460d25bf209bc8d0787b2340678e20bb5dbf73930"
+  },
+  {
+    "path": "threshold_summary.csv",
+    "sha256": "80216ec155058db4dc18f3159af305e641a81060439a6ddc57ad21aa2ef9eb00"
+  },
+  {
+    "path": "year_seed_metrics.csv",
+    "sha256": "87845a2c08bf6a4e65b3ec17063cf51941e00d8e0bd355ecda51c5e262e8f9be"
+  }
+]
