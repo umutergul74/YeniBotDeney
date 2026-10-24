@@ -1,0 +1,72 @@
+{
+  "previous_sha256": "d81fdbf4535c12bcda5e5d98ebf3fa73763e03f0880c83978915ae89bda8a0da",
+  "reason": "User authorized descriptive threshold comparison using existing predictions.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Upper scores contract; at comparable coverage precision is similar. High precision is supported by few records and sparse folds. No final test or new training.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-thresholds-20261024/REPORT.md",
+        "path": "sources/9dd516fb8609e0f77574196e862a2ca6dfe5891de10273dfcb62b6fe2919cfda.md",
+        "sha256": "9dd516fb8609e0f77574196e862a2ca6dfe5891de10273dfcb62b6fe2919cfda"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-thresholds-20261024/checks.json",
+        "path": "sources/7825da588be2a343d2bfcd6b0e5e193031d07da9689f729cfe895d98050f4b8c.json",
+        "sha256": "7825da588be2a343d2bfcd6b0e5e193031d07da9689f729cfe895d98050f4b8c"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-thresholds-20261024/selected_thresholds.csv",
+        "path": "sources/115581707d14100c8b46ee6e265e2ceb47e5f2bb9cb07dfde6c7824b72b7e301.csv",
+        "sha256": "115581707d14100c8b46ee6e265e2ceb47e5f2bb9cb07dfde6c7824b72b7e301"
+      }
+    ],
+    "id": "exp-026-learning-rate-thresholds",
+    "limitations": [
+      "Validation reused for epoch selection and descriptive threshold inspection.",
+      "Overlapping folds/seeds are not independent trades.",
+      "No threshold or new feature group authorized by this report."
+    ],
+    "method": {
+      "aggregation": "pooled confusion counts over fold/seed prediction instances; no deduplication",
+      "coverage_match": "nearest candidate signal rate to control threshold0.5; descriptive only",
+      "scope": "existing validation predictions only",
+      "threshold_grid": "0..1 step0.005"
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-025-b37-learning-rate"
+    ],
+    "question": "Düşük hızda skor dağılımı ve eşik değişimi seçiciliği nasıl etkiliyor?",
+    "results": [
+      {
+        "aggregation": "pooled fold/seed counts",
+        "cohort": "candidate threshold0.465; descriptive matched coverage",
+        "metrics": {
+          "empty_runs": 9,
+          "precision": 0.4466935414701089,
+          "recall": 0.14469078179696615,
+          "signal_rate": 0.1005623695423416
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "No threshold selected; original min-BCE epoch weights unchanged.",
+    "status": "completed",
+    "title": "B37 öğrenme hızları: validation eşik ve sinyal kapsamı"
+  },
+  "recorded_at": "2026-10-24T16:40:06.809342+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 43
+}

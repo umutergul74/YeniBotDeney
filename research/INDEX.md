@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**25 deney/plan · 42 geçmiş kaydı**
+**26 deney/plan · 43 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -33,6 +33,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-023-barrier-economics-b12](#exp-023-barrier-economics-b12) | Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi | completed | mixed |
 | [exp-024-early-epoch-diagnostics](#exp-024-early-epoch-diagnostics) | A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi | completed | mixed |
 | [exp-025-b37-learning-rate](#exp-025-b37-learning-rate) | B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001 | completed | mixed |
+| [exp-026-learning-rate-thresholds](#exp-026-learning-rate-thresholds) | B37 öğrenme hızları: validation eşik ve sinyal kapsamı | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -397,6 +398,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-025-b37-learning-rate | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+candidate threshold0.465; descriptive matched coverage · pooled fold/seed counts
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-026-learning-rate-thresholds | — | — | 0.446694 | 0.144691 | — |
 
 ## exp-001-a
 
@@ -1917,3 +1928,42 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/learning-rate-review-20261024/audit_by_run.csv](sources/3b739a1f8861b151b3fd8ca830ef552439a28dd491a8e27ed91413338492fa5d.csv) · SHA256 `3b739a1f8861b151b3fd8ca830ef552439a28dd491a8e27ed91413338492fa5d`
 
 [Son kayıt](events/000042.json) · revizyon 2 · Review user-completed Colab ZIP; verify 114 paired runs against original control evidence.
+
+## exp-026-learning-rate-thresholds
+
+**B37 öğrenme hızları: validation eşik ve sinyal kapsamı**
+
+Düşük hızda skor dağılımı ve eşik değişimi seçiciliği nasıl etkiliyor?
+
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-025-b37-learning-rate
+
+**Yöntem:** {"aggregation": "pooled confusion counts over fold/seed prediction instances; no deduplication", "coverage_match": "nearest candidate signal rate to control threshold0.5; descriptive only", "scope": "existing validation predictions only", "threshold_grid": "0..1 step0.005"}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** No threshold selected; original min-BCE epoch weights unchanged.
+
+**Karar / öğrenilen:** Upper scores contract; at comparable coverage precision is similar. High precision is supported by few records and sparse folds. No final test or new training.
+
+**validation** · candidate threshold0.465; descriptive matched coverage · pooled fold/seed counts
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| empty_runs | 9.000000 |
+| precision | 0.446694 |
+| recall | 0.144691 |
+| signal_rate | 0.100562 |
+
+**Sınırlar / açık noktalar:**
+- Validation reused for epoch selection and descriptive threshold inspection.
+- Overlapping folds/seeds are not independent trades.
+- No threshold or new feature group authorized by this report.
+
+**Kanıt kopyaları:**
+- [research/analyses/learning-rate-thresholds-20261024/REPORT.md](sources/9dd516fb8609e0f77574196e862a2ca6dfe5891de10273dfcb62b6fe2919cfda.md) · SHA256 `9dd516fb8609e0f77574196e862a2ca6dfe5891de10273dfcb62b6fe2919cfda`
+- [research/analyses/learning-rate-thresholds-20261024/checks.json](sources/7825da588be2a343d2bfcd6b0e5e193031d07da9689f729cfe895d98050f4b8c.json) · SHA256 `7825da588be2a343d2bfcd6b0e5e193031d07da9689f729cfe895d98050f4b8c`
+- [research/analyses/learning-rate-thresholds-20261024/selected_thresholds.csv](sources/115581707d14100c8b46ee6e265e2ceb47e5f2bb9cb07dfde6c7824b72b7e301.csv) · SHA256 `115581707d14100c8b46ee6e265e2ceb47e5f2bb9cb07dfde6c7824b72b7e301`
+
+[Son kayıt](events/000043.json) · revizyon 1 · User authorized descriptive threshold comparison using existing predictions.
