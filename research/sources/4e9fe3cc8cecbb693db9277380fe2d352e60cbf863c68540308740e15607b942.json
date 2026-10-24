@@ -1,0 +1,28 @@
+{
+  "account": "icinbedava34@gmail.com",
+  "retrieved_date": "2026-10-24",
+  "folder_url": "https://drive.google.com/drive/folders/1sPnnsWA70j1aWu54OWtatrp0oB3dtcIc",
+  "files": [
+    {
+      "name": "summary_at_050.csv",
+      "url": "https://drive.google.com/file/d/1eWVz2esKs3KWo1fW4yoTMu1kxcpSFwyE/view?usp=drivesdk",
+      "modified_time": "2026-10-22T18:50:52.902Z",
+      "size": "1317",
+      "format": "Drive connector text snapshot of CSV"
+    },
+    {
+      "name": "paired_differences.csv",
+      "url": "https://drive.google.com/file/d/1crlCPnfhh7bt7Nw7hWww4FrjSCPBiIMm/view?usp=drivesdk",
+      "modified_time": "2026-10-22T18:50:52.893Z",
+      "size": "28719",
+      "format": "Drive connector text snapshot of CSV"
+    },
+    {
+      "name": "metrics_by_fold_seed.csv",
+      "url": "https://drive.google.com/file/d/1fjtCerP_jf44h24NjAGKp0vVT6dOVSIK/view?usp=drivesdk",
+      "modified_time": "2026-10-22T18:50:52.876Z",
+      "size": "110355",
+      "format": "Drive connector text snapshot of CSV"
+    }
+  ]
+}

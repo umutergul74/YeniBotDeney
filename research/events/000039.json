@@ -1,0 +1,146 @@
+{
+  "previous_sha256": "f64f92308f5088e1a440daf1080cf97fa47a36b233e50b3d687e3b915e0c3fde",
+  "reason": "Correct stale planned status using completed Drive reports; user confirms comparison already run.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Drive reports confirm A6/B37/C37/D37 completed. A still leads mean validation BCE/AP in all three seeds; richer models have higher AP in the last fold. No retraining or new method authorized.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/feature-comparison-20261018/PLAN.md",
+        "path": "sources/93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1.md",
+        "sha256": "93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/feature-comparison-review-20261024/REPORT.md",
+        "path": "sources/7ffe7971dd8aeb94e94d4661b8460e3e510a01be758d10f419c6a985983b470f.md",
+        "sha256": "7ffe7971dd8aeb94e94d4661b8460e3e510a01be758d10f419c6a985983b470f"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/feature-comparison-review-20261024/summary_at_050.csv",
+        "path": "sources/9fb9b65172b341411cdf78d8ef792ae40e4986b53fb46355cf3f4db33a76a390.csv",
+        "sha256": "9fb9b65172b341411cdf78d8ef792ae40e4986b53fb46355cf3f4db33a76a390"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/feature-comparison-review-20261024/paired_differences.csv",
+        "path": "sources/45c23b6c183cdbd5f4adb6dfb886d64803895632f61a6041ac5781f59979030a.csv",
+        "sha256": "45c23b6c183cdbd5f4adb6dfb886d64803895632f61a6041ac5781f59979030a"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/feature-comparison-review-20261024/metrics_by_fold_seed.csv",
+        "path": "sources/ee41d73ba8413799b7f55f08f424ded15e4edf4037c13adf37131d3e9f143fe7.csv",
+        "sha256": "ee41d73ba8413799b7f55f08f424ded15e4edf4037c13adf37131d3e9f143fe7"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/feature-comparison-review-20261024/drive_sources.json",
+        "path": "sources/4e9fe3cc8cecbb693db9277380fe2d352e60cbf863c68540308740e15607b942.json",
+        "sha256": "4e9fe3cc8cecbb693db9277380fe2d352e60cbf863c68540308740e15607b942"
+      }
+    ],
+    "id": "exp-021-feature-comparison",
+    "limitations": [
+      "A vs C/D changes both inputs and architecture; do not claim pure architecture effect.",
+      "Parameter budgets differ; no universal architecture ranking.",
+      "Validation reused for epoch selection; folds/seeds dependent.",
+      "Drive CSVs reviewed; checkpoints, raw predictions and all histories not independently re-audited."
+    ],
+    "method": {
+      "architectures": [
+        "gru",
+        "gru",
+        "tcn",
+        "tcn_gru"
+      ],
+      "changed_factor": "B/C/D34→37; original6 inputs preserved as subset",
+      "feature_counts": [
+        6,
+        37,
+        37,
+        37
+      ],
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "original_engine_unchanged": true,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "training_runs_planned": 456
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-001-a",
+      "exp-002-b",
+      "exp-003-c",
+      "exp-004-d",
+      "exp-020-original-questions-recap"
+    ],
+    "provenance": {
+      "executed": true,
+      "origin": "User-confirmed Colab run; reviewed Drive reports on 2026-10-24",
+      "review_scope": "CSV report consistency only; no checkpoint/raw prediction re-audit"
+    },
+    "question": "A özelliklerini içeren37 girdiyle GRU/TCN/hibrit nasıl karşılaştırılır; aynı GRU içinde6→37 özellik etkisi nedir?",
+    "results": [
+      {
+        "aggregation": "equal fold/seed BCE and AP means",
+        "cohort": "A; 38 folds x 3 seeds; A6/B37/C37/D37",
+        "metrics": {
+          "ap": 0.4212122508411236,
+          "bce": 0.5943317502214197,
+          "mean_best_epoch": 4.43859649122807
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal fold/seed BCE and AP means",
+        "cohort": "B; 38 folds x 3 seeds; A6/B37/C37/D37",
+        "metrics": {
+          "ap": 0.4049292122846261,
+          "bce": 0.6094701954147272,
+          "mean_best_epoch": 1.368421052631579
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal fold/seed BCE and AP means",
+        "cohort": "C; 38 folds x 3 seeds; A6/B37/C37/D37",
+        "metrics": {
+          "ap": 0.4095866361438106,
+          "bce": 0.6029056509335836,
+          "mean_best_epoch": 1.5
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal fold/seed BCE and AP means",
+        "cohort": "D; 38 folds x 3 seeds; A6/B37/C37/D37",
+        "metrics": {
+          "ap": 0.4114764490882879,
+          "bce": 0.601671086068739,
+          "mean_best_epoch": 1.4824561403508771
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Original min-validation-BCE epoch rule; four candidates compared by macro validation BCE; threshold curves descriptive, no automatic threshold.",
+    "status": "completed",
+    "title": "A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma"
+  },
+  "recorded_at": "2026-10-24T15:04:56.533395+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 39
+}

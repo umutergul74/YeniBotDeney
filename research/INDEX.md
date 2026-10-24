@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**23 deney/plan · 38 geçmiş kaydı**
+**23 deney/plan · 39 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -28,7 +28,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-018-validation-stability](#exp-018-validation-stability) | Puan dağılımı, sıralama gücü ve dönem/seed kararlılığı teşhisi | completed | mixed |
 | [exp-019-root-cause-probes](#exp-019-root-cause-probes) | Eski proje incelemesi ve validation üzerinde neden/çözüm yoklaması | completed | mixed |
 | [exp-020-original-questions-recap](#exp-020-original-questions-recap) | Özgün A/B/C/D eşik eğrileri ve altı bariyer dağılımı | completed | mixed |
-| [exp-021-feature-comparison](#exp-021-feature-comparison) | A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma | planned | pending |
+| [exp-021-feature-comparison](#exp-021-feature-comparison) | A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma | completed | mixed |
 | [exp-022-barrier-economics](#exp-022-barrier-economics) | 2/5, 1/1 ve 2/2: validation sinyallerinin brüt getirileri | completed | mixed |
 | [exp-023-barrier-economics-b12](#exp-023-barrier-economics-b12) | Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi | completed | mixed |
 
@@ -252,6 +252,46 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-020-original-questions-recap | — | — | 0.410499 | 0.096839 | — |
+
+## Kayıtlı sonuçlar · validation
+
+A; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-021-feature-comparison | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+B; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-021-feature-comparison | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+C; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-021-feature-comparison | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+D; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-021-feature-comparison | — | — | — | — | — |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1433,7 +1473,7 @@ Kampanya: `campaign-002` · Durum: **completed** · Sonuç: **mixed**
 
 A özelliklerini içeren37 girdiyle GRU/TCN/hibrit nasıl karşılaştırılır; aynı GRU içinde6→37 özellik etkisi nedir?
 
-Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-001-a, exp-002-b, exp-003-c, exp-004-d, exp-020-original-questions-recap
 
@@ -1443,20 +1483,55 @@ Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
 
 **Seçim kuralı:** Original min-validation-BCE epoch rule; four candidates compared by macro validation BCE; threshold curves descriptive, no automatic threshold.
 
-**Karar / öğrenilen:** User chose four structures; prepare isolated A100 notebook, rerun A control in same environment, preserve historical runs. No real training executed.
+**Karar / öğrenilen:** Drive reports confirm A6/B37/C37/D37 completed. A still leads mean validation BCE/AP in all three seeds; richer models have higher AP in the last fold. No retraining or new method authorized.
 
-**Henüz sonuç yok.**
+**validation** · A; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap | 0.421212 |
+| bce | 0.594332 |
+| mean_best_epoch | 4.438596 |
+
+**validation** · B; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap | 0.404929 |
+| bce | 0.609470 |
+| mean_best_epoch | 1.368421 |
+
+**validation** · C; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap | 0.409587 |
+| bce | 0.602906 |
+| mean_best_epoch | 1.500000 |
+
+**validation** · D; 38 folds x 3 seeds; A6/B37/C37/D37 · equal fold/seed BCE and AP means
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap | 0.411476 |
+| bce | 0.601671 |
+| mean_best_epoch | 1.482456 |
 
 **Sınırlar / açık noktalar:**
 - A vs C/D changes both inputs and architecture; do not claim pure architecture effect.
 - Parameter budgets differ; no universal architecture ranking.
 - Validation reused for epoch selection; folds/seeds dependent.
-- Colab training and real Drive reconstruction not yet executed.
+- Drive CSVs reviewed; checkpoints, raw predictions and all histories not independently re-audited.
 
 **Kanıt kopyaları:**
 - [research/analyses/feature-comparison-20261018/PLAN.md](sources/93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1.md) · SHA256 `93b69d9f5915d4f4b5c708b400d3472bed449c23f5aff10cbc0a7110d4637ed1`
+- [research/analyses/feature-comparison-review-20261024/REPORT.md](sources/7ffe7971dd8aeb94e94d4661b8460e3e510a01be758d10f419c6a985983b470f.md) · SHA256 `7ffe7971dd8aeb94e94d4661b8460e3e510a01be758d10f419c6a985983b470f`
+- [research/analyses/feature-comparison-review-20261024/summary_at_050.csv](sources/9fb9b65172b341411cdf78d8ef792ae40e4986b53fb46355cf3f4db33a76a390.csv) · SHA256 `9fb9b65172b341411cdf78d8ef792ae40e4986b53fb46355cf3f4db33a76a390`
+- [research/analyses/feature-comparison-review-20261024/paired_differences.csv](sources/45c23b6c183cdbd5f4adb6dfb886d64803895632f61a6041ac5781f59979030a.csv) · SHA256 `45c23b6c183cdbd5f4adb6dfb886d64803895632f61a6041ac5781f59979030a`
+- [research/analyses/feature-comparison-review-20261024/metrics_by_fold_seed.csv](sources/ee41d73ba8413799b7f55f08f424ded15e4edf4037c13adf37131d3e9f143fe7.csv) · SHA256 `ee41d73ba8413799b7f55f08f424ded15e4edf4037c13adf37131d3e9f143fe7`
+- [research/analyses/feature-comparison-review-20261024/drive_sources.json](sources/4e9fe3cc8cecbb693db9277380fe2d352e60cbf863c68540308740e15607b942.json) · SHA256 `4e9fe3cc8cecbb693db9277380fe2d352e60cbf863c68540308740e15607b942`
 
-[Son kayıt](events/000036.json) · revizyon 1 · User selected A6/B37/C37/D37; register before Colab training.
+[Son kayıt](events/000039.json) · revizyon 2 · Correct stale planned status using completed Drive reports; user confirms comparison already run.
 
 ## exp-022-barrier-economics
 
