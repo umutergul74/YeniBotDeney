@@ -1,0 +1,20 @@
+{
+  "archive_crc": "passed",
+  "complete_unique_histories": 456,
+  "history_min_matches_saved_selection": 456,
+  "prior_drive_csv_matches": 456,
+  "patience_matches": 456,
+  "finite_losses_and_ap": true,
+  "shared_protocol_and_frame": true,
+  "source_hashes_match_frozen_release": {
+    "yenibot/training/advisor.py": true,
+    "yenibot/training/advisor_models.py": true,
+    "yenibot/training/dataset.py": true,
+    "yenibot/training/walk_forward.py": true,
+    "yenibot/models/tcn.py": true,
+    "yenibot/models/hybrid.py": true
+  },
+  "test_evaluations": 0,
+  "new_training": false,
+  "common_epoch_limit": 16
+}

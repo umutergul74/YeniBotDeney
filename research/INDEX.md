@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**23 deney/plan · 39 geçmiş kaydı**
+**24 deney/plan · 40 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -31,6 +31,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-021-feature-comparison](#exp-021-feature-comparison) | A6 / B37 / C37 / D37: eksik volatilite kanallarını koruyan karşılaştırma | completed | mixed |
 | [exp-022-barrier-economics](#exp-022-barrier-economics) | 2/5, 1/1 ve 2/2: validation sinyallerinin brüt getirileri | completed | mixed |
 | [exp-023-barrier-economics-b12](#exp-023-barrier-economics-b12) | Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi | completed | mixed |
+| [exp-024-early-epoch-diagnostics](#exp-024-early-epoch-diagnostics) | A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -335,6 +336,46 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-023-barrier-economics-b12 | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+A; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-024-early-epoch-diagnostics | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+B; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-024-early-epoch-diagnostics | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+C; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-024-early-epoch-diagnostics | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+D; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-024-early-epoch-diagnostics | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -1675,3 +1716,99 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/barrier-economics-20261023/output_manifest.json](sources/46615414d18a9c9cb96e1c682fee72ae20252809b8e18449ca19aa3dcf3cfd8c.json) · SHA256 `46615414d18a9c9cb96e1c682fee72ae20252809b8e18449ca19aa3dcf3cfd8c`
 
 [Son kayıt](events/000038.json) · revizyon 1 · Add B12 to requested positive-signal return diagnostics; preserve previous three candidates exactly.
+
+## exp-024-early-epoch-diagnostics
+
+**A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi**
+
+En iyi validation BCE neden ilk epochlarda; model, seed ve dönem boyunca train BCE ve validation AP nasıl değişiyor?
+
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-021-feature-comparison
+
+**Yöntem:** {"changed_factor": null, "common_epochs": [1, 16], "scope": "read-only analysis of 456 existing histories", "source_release": "advisor-feature-comparison-v1.0.0", "training_or_test_started": false}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Original minimum validation BCE unchanged; descriptive equal fold/seed summaries; no new threshold or checkpoint selection.
+
+**Karar / öğrenilen:** Strong overfitting-compatible pattern, especially in 37-input models; selection records consistent. Learning-rate, feature and drift causes not isolated. Propose single-factor learning-rate comparison, not executed.
+
+**validation** · A; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_down_first_to16 | 80.000000 |
+| best_epoch_1 | 17.000000 |
+| best_epoch_le3 | 56.000000 |
+| best_epoch_mean | 4.438596 |
+| epoch16_average_precision | 0.382020 |
+| epoch16_bce | 0.699519 |
+| first_average_precision | 0.404281 |
+| first_bce | 0.609349 |
+| runs | 114.000000 |
+| train_down_val_up_first_to16 | 111.000000 |
+
+**validation** · B; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_down_first_to16 | 88.000000 |
+| best_epoch_1 | 88.000000 |
+| best_epoch_le3 | 110.000000 |
+| best_epoch_mean | 1.368421 |
+| epoch16_average_precision | 0.358819 |
+| epoch16_bce | 1.503299 |
+| first_average_precision | 0.399854 |
+| first_bce | 0.611985 |
+| runs | 114.000000 |
+| train_down_val_up_first_to16 | 114.000000 |
+
+**validation** · C; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_down_first_to16 | 74.000000 |
+| best_epoch_1 | 68.000000 |
+| best_epoch_le3 | 112.000000 |
+| best_epoch_mean | 1.500000 |
+| epoch16_average_precision | 0.376726 |
+| epoch16_bce | 1.391687 |
+| first_average_precision | 0.397324 |
+| first_bce | 0.607570 |
+| runs | 114.000000 |
+| train_down_val_up_first_to16 | 114.000000 |
+
+**validation** · D; 38 folds x 3 seeds · equal fold/seed means and descriptive counts; fixed epoch 1 vs 16
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_down_first_to16 | 82.000000 |
+| best_epoch_1 | 71.000000 |
+| best_epoch_le3 | 112.000000 |
+| best_epoch_mean | 1.482456 |
+| epoch16_average_precision | 0.368116 |
+| epoch16_bce | 1.743814 |
+| first_average_precision | 0.402457 |
+| first_bce | 0.607968 |
+| runs | 114.000000 |
+| train_down_val_up_first_to16 | 114.000000 |
+
+**Sınırlar / açık noktalar:**
+- Validation reused for epoch selection; folds and seeds dependent.
+- No epochwise raw scores, gradient norms or train eval losses.
+- No checkpoint loading or raw feature/label recomputation.
+- Train loss measured during updates/dropout; validation at epoch end/eval.
+- No verified remedy; new experiment requires explicit authorization.
+
+**Kanıt kopyaları:**
+- [research/analyses/early-epochs-20261024/PLAN.md](sources/038e1ed37669e16539d0f53655079546bbaa8344e2d0dee5e65850c04878a633.md) · SHA256 `038e1ed37669e16539d0f53655079546bbaa8344e2d0dee5e65850c04878a633`
+- [research/analyses/early-epochs-20261024/REPORT.md](sources/9b3db00ee23ff82859c4f9ce6b1e65fae763eedf820deaa89e1fe3ee5a626b51.md) · SHA256 `9b3db00ee23ff82859c4f9ce6b1e65fae763eedf820deaa89e1fe3ee5a626b51`
+- [research/analyses/early-epochs-20261024/model_summary.csv](sources/2bc0489fc132aa0247b672093536c250e0e5bb8e1d59e4ff7ef771fd78b237d7.csv) · SHA256 `2bc0489fc132aa0247b672093536c250e0e5bb8e1d59e4ff7ef771fd78b237d7`
+- [research/analyses/early-epochs-20261024/run_diagnostics.csv](sources/664796599e0966341800613d0df94cc190306330e162f47a4216b2e91567adf9.csv) · SHA256 `664796599e0966341800613d0df94cc190306330e162f47a4216b2e91567adf9`
+- [research/analyses/early-epochs-20261024/input_manifest.json](sources/b8e0eb846e09b25e13b2c3dedc83d425d8d1dd6f75527e235d67e5b74aeadf69.json) · SHA256 `b8e0eb846e09b25e13b2c3dedc83d425d8d1dd6f75527e235d67e5b74aeadf69`
+- [research/analyses/early-epochs-20261024/checks.json](sources/b72f905a313794badb0f4070d6f81bfb57b17c8d7195a15bae8beb9a96f5a49b.json) · SHA256 `b72f905a313794badb0f4070d6f81bfb57b17c8d7195a15bae8beb9a96f5a49b`
+- [research/analyses/early-epochs-20261024/output_manifest.json](sources/3336c5706f5914bc2ec68c3a6baaaefa63f1a88c9cec4fea3426b12a2984c7ea.json) · SHA256 `3336c5706f5914bc2ec68c3a6baaaefa63f1a88c9cec4fea3426b12a2984c7ea`
+
+[Son kayıt](events/000040.json) · revizyon 1 · Audit existing histories; distinguish observed overfitting from unproven causes; no new training or test.

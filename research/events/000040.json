@@ -1,0 +1,159 @@
+{
+  "previous_sha256": "95ac193cb3d307ab2cb7f35fc9787d461b9fb9f31ae0fb2f876d8a1e1fb92943",
+  "reason": "Audit existing histories; distinguish observed overfitting from unproven causes; no new training or test.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Strong overfitting-compatible pattern, especially in 37-input models; selection records consistent. Learning-rate, feature and drift causes not isolated. Propose single-factor learning-rate comparison, not executed.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/early-epochs-20261024/PLAN.md",
+        "path": "sources/038e1ed37669e16539d0f53655079546bbaa8344e2d0dee5e65850c04878a633.md",
+        "sha256": "038e1ed37669e16539d0f53655079546bbaa8344e2d0dee5e65850c04878a633"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/early-epochs-20261024/REPORT.md",
+        "path": "sources/9b3db00ee23ff82859c4f9ce6b1e65fae763eedf820deaa89e1fe3ee5a626b51.md",
+        "sha256": "9b3db00ee23ff82859c4f9ce6b1e65fae763eedf820deaa89e1fe3ee5a626b51"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/early-epochs-20261024/model_summary.csv",
+        "path": "sources/2bc0489fc132aa0247b672093536c250e0e5bb8e1d59e4ff7ef771fd78b237d7.csv",
+        "sha256": "2bc0489fc132aa0247b672093536c250e0e5bb8e1d59e4ff7ef771fd78b237d7"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/early-epochs-20261024/run_diagnostics.csv",
+        "path": "sources/664796599e0966341800613d0df94cc190306330e162f47a4216b2e91567adf9.csv",
+        "sha256": "664796599e0966341800613d0df94cc190306330e162f47a4216b2e91567adf9"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/early-epochs-20261024/input_manifest.json",
+        "path": "sources/b8e0eb846e09b25e13b2c3dedc83d425d8d1dd6f75527e235d67e5b74aeadf69.json",
+        "sha256": "b8e0eb846e09b25e13b2c3dedc83d425d8d1dd6f75527e235d67e5b74aeadf69"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/early-epochs-20261024/checks.json",
+        "path": "sources/b72f905a313794badb0f4070d6f81bfb57b17c8d7195a15bae8beb9a96f5a49b.json",
+        "sha256": "b72f905a313794badb0f4070d6f81bfb57b17c8d7195a15bae8beb9a96f5a49b"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/early-epochs-20261024/output_manifest.json",
+        "path": "sources/3336c5706f5914bc2ec68c3a6baaaefa63f1a88c9cec4fea3426b12a2984c7ea.json",
+        "sha256": "3336c5706f5914bc2ec68c3a6baaaefa63f1a88c9cec4fea3426b12a2984c7ea"
+      }
+    ],
+    "id": "exp-024-early-epoch-diagnostics",
+    "limitations": [
+      "Validation reused for epoch selection; folds and seeds dependent.",
+      "No epochwise raw scores, gradient norms or train eval losses.",
+      "No checkpoint loading or raw feature/label recomputation.",
+      "Train loss measured during updates/dropout; validation at epoch end/eval.",
+      "No verified remedy; new experiment requires explicit authorization."
+    ],
+    "method": {
+      "changed_factor": null,
+      "common_epochs": [
+        1,
+        16
+      ],
+      "scope": "read-only analysis of 456 existing histories",
+      "source_release": "advisor-feature-comparison-v1.0.0",
+      "training_or_test_started": false
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-021-feature-comparison"
+    ],
+    "question": "En iyi validation BCE neden ilk epochlarda; model, seed ve dönem boyunca train BCE ve validation AP nasıl değişiyor?",
+    "results": [
+      {
+        "aggregation": "equal fold/seed means and descriptive counts; fixed epoch 1 vs 16",
+        "cohort": "A; 38 folds x 3 seeds",
+        "metrics": {
+          "ap_down_first_to16": 80.0,
+          "best_epoch_1": 17.0,
+          "best_epoch_le3": 56.0,
+          "best_epoch_mean": 4.43859649122807,
+          "epoch16_average_precision": 0.382020094997741,
+          "epoch16_bce": 0.6995193581832083,
+          "first_average_precision": 0.4042813674473866,
+          "first_bce": 0.6093490892334988,
+          "runs": 114.0,
+          "train_down_val_up_first_to16": 111.0
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal fold/seed means and descriptive counts; fixed epoch 1 vs 16",
+        "cohort": "B; 38 folds x 3 seeds",
+        "metrics": {
+          "ap_down_first_to16": 88.0,
+          "best_epoch_1": 88.0,
+          "best_epoch_le3": 110.0,
+          "best_epoch_mean": 1.368421052631579,
+          "epoch16_average_precision": 0.35881934458617554,
+          "epoch16_bce": 1.5032993152476193,
+          "first_average_precision": 0.3998541545655886,
+          "first_bce": 0.6119851459536636,
+          "runs": 114.0,
+          "train_down_val_up_first_to16": 114.0
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal fold/seed means and descriptive counts; fixed epoch 1 vs 16",
+        "cohort": "C; 38 folds x 3 seeds",
+        "metrics": {
+          "ap_down_first_to16": 74.0,
+          "best_epoch_1": 68.0,
+          "best_epoch_le3": 112.0,
+          "best_epoch_mean": 1.5,
+          "epoch16_average_precision": 0.3767263567632078,
+          "epoch16_bce": 1.3916874025997363,
+          "first_average_precision": 0.39732447056767073,
+          "first_bce": 0.6075702780171445,
+          "runs": 114.0,
+          "train_down_val_up_first_to16": 114.0
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal fold/seed means and descriptive counts; fixed epoch 1 vs 16",
+        "cohort": "D; 38 folds x 3 seeds",
+        "metrics": {
+          "ap_down_first_to16": 82.0,
+          "best_epoch_1": 71.0,
+          "best_epoch_le3": 112.0,
+          "best_epoch_mean": 1.4824561403508771,
+          "epoch16_average_precision": 0.36811618378714217,
+          "epoch16_bce": 1.7438143857738428,
+          "first_average_precision": 0.40245702822419616,
+          "first_bce": 0.607967732245462,
+          "runs": 114.0,
+          "train_down_val_up_first_to16": 114.0
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Original minimum validation BCE unchanged; descriptive equal fold/seed summaries; no new threshold or checkpoint selection.",
+    "status": "completed",
+    "title": "A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi"
+  },
+  "recorded_at": "2026-10-24T15:17:56.184436+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 40
+}

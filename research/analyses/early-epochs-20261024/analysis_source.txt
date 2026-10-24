@@ -1,0 +1,138 @@
+import io, json, hashlib, zipfile, re, subprocess
+from pathlib import Path
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = ROOT/'research/analyses/early-epochs-20261024'
+ZIP = Path(__file__).with_name('source.zip')
+OUT.mkdir(parents=True, exist_ok=True)
+sha = lambda b: hashlib.sha256(b).hexdigest()
+z = zipfile.ZipFile(ZIP)
+assert z.testzip() is None
+protocols = {json.loads(z.read(n))['experiment']: json.loads(z.read(n)) for n in z.namelist() if n.endswith('/protocol.json')}
+assert set(protocols) == set('ABCD')
+assert len({p['data_sha256'] for p in protocols.values()}) == 1
+assert all(p['config'] == protocols['A']['config'] for p in protocols.values())
+assert set(protocols['A']['features']) <= set(protocols['B']['features'])
+assert protocols['B']['features'] == protocols['C']['features'] == protocols['D']['features']
+assert [len(protocols[c]['features']) for c in 'ABCD'] == [6,37,37,37]
+source_checks = {}
+for path, expected in protocols['A']['source_hashes'].items():
+    relative = path.split('/advisor_feature_comparison_repo/')[1]
+    raw = subprocess.check_output(['git','show',f'advisor-feature-comparison-v1.0.0:{relative}'],cwd=ROOT)
+    source_checks[relative] = sha(raw) == expected
+assert all(source_checks.values()), source_checks
+rows, histories, hashes = [], [], {}
+for name in sorted(n for n in z.namelist() if n.endswith('/history.csv')):
+    model, seed, fold = re.match(r'runs/([A-D])_[^/]+/seed_(\d+)/fold_(\d+)/history.csv',name).groups()
+    seed,fold=int(seed),int(fold)
+    raw=z.read(name); hashes[name]=sha(raw)
+    h=pd.read_csv(io.BytesIO(raw))
+    m=json.loads(z.read(name.replace('history.csv','validation_metrics.json')))
+    assert h.epoch.tolist()==list(range(1,len(h)+1))
+    assert np.isfinite(h[['train_bce','bce','average_precision']]).all().all()
+    assert (h.samples==1017).all() and h.prevalence.nunique()==1 and (h.threshold==.5).all()
+    best=h.loc[h.bce.idxmin()]; first=h.iloc[0]; last=h.iloc[-1]
+    assert m['status']=='complete' and m['test_evaluations']==0
+    assert m['best_epoch']==int(best.epoch) and m['epochs_trained']==len(h)
+    assert len(h)==min(100,int(best.epoch)+15)
+    assert m['features']==protocols[model]['features']
+    for k in m['validation']:
+        if m['validation'][k] is not None:
+            assert np.isclose(best[k],m['validation'][k],rtol=1e-7,atol=1e-8),(name,k)
+    assert all(a['passed'] for a in m['boundary_audit'].values())
+    r=dict(model=model,seed=seed,fold=fold,best_epoch=int(best.epoch),epochs=len(h),parameters=m['parameters'],train_sequences=m['train_sequences'],prevalence=first.prevalence,
+           validation_section_start=m['boundary_audit']['train_validation']['next_section_start'])
+    for stage,record in [('first',first),('best',best),('last',last),('epoch16',h.iloc[15])]:
+        for k in ['train_bce','bce','average_precision','precision','recall','f1','rank_ic']:
+            r[f'{stage}_{k}']=record[k]
+    r['max_ap_epoch']=int(h.loc[h.average_precision.idxmax(),'epoch'])
+    r['max_ap']=h.average_precision.max()
+    rows.append(r)
+    h=h.assign(model=model,seed=seed,fold=fold)
+    histories.append(h)
+df=pd.DataFrame(rows); allh=pd.concat(histories,ignore_index=True)
+expected={(m,s,f) for m in 'ABCD' for s in (42,43,44) for f in range(38)}
+assert set(zip(df.model,df.seed,df.fold))==expected and len(df)==456
+assert df.epochs.min()==16
+old=pd.read_csv(ROOT/'research/analyses/feature-comparison-review-20261024/metrics_by_fold_seed.csv')
+print('prior columns',old.columns.tolist())
+paired=df.merge(old,on=['model','seed','fold'],validate='one_to_one',suffixes=('','_old'))
+assert len(paired)==456
+for ours, prior in [('best_epoch','best_epoch_old'),('best_bce','bce'),('best_average_precision','average_precision')]:
+    assert np.allclose(paired[ours],paired[prior],atol=1e-8,rtol=1e-7)
+summary=[]
+for model,g in df.groupby('model'):
+    r={'model':model,'runs':len(g),'parameters':int(g.parameters.iloc[0]),'best_epoch_mean':g.best_epoch.mean(),'best_epoch_median':g.best_epoch.median(),'best_epoch_max':g.best_epoch.max(),
+       'best_epoch_1':int((g.best_epoch==1).sum()),'best_epoch_le3':int((g.best_epoch<=3).sum()),'epochs_min':int(g.epochs.min()),'epochs_max':int(g.epochs.max()),
+       'train_down_val_up_first_to16':int(((g.epoch16_train_bce<g.first_train_bce)&(g.epoch16_bce>g.first_bce)).sum()),
+       'ap_down_first_to16':int((g.epoch16_average_precision<g.first_average_precision).sum()),
+       'ap_down_best_to_last':int((g.last_average_precision<g.best_average_precision).sum()),
+       'ap_peak_differs_from_bce_min':int((g.max_ap_epoch!=g.best_epoch).sum())}
+    for stage in ['first','best','last','epoch16']:
+        for k in ['train_bce','bce','average_precision']:
+            r[f'{stage}_{k}']=g[f'{stage}_{k}'].mean()
+    summary.append(r)
+summary=pd.DataFrame(summary)
+df.to_csv(OUT/'run_diagnostics.csv',index=False)
+summary.to_csv(OUT/'model_summary.csv',index=False)
+allh.to_csv(OUT/'epoch_metrics.csv',index=False)
+df.groupby(['model','seed'])[['best_epoch','first_bce','epoch16_bce','first_average_precision','epoch16_average_precision']].mean().to_csv(OUT/'seed_summary.csv')
+df.groupby(['model','fold'])[['best_epoch','best_bce','first_bce','epoch16_bce','first_average_precision','epoch16_average_precision','prevalence']].mean().to_csv(OUT/'fold_summary.csv')
+variation=[]
+for m,g in df.groupby('model'):
+    item={'model':m}
+    for metric in ['best_epoch','best_bce','best_average_precision']:
+        item[metric+'_median_within_fold_seed_range']=g.groupby('fold')[metric].agg(lambda x:x.max()-x.min()).median()
+        item[metric+'_fold_mean_min']=g.groupby('fold')[metric].mean().min()
+        item[metric+'_fold_mean_max']=g.groupby('fold')[metric].mean().max()
+    variation.append(item)
+pd.DataFrame(variation).to_csv(OUT/'variation_summary.csv',index=False)
+print(summary.round(5).to_string(index=False))
+plt.rcParams.update({'font.size':11,'axes.spines.top':False,'axes.spines.right':False})
+labels={'A':'A · 6 özellik GRU','B':'B · 37 özellik GRU','C':'C · 37 özellik TCN','D':'D · 37 özellik TCN+GRU'}
+colors={'A':'#2563eb','B':'#dc2626','C':'#059669','D':'#9333ea'}
+fig,axes=plt.subplots(2,2,figsize=(13,9),sharex=True,sharey=True)
+for (m,g),ax in zip(allh.groupby('model'),axes.flat):
+    g=g[g.epoch<=16]
+    for col,color,label in [('train_bce','#2563eb','Train BCE (eğitim sırasında)'),('bce','#dc2626','Validation BCE (epoch sonunda)')]:
+        agg=g.groupby('epoch')[col].agg(['mean','median',lambda x:x.quantile(.25),lambda x:x.quantile(.75)])
+        ax.plot(agg.index,agg['median'],color=color,label=label,lw=2)
+        ax.fill_between(agg.index,agg.iloc[:,2],agg.iloc[:,3],color=color,alpha=.12)
+    ax.set_title(labels[m]);ax.set_xlabel('Epoch');ax.set_ylabel('BCE — düşük daha iyi');ax.grid(alpha=.2)
+axes[0,0].legend(fontsize=9)
+fig.suptitle('Eğitim kaybı düşerken validation kaybı yükseliyor',fontsize=17)
+fig.text(.5,.025,'Her modelde aynı 114 eğitim, ilk 16 epoch. Çizgi: medyan; gölge: orta %50.\nTrain ve validation farklı ölçüm modunda; mutlak aralık saf genelleme açığı değildir.',ha='center',fontsize=10)
+fig.tight_layout(rect=(0,.075,1,.95));fig.savefig(OUT/'01_egitim_ve_validation.png',dpi=160);plt.close(fig)
+fig,axes=plt.subplots(1,2,figsize=(13,5.5))
+x=np.arange(4);b1=summary.best_epoch_1.to_numpy();b3=summary.best_epoch_le3.to_numpy()-b1;b4=114-b1-b3
+for bottom,values,color,label in [(np.zeros(4),b1,'#dc2626','Epoch 1'),(b1,b3,'#f59e0b','Epoch 2–3'),(b1+b3,b4,'#2563eb','Epoch 4 ve sonrası')]:
+    axes[0].bar(x,values,bottom=bottom,color=color,label=label)
+    for xx,b,v in zip(x,bottom,values):
+        if v:axes[0].text(xx,b+v/2,str(v),ha='center',va='center',color='white',fontweight='bold')
+axes[0].set_xticks(x,['A6 GRU','B37 GRU','C37 TCN','D37 TCN+GRU'],rotation=15);axes[0].set_ylabel('Eğitim sayısı (model başına 114)');axes[0].set_title('En iyi BCE hangi epoch’ta?');axes[0].legend(fontsize=9)
+for m,g in allh[allh.epoch<=16].groupby('model'):
+    a=g.groupby('epoch').average_precision.mean();axes[1].plot(a.index,a,label=labels[m],color=colors[m],lw=2)
+axes[1].axhline(df.prevalence.mean(),ls=':',color='gray',label='Ortalama pozitif sınıf oranı')
+axes[1].set_xlabel('Epoch');axes[1].set_ylabel('Ortalama validation AP — yüksek daha iyi');axes[1].set_title('Sıralama becerisi de çoğunlukla geriliyor');axes[1].legend(fontsize=9);axes[1].grid(alpha=.2)
+fig.suptitle('Sorun yalnız 0,5 karar eşiği değil',fontsize=17)
+fig.text(.5,.015,'AP sabit bir karar eşiğinden bağımsızdır. Eğriler aynı 114 fold/seed’in eşit ağırlıklı ortalamasıdır.',ha='center',fontsize=10)
+fig.tight_layout(rect=(0,.05,1,.93));fig.savefig(OUT/'02_erken_epoch_ve_ap.png',dpi=160);plt.close(fig)
+fig,axes=plt.subplots(4,1,figsize=(14,9),sharex=True)
+for m,ax in zip('ABCD',axes):
+    matrix=df[df.model==m].pivot(index='seed',columns='fold',values='best_epoch')
+    im=ax.imshow(matrix,aspect='auto',vmin=1,vmax=df.best_epoch.max(),cmap='YlOrRd')
+    for i in range(3):
+        for j in range(38):ax.text(j,i,str(matrix.iloc[i,j]),ha='center',va='center',fontsize=7,color='black' if matrix.iloc[i,j]<20 else 'white')
+    ax.set_yticks([0,1,2],[42,43,44]);ax.set_ylabel('Seed');ax.set_title(labels[m],loc='left',fontsize=11)
+axes[-1].set_xticks(range(38));axes[-1].set_xlabel('Fold (zaman ilerledikçe sağa)')
+fig.suptitle('Seçilen epoch: erken seçim pek çok dönem ve seed’de tekrarlanıyor',fontsize=16)
+fig.text(.5,.015,'Hücredeki sayı = minimum validation BCE epoch’u. Foldlar örtüşür; bağımsız tekrarlar değildir.',ha='center',fontsize=10)
+fig.tight_layout(rect=(0,.045,1,.95));fig.savefig(OUT/'03_fold_seed_epoch.png',dpi=160);plt.close(fig)
+manifest={'source_drive_id':'1ORArzDL8n6T6jt_ssGekJhbnVvXnMrQI','source_zip_sha256':sha(ZIP.read_bytes()),'frame_sha256':protocols['A']['data_sha256'],'history_sha256':hashes,'source_hash_checks':source_checks,'training':protocols['A']['config']['training'],'model':protocols['A']['config']['model']}
+(OUT/'input_manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+(OUT/'checks.json').write_text(json.dumps({'archive_crc':'passed','complete_unique_histories':456,'history_min_matches_saved_selection':456,'prior_drive_csv_matches':456,'patience_matches':456,'finite_losses_and_ap':True,'shared_protocol_and_frame':True,'source_hashes_match_frozen_release':source_checks,'test_evaluations':0,'new_training':False,'common_epoch_limit':16},indent=2),encoding='utf-8')

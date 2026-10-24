@@ -1,0 +1,16 @@
+{
+  "01_egitim_ve_validation.png": "c94ccf751c7cfae57e49f23b5c741788ae023d70e932f290955c3b065708ae15",
+  "02_erken_epoch_ve_ap.png": "67ee80f5192f4b3a45858cf743357daffee397389057808f63c332f5ce3054d3",
+  "03_fold_seed_epoch.png": "9378e0e70edac230d071beff1481626eb5c04069a7df2b28f2fd5c452827cc64",
+  "analysis_source.txt": "349d958ff9fac2c2d0493644ee8540b2cde2a39bb1935d891d32c5cc7eefdb5c",
+  "checks.json": "b72f905a313794badb0f4070d6f81bfb57b17c8d7195a15bae8beb9a96f5a49b",
+  "epoch_metrics.csv": "fd6e32b4a2fa9154d1d9117d53458ff0c2c69bd571a766bca5099a0a080cf37e",
+  "fold_summary.csv": "3de95a534bb81336273400edbd76b25657964462d2833a042a2f292dca7ab3fa",
+  "input_manifest.json": "b8e0eb846e09b25e13b2c3dedc83d425d8d1dd6f75527e235d67e5b74aeadf69",
+  "model_summary.csv": "2bc0489fc132aa0247b672093536c250e0e5bb8e1d59e4ff7ef771fd78b237d7",
+  "PLAN.md": "038e1ed37669e16539d0f53655079546bbaa8344e2d0dee5e65850c04878a633",
+  "REPORT.md": "9b3db00ee23ff82859c4f9ce6b1e65fae763eedf820deaa89e1fe3ee5a626b51",
+  "run_diagnostics.csv": "664796599e0966341800613d0df94cc190306330e162f47a4216b2e91567adf9",
+  "seed_summary.csv": "6af16baac2a0beb00cbef98f18c1f5d56a75b8da3e8c786c19d14c48afadf83f",
+  "variation_summary.csv": "c794506f34dbf10432bad0aa34011c76a0b5390bf6bb17fe4ef81d0180dc0e42"
+}
