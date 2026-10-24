@@ -18,6 +18,14 @@ seçici sinyal üreten modelleri adım adım karşılaştırmak ve bütün deney
 
 ## Araştırma ve kayıt
 
+- Kullanıcının açıkça istediği deney koşulları dışında sonuçları etkileyen
+  özellik veya yöntem ekleme. Veri filtreleme, ön işleme, etiketleme, mimari,
+  loss, kalibrasyon, ensemble, eşik/seçim kuralı ve sonuç toplulaştırma
+  değişiklikleri buna dahildir. Ortak kodun varsayılanları da ek yöntemleri
+  kendiliğinden etkinleştirmemeli. Yeni bir değişiklik gerekliyse gerekçesini
+  ve beklenen etkisini sun; kullanıcı açıkça onaylamadan uygulama.
+  Mevcut açık onayı tekrar isteme. Sonucu etkileyen hata bulunduğunda bunu
+  bildir; yöntem değişikliği veya eski sonuçların üzerine yazma yoluyla gizleme.
 - Veri, etiket, zaman bölmeleri ve seçim kurallarını sessizce değiştirme.
   Yeni yöntem veya koşul için yeni deney/run kimliği aç; eski deneye bağla.
 - Başarılı, başarısız, yarım ve terk edilmiş deneyleri koru. Soru, koşullar,
