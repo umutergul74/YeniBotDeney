@@ -1,0 +1,55 @@
+{
+  "previous_sha256": "7a379d146b7174025d37a0397e5e09ce57a98b5d133ebe168ad1818c0d79d91e",
+  "reason": "User authorized one-factor experiment; prepare Colab A100 entry with minimal reporting and focused checks.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Authorized and notebook prepared; awaiting user Colab A100 execution. No matching runtime locally.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-20261024/PLAN.md",
+        "path": "sources/7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0.md",
+        "sha256": "7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0"
+      }
+    ],
+    "id": "exp-025-b37-learning-rate",
+    "limitations": [
+      "Validation reused for epoch selection; overlapping folds.",
+      "Patience 15 and epoch budget 100 unchanged.",
+      "Four focused checks passed; no Colab training performed."
+    ],
+    "method": {
+      "changed_factor": "learning_rate 0.001 -> 0.0001",
+      "control_reused": true,
+      "folds": 38,
+      "new_training_runs": 114,
+      "release": "advisor-learning-rate-v1.0.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ]
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-021-feature-comparison",
+      "exp-024-early-epoch-diagnostics"
+    ],
+    "question": "Düşük öğrenme hızı validation BCE/AP ve seed kararlılığını iyileştiriyor mu?",
+    "results": [],
+    "selection_rule": "Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.",
+    "status": "planned",
+    "title": "B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001"
+  },
+  "recorded_at": "2026-10-24T15:57:31.162097+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 41
+}

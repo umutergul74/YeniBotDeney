@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**24 deney/plan · 40 geçmiş kaydı**
+**25 deney/plan · 41 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -32,6 +32,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-022-barrier-economics](#exp-022-barrier-economics) | 2/5, 1/1 ve 2/2: validation sinyallerinin brüt getirileri | completed | mixed |
 | [exp-023-barrier-economics-b12](#exp-023-barrier-economics-b12) | Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi | completed | mixed |
 | [exp-024-early-epoch-diagnostics](#exp-024-early-epoch-diagnostics) | A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi | completed | mixed |
+| [exp-025-b37-learning-rate](#exp-025-b37-learning-rate) | B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001 | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1812,3 +1813,33 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/early-epochs-20261024/output_manifest.json](sources/3336c5706f5914bc2ec68c3a6baaaefa63f1a88c9cec4fea3426b12a2984c7ea.json) · SHA256 `3336c5706f5914bc2ec68c3a6baaaefa63f1a88c9cec4fea3426b12a2984c7ea`
 
 [Son kayıt](events/000040.json) · revizyon 1 · Audit existing histories; distinguish observed overfitting from unproven causes; no new training or test.
+
+## exp-025-b37-learning-rate
+
+**B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001**
+
+Düşük öğrenme hızı validation BCE/AP ve seed kararlılığını iyileştiriyor mu?
+
+Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-021-feature-comparison, exp-024-early-epoch-diagnostics
+
+**Yöntem:** {"changed_factor": "learning_rate 0.001 -> 0.0001", "control_reused": true, "folds": 38, "new_training_runs": 114, "release": "advisor-learning-rate-v1.0.0", "seeds": [42, 43, 44]}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.
+
+**Karar / öğrenilen:** Authorized and notebook prepared; awaiting user Colab A100 execution. No matching runtime locally.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Validation reused for epoch selection; overlapping folds.
+- Patience 15 and epoch budget 100 unchanged.
+- Four focused checks passed; no Colab training performed.
+
+**Kanıt kopyaları:**
+- [research/analyses/learning-rate-20261024/PLAN.md](sources/7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0.md) · SHA256 `7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0`
+
+[Son kayıt](events/000041.json) · revizyon 1 · User authorized one-factor experiment; prepare Colab A100 entry with minimal reporting and focused checks.
