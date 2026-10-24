@@ -1,0 +1,62 @@
+{
+  "zip_sha256": "0a892f637170c5c928b9451ff75d57cfdd32ff1d3d56c584110da88b0c3af47d",
+  "crc": "passed",
+  "candidate_runs": 114,
+  "control_runs": 114,
+  "control_hashes_matched": 342,
+  "only_learning_rate_changed": true,
+  "runtime_and_engine_matched": true,
+  "selection_patience_and_predictions_checked": true,
+  "test_evaluations": 0,
+  "stats": {
+    "candidate": {
+      "no_signal_runs": 23,
+      "best_epoch_median": 3.0,
+      "best_epoch_max": 22,
+      "best_epoch_le3": 68,
+      "epochs_min": 16,
+      "epochs_max": 37,
+      "bce_mean": 0.6011456627594797,
+      "ap_mean": 0.4102561807059424,
+      "last_bce_mean": 0.6566565036773682,
+      "last_ap_mean": 0.38708423567939,
+      "epoch16_bce_mean": 0.6406679310296711,
+      "epoch16_ap_mean": 0.3902614222301047,
+      "train_falls_val_rises": 114,
+      "ap_falls_best_to_last": 76,
+      "pooled_precision": 0.46346469622331693,
+      "pooled_recall": 0.09409901650275046,
+      "pooled_f1": 0.1564361923236802,
+      "median_seed_range_bce": 0.006744563579559326,
+      "median_seed_range_ap": 0.023631351101689207
+    },
+    "control": {
+      "no_signal_runs": 1,
+      "best_epoch_median": 1.0,
+      "best_epoch_max": 5,
+      "best_epoch_le3": 110,
+      "epochs_min": 16,
+      "epochs_max": 20,
+      "bce_mean": 0.6094701954147272,
+      "ap_mean": 0.40492921228462614,
+      "last_bce_mean": 1.5225535385441362,
+      "last_ap_mean": 0.35762995196302594,
+      "epoch16_bce_mean": 1.5032993152476193,
+      "epoch16_ap_mean": 0.35881934458617554,
+      "train_falls_val_rises": 114,
+      "ap_falls_best_to_last": 94,
+      "pooled_precision": 0.4474498364713162,
+      "pooled_recall": 0.14063455020281157,
+      "pooled_f1": 0.21400638383325934,
+      "median_seed_range_bce": 0.01296970248222351,
+      "median_seed_range_ap": 0.031145426001735033
+    },
+    "paired": {
+      "bce_improved": 88,
+      "ap_improved": 65,
+      "both_improved": 55,
+      "bce_delta_mean": -0.008324532655247437,
+      "ap_delta_mean": 0.005326968421316151
+    }
+  }
+}

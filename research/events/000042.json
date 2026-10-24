@@ -1,0 +1,146 @@
+{
+  "previous_sha256": "5355ac3112b86d2329e8b0971609da4bcd996769f9d15057608259134c069056",
+  "reason": "Review user-completed Colab ZIP; verify 114 paired runs against original control evidence.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Lower learning rate improves selected BCE modestly and AP slightly, reduces seed metric spread, but overfitting and zero-signal behavior persist; no final test or threshold selected.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-20261024/PLAN.md",
+        "path": "sources/7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0.md",
+        "sha256": "7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-review-20261024/REPORT.md",
+        "path": "sources/087b879122ad50d4b1668bc63ef17abdd36a41221de90e91e8119bb731fe2cb8.md",
+        "sha256": "087b879122ad50d4b1668bc63ef17abdd36a41221de90e91e8119bb731fe2cb8"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-review-20261024/checks.json",
+        "path": "sources/9c3b095a1777fe736fd57e47fbfb12bf11d99f42413994c0deadffb28faf995a.json",
+        "sha256": "9c3b095a1777fe736fd57e47fbfb12bf11d99f42413994c0deadffb28faf995a"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-review-20261024/summary.csv",
+        "path": "sources/fb44f7dfccefcd383fdbc6e8e05eb9cf65857c9addb0de11e0807c1eb4262afd.csv",
+        "sha256": "fb44f7dfccefcd383fdbc6e8e05eb9cf65857c9addb0de11e0807c1eb4262afd"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-review-20261024/paired.csv",
+        "path": "sources/6192a383cc91ed2aa727de289ace884f844e5ac5125256f347c4d82b108eb38d.csv",
+        "sha256": "6192a383cc91ed2aa727de289ace884f844e5ac5125256f347c4d82b108eb38d"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-review-20261024/seed_summary.csv",
+        "path": "sources/59f49f83a4888dbad957eea038633d37d8975bdfa9d5194b00ddfd63ae440e61.csv",
+        "sha256": "59f49f83a4888dbad957eea038633d37d8975bdfa9d5194b00ddfd63ae440e61"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/learning-rate-review-20261024/audit_by_run.csv",
+        "path": "sources/3b739a1f8861b151b3fd8ca830ef552439a28dd491a8e27ed91413338492fa5d.csv",
+        "sha256": "3b739a1f8861b151b3fd8ca830ef552439a28dd491a8e27ed91413338492fa5d"
+      }
+    ],
+    "id": "exp-025-b37-learning-rate",
+    "limitations": [
+      "Validation reused for epoch selection; overlapping folds.",
+      "Patience 15 and epoch budget 100 unchanged.",
+      "Four focused checks passed; no Colab training performed.",
+      "Weights not included; no inference rerun.",
+      "Macro precision includes zero-signal groups; pooled counts also reported explicitly."
+    ],
+    "method": {
+      "changed_factor": "learning_rate 0.001 -> 0.0001",
+      "control_reused": true,
+      "folds": 38,
+      "new_training_runs": 114,
+      "release": "advisor-learning-rate-v1.0.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ]
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-021-feature-comparison",
+      "exp-024-early-epoch-diagnostics"
+    ],
+    "question": "Düşük öğrenme hızı validation BCE/AP ve seed kararlılığını iyileştiriyor mu?",
+    "results": [
+      {
+        "aggregation": "equal fold/seed means; 114 paired runs",
+        "cohort": "control",
+        "metrics": {
+          "ap_falls_best_to_last": 94,
+          "ap_mean": 0.40492921228462614,
+          "bce_mean": 0.6094701954147272,
+          "best_epoch_le3": 110,
+          "best_epoch_max": 5,
+          "best_epoch_median": 1.0,
+          "epoch16_ap_mean": 0.35881934458617554,
+          "epoch16_bce_mean": 1.5032993152476193,
+          "epochs_max": 20,
+          "epochs_min": 16,
+          "last_ap_mean": 0.35762995196302594,
+          "last_bce_mean": 1.5225535385441362,
+          "median_seed_range_ap": 0.031145426001735033,
+          "median_seed_range_bce": 0.01296970248222351,
+          "no_signal_runs": 1,
+          "pooled_f1": 0.21400638383325934,
+          "pooled_precision": 0.4474498364713162,
+          "pooled_recall": 0.14063455020281157,
+          "train_falls_val_rises": 114
+        },
+        "split": "validation"
+      },
+      {
+        "aggregation": "equal fold/seed means; 114 paired runs",
+        "cohort": "candidate",
+        "metrics": {
+          "ap_falls_best_to_last": 76,
+          "ap_mean": 0.4102561807059424,
+          "bce_mean": 0.6011456627594797,
+          "best_epoch_le3": 68,
+          "best_epoch_max": 22,
+          "best_epoch_median": 3.0,
+          "epoch16_ap_mean": 0.3902614222301047,
+          "epoch16_bce_mean": 0.6406679310296711,
+          "epochs_max": 37,
+          "epochs_min": 16,
+          "last_ap_mean": 0.38708423567939,
+          "last_bce_mean": 0.6566565036773682,
+          "median_seed_range_ap": 0.023631351101689207,
+          "median_seed_range_bce": 0.006744563579559326,
+          "no_signal_runs": 23,
+          "pooled_f1": 0.1564361923236802,
+          "pooled_precision": 0.46346469622331693,
+          "pooled_recall": 0.09409901650275046,
+          "train_falls_val_rises": 114
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.",
+    "status": "completed",
+    "title": "B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001"
+  },
+  "recorded_at": "2026-10-24T16:32:39.769572+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 42
+}

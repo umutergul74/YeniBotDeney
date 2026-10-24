@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**25 deney/plan · 41 geçmiş kaydı**
+**25 deney/plan · 42 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -32,7 +32,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-022-barrier-economics](#exp-022-barrier-economics) | 2/5, 1/1 ve 2/2: validation sinyallerinin brüt getirileri | completed | mixed |
 | [exp-023-barrier-economics-b12](#exp-023-barrier-economics-b12) | Pozitif model sinyallerinin getirileri: 1/2 bariyeri eklendi | completed | mixed |
 | [exp-024-early-epoch-diagnostics](#exp-024-early-epoch-diagnostics) | A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi | completed | mixed |
-| [exp-025-b37-learning-rate](#exp-025-b37-learning-rate) | B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001 | planned | pending |
+| [exp-025-b37-learning-rate](#exp-025-b37-learning-rate) | B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001 | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -377,6 +377,26 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-024-early-epoch-diagnostics | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+control · equal fold/seed means; 114 paired runs
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-025-b37-learning-rate | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+candidate · equal fold/seed means; 114 paired runs
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-025-b37-learning-rate | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -1820,7 +1840,7 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 Düşük öğrenme hızı validation BCE/AP ve seed kararlılığını iyileştiriyor mu?
 
-Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-021-feature-comparison, exp-024-early-epoch-diagnostics
 
@@ -1830,16 +1850,70 @@ Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
 
 **Seçim kuralı:** Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.
 
-**Karar / öğrenilen:** Authorized and notebook prepared; awaiting user Colab A100 execution. No matching runtime locally.
+**Karar / öğrenilen:** Lower learning rate improves selected BCE modestly and AP slightly, reduces seed metric spread, but overfitting and zero-signal behavior persist; no final test or threshold selected.
 
-**Henüz sonuç yok.**
+**validation** · control · equal fold/seed means; 114 paired runs
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_falls_best_to_last | 94.000000 |
+| ap_mean | 0.404929 |
+| bce_mean | 0.609470 |
+| best_epoch_le3 | 110.000000 |
+| best_epoch_max | 5.000000 |
+| best_epoch_median | 1.000000 |
+| epoch16_ap_mean | 0.358819 |
+| epoch16_bce_mean | 1.503299 |
+| epochs_max | 20.000000 |
+| epochs_min | 16.000000 |
+| last_ap_mean | 0.357630 |
+| last_bce_mean | 1.522554 |
+| median_seed_range_ap | 0.031145 |
+| median_seed_range_bce | 0.012970 |
+| no_signal_runs | 1.000000 |
+| pooled_f1 | 0.214006 |
+| pooled_precision | 0.447450 |
+| pooled_recall | 0.140635 |
+| train_falls_val_rises | 114.000000 |
+
+**validation** · candidate · equal fold/seed means; 114 paired runs
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_falls_best_to_last | 76.000000 |
+| ap_mean | 0.410256 |
+| bce_mean | 0.601146 |
+| best_epoch_le3 | 68.000000 |
+| best_epoch_max | 22.000000 |
+| best_epoch_median | 3.000000 |
+| epoch16_ap_mean | 0.390261 |
+| epoch16_bce_mean | 0.640668 |
+| epochs_max | 37.000000 |
+| epochs_min | 16.000000 |
+| last_ap_mean | 0.387084 |
+| last_bce_mean | 0.656657 |
+| median_seed_range_ap | 0.023631 |
+| median_seed_range_bce | 0.006745 |
+| no_signal_runs | 23.000000 |
+| pooled_f1 | 0.156436 |
+| pooled_precision | 0.463465 |
+| pooled_recall | 0.094099 |
+| train_falls_val_rises | 114.000000 |
 
 **Sınırlar / açık noktalar:**
 - Validation reused for epoch selection; overlapping folds.
 - Patience 15 and epoch budget 100 unchanged.
 - Four focused checks passed; no Colab training performed.
+- Weights not included; no inference rerun.
+- Macro precision includes zero-signal groups; pooled counts also reported explicitly.
 
 **Kanıt kopyaları:**
 - [research/analyses/learning-rate-20261024/PLAN.md](sources/7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0.md) · SHA256 `7d7fc826fa31a971892154fdc917f134b51bf2719be539b718a2f38f883ca9b0`
+- [research/analyses/learning-rate-review-20261024/REPORT.md](sources/087b879122ad50d4b1668bc63ef17abdd36a41221de90e91e8119bb731fe2cb8.md) · SHA256 `087b879122ad50d4b1668bc63ef17abdd36a41221de90e91e8119bb731fe2cb8`
+- [research/analyses/learning-rate-review-20261024/checks.json](sources/9c3b095a1777fe736fd57e47fbfb12bf11d99f42413994c0deadffb28faf995a.json) · SHA256 `9c3b095a1777fe736fd57e47fbfb12bf11d99f42413994c0deadffb28faf995a`
+- [research/analyses/learning-rate-review-20261024/summary.csv](sources/fb44f7dfccefcd383fdbc6e8e05eb9cf65857c9addb0de11e0807c1eb4262afd.csv) · SHA256 `fb44f7dfccefcd383fdbc6e8e05eb9cf65857c9addb0de11e0807c1eb4262afd`
+- [research/analyses/learning-rate-review-20261024/paired.csv](sources/6192a383cc91ed2aa727de289ace884f844e5ac5125256f347c4d82b108eb38d.csv) · SHA256 `6192a383cc91ed2aa727de289ace884f844e5ac5125256f347c4d82b108eb38d`
+- [research/analyses/learning-rate-review-20261024/seed_summary.csv](sources/59f49f83a4888dbad957eea038633d37d8975bdfa9d5194b00ddfd63ae440e61.csv) · SHA256 `59f49f83a4888dbad957eea038633d37d8975bdfa9d5194b00ddfd63ae440e61`
+- [research/analyses/learning-rate-review-20261024/audit_by_run.csv](sources/3b739a1f8861b151b3fd8ca830ef552439a28dd491a8e27ed91413338492fa5d.csv) · SHA256 `3b739a1f8861b151b3fd8ca830ef552439a28dd491a8e27ed91413338492fa5d`
 
-[Son kayıt](events/000041.json) · revizyon 1 · User authorized one-factor experiment; prepare Colab A100 entry with minimal reporting and focused checks.
+[Son kayıt](events/000042.json) · revizyon 2 · Review user-completed Colab ZIP; verify 114 paired runs against original control evidence.
