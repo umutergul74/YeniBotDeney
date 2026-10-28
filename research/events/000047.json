@@ -1,0 +1,73 @@
+{
+  "previous_sha256": "3988668de26505751ef133e2392d7e3e94912b1c886ddbed62868f5de337aff9",
+  "reason": "User authorized existing-feature train/validation diagnosis; identities verified against frozen frame.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Marginal shift and TP-rate drop alone do not explain failure. Fold28 volatility-label associations weaken and BCE/AP epoch preferences diverge. Audit all histories before any selection-rule change.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-period-diagnosis-20261028/REPORT.md",
+        "path": "sources/38106917d79c19e8b02f2256875013e2304aedb9165f92f6abd05f5a026e580e.md",
+        "sha256": "38106917d79c19e8b02f2256875013e2304aedb9165f92f6abd05f5a026e580e"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-period-diagnosis-20261028/checks.json",
+        "path": "sources/b6c873ba9e50b3285ff52b77e6a31f7f09312300dbdb43a9c1eb37d928a6e610.json",
+        "sha256": "b6c873ba9e50b3285ff52b77e6a31f7f09312300dbdb43a9c1eb37d928a6e610"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-period-diagnosis-20261028/epoch_tradeoff.csv",
+        "path": "sources/22e8a843da347e46b38237085784705661984cb7cc177cb781e7bfc2aff49e4a.csv",
+        "sha256": "22e8a843da347e46b38237085784705661984cb7cc177cb781e7bfc2aff49e4a"
+      }
+    ],
+    "id": "exp-029-a6-period-diagnosis",
+    "limitations": [
+      "Reused validation and overlapping folds; focus periods chosen after outcomes.",
+      "Marginal feature associations are not GRU attribution or causal proof.",
+      "No alternate-epoch predictions available; no new inference."
+    ],
+    "method": {
+      "associations": "marginal Spearman; descriptive only",
+      "distribution": "Wasserstein/train IQR, KS, tail rates; unweighted input rows",
+      "epoch_review": "existing fold28/37 histories; no checkpoint replacement",
+      "labels": "sequence endpoints only",
+      "scope": "38 train/validation folds; six existing inputs; no test or training"
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-028-a6-thresholds"
+    ],
+    "question": "Fold28 ve37 farkını etiket oranı, mevcut altı özellik dağılımı ve epoch geçmişleri açıklıyor mu?",
+    "results": [
+      {
+        "aggregation": "three-seed mean; feature shift mean over six inputs",
+        "cohort": "fold28 versus fold37; candidate LR0.0001",
+        "metrics": {
+          "fold28_mean_shift": 0.1261,
+          "fold28_top5_precision": 0.10457516339869281,
+          "fold37_mean_shift": 0.4792,
+          "fold37_top5_precision": 0.5032679738562091
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Unchanged minimum validation BCE; no new rule.",
+    "status": "completed",
+    "title": "A6 fold28/37: train-validation dağılım ve etiket ilişkisi"
+  },
+  "recorded_at": "2026-10-28T17:48:22.502725+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 47
+}

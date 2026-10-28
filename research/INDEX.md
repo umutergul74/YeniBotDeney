@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**28 deney/plan · 46 geçmiş kaydı**
+**29 deney/plan · 47 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -36,6 +36,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-026-learning-rate-thresholds](#exp-026-learning-rate-thresholds) | B37 öğrenme hızları: validation eşik ve sinyal kapsamı | completed | mixed |
 | [exp-027-a6-learning-rate](#exp-027-a6-learning-rate) | A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol | completed | mixed |
 | [exp-028-a6-thresholds](#exp-028-a6-thresholds) | A6 öğrenme hızları: eşik, eşit kapsam ve dönem kararlılığı | completed | mixed |
+| [exp-029-a6-period-diagnosis](#exp-029-a6-period-diagnosis) | A6 fold28/37: train-validation dağılım ve etiket ilişkisi | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -430,6 +431,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-028-a6-thresholds | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+fold28 versus fold37; candidate LR0.0001 · three-seed mean; feature shift mean over six inputs
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-029-a6-period-diagnosis | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -2072,3 +2083,42 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/a6-thresholds-20261028/matched_summary.csv](sources/517fdfbc82acf088b3cb44f53731ae8ba1b7d18efa317b6685076951d6a4c8f4.csv) · SHA256 `517fdfbc82acf088b3cb44f53731ae8ba1b7d18efa317b6685076951d6a4c8f4`
 
 [Son kayıt](events/000046.json) · revizyon 1 · User authorized detailed A6 threshold and matched-coverage diagnosis on existing predictions.
+
+## exp-029-a6-period-diagnosis
+
+**A6 fold28/37: train-validation dağılım ve etiket ilişkisi**
+
+Fold28 ve37 farkını etiket oranı, mevcut altı özellik dağılımı ve epoch geçmişleri açıklıyor mu?
+
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-028-a6-thresholds
+
+**Yöntem:** {"associations": "marginal Spearman; descriptive only", "distribution": "Wasserstein/train IQR, KS, tail rates; unweighted input rows", "epoch_review": "existing fold28/37 histories; no checkpoint replacement", "labels": "sequence endpoints only", "scope": "38 train/validation folds; six existing inputs; no test or training"}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Unchanged minimum validation BCE; no new rule.
+
+**Karar / öğrenilen:** Marginal shift and TP-rate drop alone do not explain failure. Fold28 volatility-label associations weaken and BCE/AP epoch preferences diverge. Audit all histories before any selection-rule change.
+
+**validation** · fold28 versus fold37; candidate LR0.0001 · three-seed mean; feature shift mean over six inputs
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| fold28_mean_shift | 0.126100 |
+| fold28_top5_precision | 0.104575 |
+| fold37_mean_shift | 0.479200 |
+| fold37_top5_precision | 0.503268 |
+
+**Sınırlar / açık noktalar:**
+- Reused validation and overlapping folds; focus periods chosen after outcomes.
+- Marginal feature associations are not GRU attribution or causal proof.
+- No alternate-epoch predictions available; no new inference.
+
+**Kanıt kopyaları:**
+- [research/analyses/a6-period-diagnosis-20261028/REPORT.md](sources/38106917d79c19e8b02f2256875013e2304aedb9165f92f6abd05f5a026e580e.md) · SHA256 `38106917d79c19e8b02f2256875013e2304aedb9165f92f6abd05f5a026e580e`
+- [research/analyses/a6-period-diagnosis-20261028/checks.json](sources/b6c873ba9e50b3285ff52b77e6a31f7f09312300dbdb43a9c1eb37d928a6e610.json) · SHA256 `b6c873ba9e50b3285ff52b77e6a31f7f09312300dbdb43a9c1eb37d928a6e610`
+- [research/analyses/a6-period-diagnosis-20261028/epoch_tradeoff.csv](sources/22e8a843da347e46b38237085784705661984cb7cc177cb781e7bfc2aff49e4a.csv) · SHA256 `22e8a843da347e46b38237085784705661984cb7cc177cb781e7bfc2aff49e4a`
+
+[Son kayıt](events/000047.json) · revizyon 1 · User authorized existing-feature train/validation diagnosis; identities verified against frozen frame.

@@ -1,0 +1,12 @@
+{
+  "frame_sha256": "ce49f694d8e7d1c860f0b16ef49c8ec48ed072404c4f8b2991fc8945584c0653",
+  "source_drive_id": "14kXQEYSUVQY2rwWD4YFSYTiCRZUrs4B6",
+  "folds": 38,
+  "prediction_identity_pairs": 114,
+  "train_targets": 4977,
+  "validation_targets": 1017,
+  "split_and_dataset_hashes_match": true,
+  "test_evaluations": 0,
+  "scope": "raw feature rows within train/validation; labels at sequence endpoints; no sequence weighting",
+  "limitations": "Marginal distributions and descriptive associations; dependent folds; no p-values or causal claim."
+}
