@@ -1,0 +1,21 @@
+{
+  "sources": {
+    "control": "0d239ab948a0a28fd9bf6fd94ccf4f1cd082d27b1e283548ce35b888d79cfbc6",
+    "candidate": "858e85cfb59b1c5f020698be2fb014ff3b6e5983a67e6932b6b28f0afbe2b1b9"
+  },
+  "pairs": 114,
+  "grid_step": 0.005,
+  "aggregation": "sum TP/FP/FN over overlapping fold/seed prediction instances; no deduplication, no ensemble",
+  "checks": [
+    "matched validation identities",
+    "finite probabilities",
+    "0.5 matches prior verified pooled metrics",
+    "monotonic signal counts",
+    "equal top-k per run; stable score sorting; boundary ties counted"
+  ],
+  "new_training": false,
+  "test_evaluations": 0,
+  "threshold_selected": false,
+  "matched_global_rule": "nearest coverage on 0.005 threshold grid; no label optimization",
+  "matched_within_run_rule": "top round(1017 * coverage), retrospective diagnostic only"
+}

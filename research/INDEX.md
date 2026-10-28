@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**27 deney/plan · 45 geçmiş kaydı**
+**28 deney/plan · 46 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -35,6 +35,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-025-b37-learning-rate](#exp-025-b37-learning-rate) | B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001 | completed | mixed |
 | [exp-026-learning-rate-thresholds](#exp-026-learning-rate-thresholds) | B37 öğrenme hızları: validation eşik ve sinyal kapsamı | completed | mixed |
 | [exp-027-a6-learning-rate](#exp-027-a6-learning-rate) | A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol | completed | mixed |
+| [exp-028-a6-thresholds](#exp-028-a6-thresholds) | A6 öğrenme hızları: eşik, eşit kapsam ve dönem kararlılığı | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -419,6 +420,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-027-a6-learning-rate | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+top51 per run; 114 runs each · equal-run precision; same count per run
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-028-a6-thresholds | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -2021,3 +2032,43 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/a6-learning-rate-20261028/checks.json](sources/beaa6b6f5bcbcb6efa13e2b19dade401be5552c9a1353b3cbf7c16aa66f07f4c.json) · SHA256 `beaa6b6f5bcbcb6efa13e2b19dade401be5552c9a1353b3cbf7c16aa66f07f4c`
 
 [Son kayıt](events/000045.json) · revizyon 2 · Audit user-completed A6 low-LR Drive results; all 114 validation runs complete.
+
+## exp-028-a6-thresholds
+
+**A6 öğrenme hızları: eşik, eşit kapsam ve dönem kararlılığı**
+
+Düşük hızda sinyal kaybı skor ölçeği mi, sıralama kalitesi mi; aynı sinyal oranında ne değişiyor?
+
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-027-a6-learning-rate, exp-026-learning-rate-thresholds
+
+**Yöntem:** {"aggregation": "pooled fold/seed confusion counts; no deduplication or ensemble", "global_match": "nearest signal rate; no label optimization", "threshold_grid": "0..1 step0.005", "within_run_match": "top 1/2/5/10/20 percent; rounded counts; retrospective diagnostic"}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Original min-validation-BCE checkpoints unchanged; no threshold selected.
+
+**Karar / öğrenilen:** Upper scores contract; matched coverage shows no consistent low-LR precision advantage. Last fold retains ranking below 0.5; fold28 ranking deteriorates. Keep original A6 reference; no final test.
+
+**validation** · top51 per run; 114 runs each · equal-run precision; same count per run
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| candidate_better_pairs | 53.000000 |
+| candidate_precision | 0.462504 |
+| control_better_pairs | 54.000000 |
+| control_precision | 0.473168 |
+| tied_pairs | 7.000000 |
+
+**Sınırlar / açık noktalar:**
+- Reused validation; overlapping folds and repeated seeds are not independent trades.
+- Retrospective top-k cutoffs are not prospective trading rules.
+- High-threshold precision has sparse support; no economic or significance claim.
+
+**Kanıt kopyaları:**
+- [research/analyses/a6-thresholds-20261028/REPORT.md](sources/012228e4b07377c6f4abe272b79acf01552e3fe1c01a1a13bfdfb023c9424846.md) · SHA256 `012228e4b07377c6f4abe272b79acf01552e3fe1c01a1a13bfdfb023c9424846`
+- [research/analyses/a6-thresholds-20261028/checks.json](sources/b17cff39a00ef8aa792cff51f4e874b7a237e9c0950feaa5ca7abb9ec09b33c0.json) · SHA256 `b17cff39a00ef8aa792cff51f4e874b7a237e9c0950feaa5ca7abb9ec09b33c0`
+- [research/analyses/a6-thresholds-20261028/matched_summary.csv](sources/517fdfbc82acf088b3cb44f53731ae8ba1b7d18efa317b6685076951d6a4c8f4.csv) · SHA256 `517fdfbc82acf088b3cb44f53731ae8ba1b7d18efa317b6685076951d6a4c8f4`
+
+[Son kayıt](events/000046.json) · revizyon 1 · User authorized detailed A6 threshold and matched-coverage diagnosis on existing predictions.

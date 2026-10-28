@@ -1,0 +1,74 @@
+{
+  "previous_sha256": "dd0bdf5d6112880be94221f3b0e3a488a5c858ce25b26cdf4226dc76217dce50",
+  "reason": "User authorized detailed A6 threshold and matched-coverage diagnosis on existing predictions.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Upper scores contract; matched coverage shows no consistent low-LR precision advantage. Last fold retains ranking below 0.5; fold28 ranking deteriorates. Keep original A6 reference; no final test.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-thresholds-20261028/REPORT.md",
+        "path": "sources/012228e4b07377c6f4abe272b79acf01552e3fe1c01a1a13bfdfb023c9424846.md",
+        "sha256": "012228e4b07377c6f4abe272b79acf01552e3fe1c01a1a13bfdfb023c9424846"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-thresholds-20261028/checks.json",
+        "path": "sources/b17cff39a00ef8aa792cff51f4e874b7a237e9c0950feaa5ca7abb9ec09b33c0.json",
+        "sha256": "b17cff39a00ef8aa792cff51f4e874b7a237e9c0950feaa5ca7abb9ec09b33c0"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-thresholds-20261028/matched_summary.csv",
+        "path": "sources/517fdfbc82acf088b3cb44f53731ae8ba1b7d18efa317b6685076951d6a4c8f4.csv",
+        "sha256": "517fdfbc82acf088b3cb44f53731ae8ba1b7d18efa317b6685076951d6a4c8f4"
+      }
+    ],
+    "id": "exp-028-a6-thresholds",
+    "limitations": [
+      "Reused validation; overlapping folds and repeated seeds are not independent trades.",
+      "Retrospective top-k cutoffs are not prospective trading rules.",
+      "High-threshold precision has sparse support; no economic or significance claim."
+    ],
+    "method": {
+      "aggregation": "pooled fold/seed confusion counts; no deduplication or ensemble",
+      "global_match": "nearest signal rate; no label optimization",
+      "threshold_grid": "0..1 step0.005",
+      "within_run_match": "top 1/2/5/10/20 percent; rounded counts; retrospective diagnostic"
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-027-a6-learning-rate",
+      "exp-026-learning-rate-thresholds"
+    ],
+    "question": "Düşük hızda sinyal kaybı skor ölçeği mi, sıralama kalitesi mi; aynı sinyal oranında ne değişiyor?",
+    "results": [
+      {
+        "aggregation": "equal-run precision; same count per run",
+        "cohort": "top51 per run; 114 runs each",
+        "metrics": {
+          "candidate_better_pairs": 53,
+          "candidate_precision": 0.4625042999656003,
+          "control_better_pairs": 54,
+          "control_precision": 0.47316821465428277,
+          "tied_pairs": 7
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Original min-validation-BCE checkpoints unchanged; no threshold selected.",
+    "status": "completed",
+    "title": "A6 öğrenme hızları: eşik, eşit kapsam ve dönem kararlılığı"
+  },
+  "recorded_at": "2026-10-28T16:48:52.826093+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 46
+}
