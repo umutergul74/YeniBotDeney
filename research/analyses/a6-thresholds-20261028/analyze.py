@@ -120,4 +120,3 @@ manifest['checks']+=['equal top-k per run; stable score sorting; boundary ties c
 manifest['matched_global_rule']='nearest coverage on 0.005 threshold grid; no label optimization'
 manifest['matched_within_run_rule']='top round(1017 * coverage), retrospective diagnostic only'
 (out/'checks.json').write_text(json.dumps(manifest,indent=2)+'\n')
-
