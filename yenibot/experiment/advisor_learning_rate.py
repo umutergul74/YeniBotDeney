@@ -1,4 +1,4 @@
-"""Single-factor B37 learning-rate experiment; historical control is read-only."""
+"""Single-factor A6/B37 learning-rate experiment; historical control is read-only."""
 import argparse
 import copy
 import json
@@ -17,10 +17,11 @@ def candidate_config(control, root):
     return cfg
 
 
-def one_run(root):
-    runs = list((root/'runs').glob('B_*'))
+def one_run(root, experiment='B'):
+    if experiment not in ('A', 'B'): raise ValueError('Only A/B GRU controls supported')
+    runs = list((root/'runs').glob(experiment+'_*'))
     if len(runs) != 1:
-        raise ValueError('Expected exactly one B run')
+        raise ValueError(f'Expected exactly one {experiment} run')
     return runs[0]
 
 
@@ -53,7 +54,8 @@ def load_runs(run):
     return pd.DataFrame(rows), pd.concat(histories), identities
 
 
-def report(control_run, candidate_run, root):
+def report(control_run, candidate_run, root, experiment='B'):
+    model_label = {'A': 'A6', 'B': 'B37'}[experiment]
     import pandas as pd
     import matplotlib.pyplot as plt
     a, ha, ia = load_runs(control_run)
@@ -80,9 +82,9 @@ def report(control_run, candidate_run, root):
         axes[1].plot(g.index,g.average_precision,color=color,label=label)
     for ax in axes: ax.set_xlabel('Epoch'); ax.legend(fontsize=8); ax.grid(alpha=.2)
     axes[0].set_ylabel('BCE (düşük iyi)'); axes[1].set_ylabel('Validation AP (yüksek iyi)')
-    fig.suptitle('B37 GRU: aynı 114 eğitim; ortak epoch aralığı')
+    fig.suptitle(f'{model_label} GRU: aynı 114 eğitim; ortak epoch aralığı')
     fig.savefig(out/'comparison.png',dpi=150); plt.close(fig)
-    (out/'README.md').write_text('# B37 öğrenme hızı karşılaştırması\n\n'
+    (out/'README.md').write_text(f'# {model_label} öğrenme hızı karşılaştırması\n\n'
         'Yalnız validation; epoch minimum BCE ile seçildi. Eşik 0.5 değişmedi. '
         'Özet eşit fold/seed ortalaması; signals fold başınadır, benzersiz işlem sayısı değildir. '
         'Sıfır sinyalde kayıtlı precision=0; sinyal sayısıyla okuyun. '
@@ -103,6 +105,7 @@ def main():
     parser.add_argument('action',choices=['prepare','train','report'])
     parser.add_argument('--source',type=Path,required=True)
     parser.add_argument('--root',type=Path,required=True)
+    parser.add_argument('--experiment',choices=['A','B'],default='B')
     args=parser.parse_args(); source=args.source.resolve(); root=args.root.resolve()
     if root==source or root.is_relative_to(source) or source.is_relative_to(root):
         raise ValueError('Separate workspace required')
@@ -111,9 +114,9 @@ def main():
     from yenibot.experiment.advisor_workspace import REPO
     from yenibot.training import advisor
     control=verified(source)
-    run=one_run(source)
+    run=one_run(source,args.experiment)
     protocol=json.loads((run/'protocol.json').read_text())
-    if protocol['config'] != control:
+    if protocol['config'] != control or protocol['experiment'] != args.experiment:
         raise ValueError('Control configuration mismatch')
     for path,digest in protocol['source_hashes'].items():
         relative=path.split('/advisor_feature_comparison_repo/')[1]
@@ -126,6 +129,7 @@ def main():
     if any(protocol[k] != v for k,v in current.items()):
         raise ValueError('Control runtime differs; do not mix conditions')
     freeze_workspace_identity(REPO,root,identity)
+    immutable_json(root/'artifacts/experiment.json',{'experiment':args.experiment})
     cfg=candidate_config(control,root)
     immutable_json(root/'artifacts/config.json',cfg)
     immutable_json(root/'artifacts/control.json',{'protocol':protocol,'sha256':sha256(run/'protocol.json')})
@@ -135,13 +139,13 @@ def main():
     immutable_json(root/'artifacts/control_evidence.json',evidence)
     if args.action=='prepare':
         load_runs(run)
-        print('Verified control; only B37 learning rate changes: 0.001 -> 0.0001; 114 new trainings.')
-    elif args.action=='train': advisor.run(cfg,'B')
+        print(f'Verified {args.experiment} control; only learning rate changes: 0.001 -> 0.0001; 114 new trainings.')
+    elif args.action=='train': advisor.run(cfg,args.experiment)
     else:
-        candidate=one_run(root)
+        candidate=one_run(root,args.experiment)
         if json.loads((candidate/'protocol.json').read_text())['config'] != cfg:
             raise ValueError('Candidate configuration mismatch')
-        report(run,candidate,root)
+        report(run,candidate,root,args.experiment)
 
 
 if __name__=='__main__': main()

@@ -1,0 +1,57 @@
+{
+  "previous_sha256": "fda91a6597ac29d1d668a3dc646f00f777a9c8d22a3bd6af1896c214df7a190f",
+  "reason": "Authorize A6 missing learning-rate cell; reuse existing notebook and preserve historical B37.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "User approved A6; existing notebook adapted, awaiting Colab execution.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-learning-rate-20261028/PLAN.md",
+        "path": "sources/54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e.md",
+        "sha256": "54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e"
+      }
+    ],
+    "id": "exp-027-a6-learning-rate",
+    "limitations": [
+      "Validation reused; overlapping folds.",
+      "Patience15 and epochs100 unchanged.",
+      "No Colab training executed here."
+    ],
+    "method": {
+      "changed_factor": "learning_rate 0.001 -> 0.0001",
+      "control_reused": true,
+      "experiment": "A",
+      "folds": 38,
+      "new_training_runs": 114,
+      "release": "advisor-learning-rate-v1.1.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ]
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-021-feature-comparison",
+      "exp-025-b37-learning-rate",
+      "exp-026-learning-rate-thresholds"
+    ],
+    "question": "Düşük hız A6 modelini de geliştiriyor mu; aynı hızda A6/B37 karşılaştırması nasıl değişiyor?",
+    "results": [],
+    "selection_rule": "Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.",
+    "status": "planned",
+    "title": "A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol"
+  },
+  "recorded_at": "2026-10-28T15:29:56.638662+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 44
+}

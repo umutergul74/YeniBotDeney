@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**26 deney/plan · 43 geçmiş kaydı**
+**27 deney/plan · 44 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -34,6 +34,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-024-early-epoch-diagnostics](#exp-024-early-epoch-diagnostics) | A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi | completed | mixed |
 | [exp-025-b37-learning-rate](#exp-025-b37-learning-rate) | B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001 | completed | mixed |
 | [exp-026-learning-rate-thresholds](#exp-026-learning-rate-thresholds) | B37 öğrenme hızları: validation eşik ve sinyal kapsamı | completed | mixed |
+| [exp-027-a6-learning-rate](#exp-027-a6-learning-rate) | A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -1967,3 +1968,33 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/learning-rate-thresholds-20261024/selected_thresholds.csv](sources/115581707d14100c8b46ee6e265e2ceb47e5f2bb9cb07dfde6c7824b72b7e301.csv) · SHA256 `115581707d14100c8b46ee6e265e2ceb47e5f2bb9cb07dfde6c7824b72b7e301`
 
 [Son kayıt](events/000043.json) · revizyon 1 · User authorized descriptive threshold comparison using existing predictions.
+
+## exp-027-a6-learning-rate
+
+**A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol**
+
+Düşük hız A6 modelini de geliştiriyor mu; aynı hızda A6/B37 karşılaştırması nasıl değişiyor?
+
+Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-021-feature-comparison, exp-025-b37-learning-rate, exp-026-learning-rate-thresholds
+
+**Yöntem:** {"changed_factor": "learning_rate 0.001 -> 0.0001", "control_reused": true, "experiment": "A", "folds": 38, "new_training_runs": 114, "release": "advisor-learning-rate-v1.1.0", "seeds": [42, 43, 44]}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.
+
+**Karar / öğrenilen:** User approved A6; existing notebook adapted, awaiting Colab execution.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Validation reused; overlapping folds.
+- Patience15 and epochs100 unchanged.
+- No Colab training executed here.
+
+**Kanıt kopyaları:**
+- [research/analyses/a6-learning-rate-20261028/PLAN.md](sources/54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e.md) · SHA256 `54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e`
+
+[Son kayıt](events/000044.json) · revizyon 1 · Authorize A6 missing learning-rate cell; reuse existing notebook and preserve historical B37.

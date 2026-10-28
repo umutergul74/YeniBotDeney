@@ -24,19 +24,23 @@ def test_notebook_syntax_and_scope():
     for c in nb['cells']:
         if c['cell_type']=='code':compile(c['source'],'notebook','exec')
     assert 'advisor_learning_rate.py' in text and "step('train')" in text
+    assert "'--experiment','A'" in text and 'a6_lr0001_a100_001' in text
+    assert 'b37_lr0001_a100_001' not in text
     assert 'ALLOW_TRAINING' not in text and "step('bundle')" not in text
-    assert "RELEASE='advisor-learning-rate-v1.0.0'" in text
+    assert "RELEASE='advisor-learning-rate-v1.1.0'" in text
     assert text.index('drive.flush_and_unmount()')<text.index('runtime.unassign()')
     assert json.loads(Path('notebooks/workflows/06_learning_rate.ipynb').read_text(encoding='utf-8'))==nb
 
 
-def test_missing_or_ambiguous_control_rejected(tmp_path):
-    with pytest.raises(ValueError):one_run(tmp_path)
-    for n in ('B_one','B_two'):(tmp_path/'runs'/n).mkdir(parents=True)
-    with pytest.raises(ValueError):one_run(tmp_path)
+@pytest.mark.parametrize('experiment', ['A','B'])
+def test_missing_or_ambiguous_control_rejected(tmp_path, experiment):
+    with pytest.raises(ValueError):one_run(tmp_path,experiment)
+    for n in (experiment+'_one',experiment+'_two'):(tmp_path/'runs'/n).mkdir(parents=True)
+    with pytest.raises(ValueError):one_run(tmp_path,experiment)
 
 
-def test_report_paired_direction_and_single_graph(tmp_path,monkeypatch):
+@pytest.mark.parametrize('experiment', ['A','B'])
+def test_report_paired_direction_and_single_graph(tmp_path,monkeypatch,experiment):
     import numpy as np
     import pandas as pd
     import yenibot.experiment.advisor_learning_rate as mod
@@ -47,10 +51,17 @@ def test_report_paired_direction_and_single_graph(tmp_path,monkeypatch):
         ids={(s,f):pd.DataFrame({'label':[0,1]}) for s in (42,43,44) for f in range(38)}
         return rows,h,ids
     monkeypatch.setattr(mod,'load_runs',fake)
-    report(Path('control'),Path('candidate'),tmp_path)
+    report(Path('control'),Path('candidate'),tmp_path,experiment)
+    assert ('A6' if experiment=='A' else 'B37') in (tmp_path/'reports/README.md').read_text(encoding='utf-8')
     paired=pd.read_csv(tmp_path/'reports/paired.csv')
     assert len(paired)==114 and np.allclose(paired.delta_bce,-.02)
     summary=pd.read_csv(tmp_path/'reports/summary.csv').set_index('learning_rate')
     assert summary.loc[.0001,'bce_better_pairs']==114
     assert summary.loc[.001,'bce_better_pairs']==0
     assert len(list((tmp_path/'reports').glob('*.png')))==1
+
+
+def test_run_selection_does_not_mix_models(tmp_path):
+    for name in ("A_one", "B_one"):(tmp_path/"runs"/name).mkdir(parents=True)
+    assert one_run(tmp_path,"A").name=="A_one"
+    assert one_run(tmp_path,"B").name=="B_one"
