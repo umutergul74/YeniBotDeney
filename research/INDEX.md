@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**27 deney/plan · 44 geçmiş kaydı**
+**27 deney/plan · 45 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -34,7 +34,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-024-early-epoch-diagnostics](#exp-024-early-epoch-diagnostics) | A6/B37/C37/D37: erken epoch seçimi ve eğitim eğrilerinin neden analizi | completed | mixed |
 | [exp-025-b37-learning-rate](#exp-025-b37-learning-rate) | B37 GRU: yalnız öğrenme hızı 0.001 → 0.0001 | completed | mixed |
 | [exp-026-learning-rate-thresholds](#exp-026-learning-rate-thresholds) | B37 öğrenme hızları: validation eşik ve sinyal kapsamı | completed | mixed |
-| [exp-027-a6-learning-rate](#exp-027-a6-learning-rate) | A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol | planned | pending |
+| [exp-027-a6-learning-rate](#exp-027-a6-learning-rate) | A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -409,6 +409,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-026-learning-rate-thresholds | — | — | 0.446694 | 0.144691 | — |
+
+## Kayıtlı sonuçlar · validation
+
+A6 lr0.0001; 114 fold-seed runs · equal-run BCE/AP; pooled confusion counts at threshold0.5
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-027-a6-learning-rate | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -1975,7 +1985,7 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 Düşük hız A6 modelini de geliştiriyor mu; aynı hızda A6/B37 karşılaştırması nasıl değişiyor?
 
-Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-021-feature-comparison, exp-025-b37-learning-rate, exp-026-learning-rate-thresholds
 
@@ -1985,16 +1995,29 @@ Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
 
 **Seçim kuralı:** Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.
 
-**Karar / öğrenilen:** User approved A6; existing notebook adapted, awaiting Colab execution.
+**Karar / öğrenilen:** A6 low LR reduces seed spread and delays deterioration but does not improve selected validation BCE/AP; zero-signal runs rise 14 to 35. Preserve original reference; no final test.
 
-**Henüz sonuç yok.**
+**validation** · A6 lr0.0001; 114 fold-seed runs · equal-run BCE/AP; pooled confusion counts at threshold0.5
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_mean | 0.419869 |
+| bce_mean | 0.594545 |
+| median_seed_range_ap | 0.013485 |
+| median_seed_range_bce | 0.003653 |
+| no_signal_runs | 35.000000 |
+| pooled_f1 | 0.123988 |
+| pooled_precision | 0.485573 |
+| pooled_recall | 0.071067 |
 
 **Sınırlar / açık noktalar:**
-- Validation reused; overlapping folds.
-- Patience15 and epochs100 unchanged.
-- No Colab training executed here.
+- Reused validation and overlapping folds/seeds; not independent final performance.
+- Two runs reached 100-epoch cap.
+- Review ZIP excludes weights; checkpoint files/inference not reverified.
 
 **Kanıt kopyaları:**
 - [research/analyses/a6-learning-rate-20261028/PLAN.md](sources/54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e.md) · SHA256 `54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e`
+- [research/analyses/a6-learning-rate-20261028/REPORT.md](sources/0a8867647fb83f48d01822a654fe283d8d65c66af688a6bd44979545cc7a9f2a.md) · SHA256 `0a8867647fb83f48d01822a654fe283d8d65c66af688a6bd44979545cc7a9f2a`
+- [research/analyses/a6-learning-rate-20261028/checks.json](sources/beaa6b6f5bcbcb6efa13e2b19dade401be5552c9a1353b3cbf7c16aa66f07f4c.json) · SHA256 `beaa6b6f5bcbcb6efa13e2b19dade401be5552c9a1353b3cbf7c16aa66f07f4c`
 
-[Son kayıt](events/000044.json) · revizyon 1 · Authorize A6 missing learning-rate cell; reuse existing notebook and preserve historical B37.
+[Son kayıt](events/000045.json) · revizyon 2 · Audit user-completed A6 low-LR Drive results; all 114 validation runs complete.

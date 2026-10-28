@@ -1,0 +1,85 @@
+{
+  "previous_sha256": "52fe6c9610d32351f2af6bd141a37edfbd17466a84d331806b78d02197ec5745",
+  "reason": "Audit user-completed A6 low-LR Drive results; all 114 validation runs complete.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "validation only; no test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "A6 low LR reduces seed spread and delays deterioration but does not improve selected validation BCE/AP; zero-signal runs rise 14 to 35. Preserve original reference; no final test.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-learning-rate-20261028/PLAN.md",
+        "path": "sources/54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e.md",
+        "sha256": "54dc894275e552b3d42744716ba2ba101a0f47cb51a8214bc726d7cd0231526e"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-learning-rate-20261028/REPORT.md",
+        "path": "sources/0a8867647fb83f48d01822a654fe283d8d65c66af688a6bd44979545cc7a9f2a.md",
+        "sha256": "0a8867647fb83f48d01822a654fe283d8d65c66af688a6bd44979545cc7a9f2a"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/a6-learning-rate-20261028/checks.json",
+        "path": "sources/beaa6b6f5bcbcb6efa13e2b19dade401be5552c9a1353b3cbf7c16aa66f07f4c.json",
+        "sha256": "beaa6b6f5bcbcb6efa13e2b19dade401be5552c9a1353b3cbf7c16aa66f07f4c"
+      }
+    ],
+    "id": "exp-027-a6-learning-rate",
+    "limitations": [
+      "Reused validation and overlapping folds/seeds; not independent final performance.",
+      "Two runs reached 100-epoch cap.",
+      "Review ZIP excludes weights; checkpoint files/inference not reverified."
+    ],
+    "method": {
+      "changed_factor": "learning_rate 0.001 -> 0.0001",
+      "control_reused": true,
+      "experiment": "A",
+      "folds": 38,
+      "new_training_runs": 114,
+      "release": "advisor-learning-rate-v1.1.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ]
+    },
+    "outcome": "mixed",
+    "parent_ids": [
+      "exp-021-feature-comparison",
+      "exp-025-b37-learning-rate",
+      "exp-026-learning-rate-thresholds"
+    ],
+    "question": "Düşük hız A6 modelini de geliştiriyor mu; aynı hızda A6/B37 karşılaştırması nasıl değişiyor?",
+    "results": [
+      {
+        "aggregation": "equal-run BCE/AP; pooled confusion counts at threshold0.5",
+        "cohort": "A6 lr0.0001; 114 fold-seed runs",
+        "metrics": {
+          "ap_mean": 0.41986873887325704,
+          "bce_mean": 0.5945452404649634,
+          "median_seed_range_ap": 0.013484869970043334,
+          "median_seed_range_bce": 0.003653287887573242,
+          "no_signal_runs": 35,
+          "pooled_f1": 0.12398817313751151,
+          "pooled_precision": 0.4855732725892179,
+          "pooled_recall": 0.0710674001222426
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Original minimum validation BCE; fixed 0.5 descriptive threshold; no final test.",
+    "status": "completed",
+    "title": "A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol"
+  },
+  "recorded_at": "2026-10-28T16:36:16.853744+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 45
+}
