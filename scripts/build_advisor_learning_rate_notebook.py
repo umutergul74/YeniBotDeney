@@ -26,5 +26,17 @@ def build():
     return nb
 
 
+def build_checkpoint():
+    nb=build();cells=nb['cells']
+    cells[0]['source']='# A6 — BCE / AP checkpoint seçimi\n\nA100, aynı kilitli ortam. 114 yeni ortak eğitim; 228 seçilmiş checkpoint.\nTrain5040 değişmez. Validation528 seçim +24 boşluk +528 değerlendirme: her bölüm465 hedef.\nLR0.001; ortak durdurma seçim BCE/patience15. AP erken durdurma denenmez.\nEski validation daha önce görülmüştür; bu final test değildir. Yeni Colab oturumunda sırayla çalıştırın.\n'
+    cells[1]['source']=cells[1]['source'].replace('learning_rate_v1/a6_lr0001_a100_001','checkpoint_selection_v1/a6_bce_ap_a100_001').replace('advisor-learning-rate-v1.1.0','advisor-checkpoint-selection-v1.0.0')
+    cells[3]['source']=cells[3]['source'].replace('scripts/advisor_learning_rate.py','scripts/advisor_checkpoint_selection.py').replace(",'--experiment','A'",'')
+    cells[4]['source']='## Dondurulmuş A6 verisi ve bölüm sınırlarını doğrula\n'
+    cells[6]['source']='## 114 ortak eğitim; BCE ve AP ağırlıklarını ayrı sakla\nDeğerlendirme bölümü epoch veya eşik seçimine katılmaz. Kesilen eğitim aynı kimlikle devam eder.\n'
+    cells[8]['source']='## Seçimden türetilen eşiklerle değerlendirme\n0.5 referansı ve seçim bölümünün üst %5/%10 skor eşikleri. Otomatik kazanan yok.\n'
+    cells[9]['source']="step('report')\nfrom IPython.display import display, Image\ndisplay(Image(filename=str(ROOT/'reports/comparison.png')))\nprint((ROOT/'reports/summary.csv').read_text())\nprint('Review ZIP:',ROOT/'reports/checkpoint_selection_review.zip')\n"
+    return nb
+
+
 if __name__=='__main__':
-    (ROOT/'notebooks/workflows/06_learning_rate.ipynb').write_text(json.dumps(build(),ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')
+    (ROOT/'notebooks/workflows/06_learning_rate.ipynb').write_text(json.dumps(build_checkpoint(),ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')

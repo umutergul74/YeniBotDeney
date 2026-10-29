@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**30 deney/plan · 48 geçmiş kaydı**
+**31 deney/plan · 49 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -38,6 +38,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-028-a6-thresholds](#exp-028-a6-thresholds) | A6 öğrenme hızları: eşik, eşit kapsam ve dönem kararlılığı | completed | mixed |
 | [exp-029-a6-period-diagnosis](#exp-029-a6-period-diagnosis) | A6 fold28/37: train-validation dağılım ve etiket ilişkisi | completed | mixed |
 | [exp-030-comprehensive-diagnosis](#exp-030-comprehensive-diagnosis) | 684 eğitim: epoch, eşik, dönem ve 37 girdi teşhisi | completed | mixed |
+| [exp-031-checkpoint-selection](#exp-031-checkpoint-selection) | A6: seçim ve değerlendirme ayrımıyla BCE/AP checkpoint karşılaştırması | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -2175,3 +2176,34 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/comprehensive-diagnosis-20261028/summary.csv](sources/bc7aa9b47fa2c8317f345f71e5e8865bfd28921bb83155c723f9742bbbdaf422.csv) · SHA256 `bc7aa9b47fa2c8317f345f71e5e8865bfd28921bb83155c723f9742bbbdaf422`
 
 [Son kayıt](events/000048.json) · revizyon 1 · Complete user-authorized all-run diagnostics and full37 marginal input audit; preserve test boundary.
+
+## exp-031-checkpoint-selection
+
+**A6: seçim ve değerlendirme ayrımıyla BCE/AP checkpoint karşılaştırması**
+
+Aynı eğitim akışında minBCE ve maxAP seçimi, sonraki validation bölümünde seçicilik ve dönem kararlılığını değiştiriyor mu?
+
+Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-030-comprehensive-diagnosis, exp-021-feature-comparison
+
+**Yöntem:** {"assessment_rows": 528, "assessment_targets": 465, "folds": 38, "gap_rows": 24, "learning_rate": 0.001, "model": "A6 GRU", "release": "advisor-checkpoint-selection-v1.0.0", "seeds": [42, 43, 44], "selected_checkpoints": 228, "selection_rows": 528, "selection_targets": 465, "sequence_length": 64, "stopping": "common selection BCE patience15, maximum100", "thresholds": "fixed0.5 plus selection-score top5/top10 cutoff; assessment untouched by choice", "train_rows": 5040, "trajectories": 114}
+
+**Veri kimliği:** {"evaluation_scope": "selection/assessment inside historical validation only; no final test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Checkpoint epochs frozen from selection minBCE/maxAP; no assessment-driven choice.
+
+**Karar / öğrenilen:** Approved implementation prepares existing notebook06 for new isolated Colab workspace. Awaiting user Colab execution; no research training executed locally.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Historical validation has been seen; assessment is separated within new run, not an unseen final test.
+- Overlapping folds and repeated seeds remain dependent.
+- Common BCE stopping; not an AP early-stopping comparison.
+- New assessment cohort is not directly comparable to old1017 validation targets.
+
+**Kanıt kopyaları:**
+- [research/analyses/checkpoint-selection-20261029/PLAN.md](sources/ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2.md) · SHA256 `ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2`
+
+[Son kayıt](events/000049.json) · revizyon 1 · User approved checkpoint criterion experiment with time-ordered validation selection/assessment split; reuse notebook06.

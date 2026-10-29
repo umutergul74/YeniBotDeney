@@ -1,0 +1,66 @@
+{
+  "previous_sha256": "e5257fd7d06121e6ac616cabe4b36b2908a9978904190a5357ba2b6a03a3fd96",
+  "reason": "User approved checkpoint criterion experiment with time-ordered validation selection/assessment split; reuse notebook06.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "selection/assessment inside historical validation only; no final test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Approved implementation prepares existing notebook06 for new isolated Colab workspace. Awaiting user Colab execution; no research training executed locally.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/checkpoint-selection-20261029/PLAN.md",
+        "path": "sources/ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2.md",
+        "sha256": "ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2"
+      }
+    ],
+    "id": "exp-031-checkpoint-selection",
+    "limitations": [
+      "Historical validation has been seen; assessment is separated within new run, not an unseen final test.",
+      "Overlapping folds and repeated seeds remain dependent.",
+      "Common BCE stopping; not an AP early-stopping comparison.",
+      "New assessment cohort is not directly comparable to old1017 validation targets."
+    ],
+    "method": {
+      "assessment_rows": 528,
+      "assessment_targets": 465,
+      "folds": 38,
+      "gap_rows": 24,
+      "learning_rate": 0.001,
+      "model": "A6 GRU",
+      "release": "advisor-checkpoint-selection-v1.0.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "selected_checkpoints": 228,
+      "selection_rows": 528,
+      "selection_targets": 465,
+      "sequence_length": 64,
+      "stopping": "common selection BCE patience15, maximum100",
+      "thresholds": "fixed0.5 plus selection-score top5/top10 cutoff; assessment untouched by choice",
+      "train_rows": 5040,
+      "trajectories": 114
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-030-comprehensive-diagnosis",
+      "exp-021-feature-comparison"
+    ],
+    "question": "Aynı eğitim akışında minBCE ve maxAP seçimi, sonraki validation bölümünde seçicilik ve dönem kararlılığını değiştiriyor mu?",
+    "results": [],
+    "selection_rule": "Checkpoint epochs frozen from selection minBCE/maxAP; no assessment-driven choice.",
+    "status": "planned",
+    "title": "A6: seçim ve değerlendirme ayrımıyla BCE/AP checkpoint karşılaştırması"
+  },
+  "recorded_at": "2026-10-29T14:59:58.647704+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 49
+}

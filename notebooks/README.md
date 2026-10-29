@@ -1,5 +1,11 @@
 # Notebook giriş noktaları
 
+**Güncel kontrollü deney:** [06 · BCE/AP checkpoint seçimi](workflows/06_learning_rate.ipynb).
+A6/LR0.001; validation528 seçim +24 boşluk +528 değerlendirme,114 ortak eğitim.
+[Plan ve sınırlar](../research/analyses/checkpoint-selection-20261029/PLAN.md).
+Yeni A100 oturumu ve yeni workspace kullanın. Önceki LR sürümü
+`advisor-learning-rate-v1.1.0` etiketinde korunur; final test yapılmaz.
+
 **Araştırmanın ana ekranı [deney defteridir](../research/INDEX.md).**
 Bu notebooklar kayıt sisteminin yerine geçmez. Yeni öneri önce plan olarak
 kaydedilir; her yeni deney için yeni notebook oluşturmak gerekmez.

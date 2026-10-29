@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import pytest
 from yenibot.experiment.advisor_learning_rate import candidate_config, one_run, report
-from scripts.build_advisor_learning_rate_notebook import build
+from scripts.build_advisor_learning_rate_notebook import build, build_checkpoint
 
 
 def test_only_learning_rate_and_output_change(tmp_path):
@@ -29,7 +29,7 @@ def test_notebook_syntax_and_scope():
     assert 'ALLOW_TRAINING' not in text and "step('bundle')" not in text
     assert "RELEASE='advisor-learning-rate-v1.1.0'" in text
     assert text.index('drive.flush_and_unmount()')<text.index('runtime.unassign()')
-    assert json.loads(Path('notebooks/workflows/06_learning_rate.ipynb').read_text(encoding='utf-8'))==nb
+    assert json.loads(Path('notebooks/workflows/06_learning_rate.ipynb').read_text(encoding='utf-8'))==build_checkpoint()
 
 
 @pytest.mark.parametrize('experiment', ['A','B'])
