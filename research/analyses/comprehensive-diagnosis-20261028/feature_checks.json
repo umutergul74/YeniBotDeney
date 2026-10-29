@@ -1,0 +1,10 @@
+{
+  "frame_hash_verified": true,
+  "features": 37,
+  "folds": 38,
+  "feature_fold_pairs": 1406,
+  "zero_train_iqr": 152,
+  "undefined_association_changes": 63,
+  "zero_spread_policy": "record undefined, do not impute; count available dimensions",
+  "test_evaluations": 0
+}

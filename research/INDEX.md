@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**29 deney/plan · 47 geçmiş kaydı**
+**30 deney/plan · 48 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -37,6 +37,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-027-a6-learning-rate](#exp-027-a6-learning-rate) | A6 GRU: öğrenme hızı 0.0001 ile eksik kontrol | completed | mixed |
 | [exp-028-a6-thresholds](#exp-028-a6-thresholds) | A6 öğrenme hızları: eşik, eşit kapsam ve dönem kararlılığı | completed | mixed |
 | [exp-029-a6-period-diagnosis](#exp-029-a6-period-diagnosis) | A6 fold28/37: train-validation dağılım ve etiket ilişkisi | completed | mixed |
+| [exp-030-comprehensive-diagnosis](#exp-030-comprehensive-diagnosis) | 684 eğitim: epoch, eşik, dönem ve 37 girdi teşhisi | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -441,6 +442,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-029-a6-period-diagnosis | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+six conditions, 38 folds, 3 seeds · equal run means; counts not independent
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-030-comprehensive-diagnosis | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -2122,3 +2133,45 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 - [research/analyses/a6-period-diagnosis-20261028/epoch_tradeoff.csv](sources/22e8a843da347e46b38237085784705661984cb7cc177cb781e7bfc2aff49e4a.csv) · SHA256 `22e8a843da347e46b38237085784705661984cb7cc177cb781e7bfc2aff49e4a`
 
 [Son kayıt](events/000047.json) · revizyon 1 · User authorized existing-feature train/validation diagnosis; identities verified against frozen frame.
+
+## exp-030-comprehensive-diagnosis
+
+**684 eğitim: epoch, eşik, dönem ve 37 girdi teşhisi**
+
+Mevcut karşılaştırılabilir bütün eğitimlerde seçim ölçütü, dönem ve girdi teşhisleri ne gösteriyor?
+
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
+
+Önceki kayıtlar: exp-029-a6-period-diagnosis, exp-027-a6-learning-rate, exp-025-b37-learning-rate, exp-021-feature-comparison
+
+**Yöntem:** {"conditions": 6, "context": "all37 marginal shifts and associations, sparse inputs explicitly undefined when needed", "features_audited": 37, "folds": 38, "runs": 684, "scope": "existing train/validation artifacts; retrospective epoch logs; no new training or test", "seeds": [42, 43, 44], "thresholds": "0.30..0.70 step0.05", "topk": "1/2/5/10/20 percent per run; diagnostic only"}
+
+**Veri kimliği:** {"evaluation_scope": "validation only; no test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Unchanged min-validation-BCE weights; no new threshold or checkpoint rule.
+
+**Karar / öğrenilen:** No consistent low-LR gain in equal-coverage precision; widespread retrospective BCE/AP divergence; period effects persist. Marginal input shifts/association changes do not provide a general cause. Sparse whale flags recorded without removal.
+
+**validation** · six conditions, 38 folds, 3 seeds · equal run means; counts not independent
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| different_bce_ap_epoch | 473.000000 |
+| feature_fold_pairs | 1406.000000 |
+| runs | 684.000000 |
+| test_evaluations | 0.000000 |
+| zero_train_iqr_pairs | 152.000000 |
+
+**Sınırlar / açık noktalar:**
+- Reused validation, overlapping folds/seeds; not independent trades or final test.
+- AP maxima are retrospective within BCE-stopped histories; alternative-epoch precision unavailable.
+- Main independent review PASS; full37 follow-up unavailable due usage limit, locally checked.
+- Marginal input means omit explicitly undefined dimensions; no causal or feature-removal inference.
+
+**Kanıt kopyaları:**
+- [research/analyses/comprehensive-diagnosis-20261028/REPORT.md](sources/50473b125fc558e3a907b03a0ff798b13699a2040847f4837c96c3f7cdea40bb.md) · SHA256 `50473b125fc558e3a907b03a0ff798b13699a2040847f4837c96c3f7cdea40bb`
+- [research/analyses/comprehensive-diagnosis-20261028/checks.json](sources/455adfb380891a3681157dd5cb2dc7a7696401733c27584b4d74786fc55d2c5b.json) · SHA256 `455adfb380891a3681157dd5cb2dc7a7696401733c27584b4d74786fc55d2c5b`
+- [research/analyses/comprehensive-diagnosis-20261028/feature_checks.json](sources/0ba8a71931678de703a41d7deac93ddcbb75b0c043e518e94134269284a3b408.json) · SHA256 `0ba8a71931678de703a41d7deac93ddcbb75b0c043e518e94134269284a3b408`
+- [research/analyses/comprehensive-diagnosis-20261028/summary.csv](sources/bc7aa9b47fa2c8317f345f71e5e8865bfd28921bb83155c723f9742bbbdaf422.csv) · SHA256 `bc7aa9b47fa2c8317f345f71e5e8865bfd28921bb83155c723f9742bbbdaf422`
+
+[Son kayıt](events/000048.json) · revizyon 1 · Complete user-authorized all-run diagnostics and full37 marginal input audit; preserve test boundary.

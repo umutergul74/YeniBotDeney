@@ -1,0 +1,18 @@
+{
+  "runs": 684,
+  "models": 6,
+  "folds": 38,
+  "seeds": 3,
+  "matched_validation_identities": true,
+  "source_sha256": {
+    "original": "0d239ab948a0a28fd9bf6fd94ccf4f1cd082d27b1e283548ce35b888d79cfbc6",
+    "A_low": "858e85cfb59b1c5f020698be2fb014ff3b6e5983a67e6932b6b28f0afbe2b1b9",
+    "B_low": "0a892f637170c5c928b9451ff75d57cfdd32ff1d3d56c584110da88b0c3af47d"
+  },
+  "minimum_bce_epoch_and_saved_ap_verified": true,
+  "topk_ties": 1,
+  "tie_rule": "Stable original row order; possible precision bounds recorded for boundary ties",
+  "test_evaluations": 0,
+  "new_training": 0,
+  "limitation": "AP peak uses already-selected validation and a BCE-stopped history; not alternative checkpoint policy performance."
+}
