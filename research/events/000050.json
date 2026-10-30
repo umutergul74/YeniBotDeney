@@ -1,0 +1,87 @@
+{
+  "previous_sha256": "3470027a84432cfc22a216dd951eb8ddeec24b51209846a49e5ee48d1d82d81e",
+  "reason": "Completed Colab review: AP selection advantage did not transfer to subsequent assessment.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "selection/assessment inside historical validation only; no final test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "AP checkpoint selection did not improve subsequent assessment AP or selective precision consistently; retain BCE control. No final test. 114 trajectories complete in review; weights not independently downloaded.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/checkpoint-selection-20261029/PLAN.md",
+        "path": "sources/ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2.md",
+        "sha256": "ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/checkpoint-selection-20261030/REPORT.md",
+        "path": "sources/9b8552f3e80053c4630b036a024a080fbec466e96674b8c38043f607840a36cb.md",
+        "sha256": "9b8552f3e80053c4630b036a024a080fbec466e96674b8c38043f607840a36cb"
+      }
+    ],
+    "id": "exp-031-checkpoint-selection",
+    "limitations": [
+      "Historical validation has been seen; assessment is separated within new run, not an unseen final test.",
+      "Overlapping folds and repeated seeds remain dependent.",
+      "Common BCE stopping; not an AP early-stopping comparison.",
+      "New assessment cohort is not directly comparable to old1017 validation targets."
+    ],
+    "method": {
+      "assessment_rows": 528,
+      "assessment_targets": 465,
+      "folds": 38,
+      "gap_rows": 24,
+      "learning_rate": 0.001,
+      "model": "A6 GRU",
+      "release": "advisor-checkpoint-selection-v1.0.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "selected_checkpoints": 228,
+      "selection_rows": 528,
+      "selection_targets": 465,
+      "sequence_length": 64,
+      "stopping": "common selection BCE patience15, maximum100",
+      "thresholds": "fixed0.5 plus selection-score top5/top10 cutoff; assessment untouched by choice",
+      "train_rows": 5040,
+      "trajectories": 114
+    },
+    "outcome": "not_selected",
+    "parent_ids": [
+      "exp-030-comprehensive-diagnosis",
+      "exp-021-feature-comparison"
+    ],
+    "question": "AynÄ± eÄŸitim akÄ±ÅŸÄ±nda minBCE ve maxAP seÃ§imi, sonraki validation bÃ¶lÃ¼mÃ¼nde seÃ§icilik ve dÃ¶nem kararlÄ±lÄ±ÄŸÄ±nÄ± deÄŸiÅŸtiriyor mu?",
+    "results": [
+      {
+        "aggregation": "Equal-run BCE/AP means; audit counts",
+        "cohort": "114 matched A6 trajectories, 465 assessment targets each",
+        "metrics": {
+          "ap_selector_ap": 0.4033539717800094,
+          "ap_selector_bce": 0.6434269218068374,
+          "bce_selector_ap": 0.4040999823914991,
+          "bce_selector_bce": 0.6118588860620532,
+          "completed_trajectories": 114,
+          "recomputed_decision_rows": 684,
+          "verified_nonweight_hashes": 798
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Checkpoint epochs frozen from selection minBCE/maxAP; no assessment-driven choice.",
+    "status": "completed",
+    "title": "A6: seÃ§im ve deÄŸerlendirme ayrÄ±mÄ±yla BCE/AP checkpoint karÅŸÄ±laÅŸtÄ±rmasÄ±"
+  },
+  "recorded_at": "2026-10-30T14:11:00.158363+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 50
+}

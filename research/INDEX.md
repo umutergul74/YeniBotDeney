@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**31 deney/plan · 49 geçmiş kaydı**
+**31 deney/plan · 50 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -38,7 +38,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-028-a6-thresholds](#exp-028-a6-thresholds) | A6 öğrenme hızları: eşik, eşit kapsam ve dönem kararlılığı | completed | mixed |
 | [exp-029-a6-period-diagnosis](#exp-029-a6-period-diagnosis) | A6 fold28/37: train-validation dağılım ve etiket ilişkisi | completed | mixed |
 | [exp-030-comprehensive-diagnosis](#exp-030-comprehensive-diagnosis) | 684 eğitim: epoch, eşik, dönem ve 37 girdi teşhisi | completed | mixed |
-| [exp-031-checkpoint-selection](#exp-031-checkpoint-selection) | A6: seçim ve değerlendirme ayrımıyla BCE/AP checkpoint karşılaştırması | planned | pending |
+| [exp-031-checkpoint-selection](#exp-031-checkpoint-selection) | A6: seÃ§im ve deÄŸerlendirme ayrÄ±mÄ±yla BCE/AP checkpoint karÅŸÄ±laÅŸtÄ±rmasÄ± | completed | not_selected |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -453,6 +453,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-030-comprehensive-diagnosis | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+114 matched A6 trajectories, 465 assessment targets each · Equal-run BCE/AP means; audit counts
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-031-checkpoint-selection | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -2179,11 +2189,11 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 ## exp-031-checkpoint-selection
 
-**A6: seçim ve değerlendirme ayrımıyla BCE/AP checkpoint karşılaştırması**
+**A6: seÃ§im ve deÄŸerlendirme ayrÄ±mÄ±yla BCE/AP checkpoint karÅŸÄ±laÅŸtÄ±rmasÄ±**
 
-Aynı eğitim akışında minBCE ve maxAP seçimi, sonraki validation bölümünde seçicilik ve dönem kararlılığını değiştiriyor mu?
+AynÄ± eÄŸitim akÄ±ÅŸÄ±nda minBCE ve maxAP seÃ§imi, sonraki validation bÃ¶lÃ¼mÃ¼nde seÃ§icilik ve dÃ¶nem kararlÄ±lÄ±ÄŸÄ±nÄ± deÄŸiÅŸtiriyor mu?
 
-Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **not_selected**
 
 Önceki kayıtlar: exp-030-comprehensive-diagnosis, exp-021-feature-comparison
 
@@ -2193,9 +2203,19 @@ Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
 
 **Seçim kuralı:** Checkpoint epochs frozen from selection minBCE/maxAP; no assessment-driven choice.
 
-**Karar / öğrenilen:** Approved implementation prepares existing notebook06 for new isolated Colab workspace. Awaiting user Colab execution; no research training executed locally.
+**Karar / öğrenilen:** AP checkpoint selection did not improve subsequent assessment AP or selective precision consistently; retain BCE control. No final test. 114 trajectories complete in review; weights not independently downloaded.
 
-**Henüz sonuç yok.**
+**validation** · 114 matched A6 trajectories, 465 assessment targets each · Equal-run BCE/AP means; audit counts
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| ap_selector_ap | 0.403354 |
+| ap_selector_bce | 0.643427 |
+| bce_selector_ap | 0.404100 |
+| bce_selector_bce | 0.611859 |
+| completed_trajectories | 114.000000 |
+| recomputed_decision_rows | 684.000000 |
+| verified_nonweight_hashes | 798.000000 |
 
 **Sınırlar / açık noktalar:**
 - Historical validation has been seen; assessment is separated within new run, not an unseen final test.
@@ -2205,5 +2225,6 @@ Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
 
 **Kanıt kopyaları:**
 - [research/analyses/checkpoint-selection-20261029/PLAN.md](sources/ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2.md) · SHA256 `ccf31ae05ae6cbbdc3bb25d8747e20ce8cbeecac2bf9e350a789f01e10d1b1d2`
+- [research/analyses/checkpoint-selection-20261030/REPORT.md](sources/9b8552f3e80053c4630b036a024a080fbec466e96674b8c38043f607840a36cb.md) · SHA256 `9b8552f3e80053c4630b036a024a080fbec466e96674b8c38043f607840a36cb`
 
-[Son kayıt](events/000049.json) · revizyon 1 · User approved checkpoint criterion experiment with time-ordered validation selection/assessment split; reuse notebook06.
+[Son kayıt](events/000050.json) · revizyon 2 · Completed Colab review: AP selection advantage did not transfer to subsequent assessment.
