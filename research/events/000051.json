@@ -1,0 +1,66 @@
+{
+  "previous_sha256": "88640d6af229f07b0d4def3a1f3dd9ef799119594a84d9167416de2d6700333d",
+  "reason": "Kullanıcı onaylı GRU ve nedensel CNN-GRU hazırlığı; yeni eğitim henüz çalıştırılmadı.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "selection/assessment inside historical validation only; no final test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Kullanıcı onaylı hazırlık. Mevcut06 notebooku kullanılır; yeni A100 workspace. Gerçek eğitim henüz çalıştırılmadı.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/cnn-gru-20261030/PLAN.md",
+        "path": "sources/86b4605a0f22f5b6458d0995984b720e752a7b0f478b35f010031cd0e0a1102f.md",
+        "sha256": "86b4605a0f22f5b6458d0995984b720e752a7b0f478b35f010031cd0e0a1102f"
+      }
+    ],
+    "id": "exp-032-cnn-gru",
+    "limitations": [
+      "Tarihsel validation görülmüştür; final test değildir.",
+      "Dönemler/seedler bağımsız değildir.",
+      "Parametre sayısı eşit değildir; bu somut mimari değişikliği karşılaştırılır.",
+      "Sabit hiperparametreler her mimarinin erişebileceği en iyi performansı göstermez."
+    ],
+    "method": {
+      "assessment_rows": 528,
+      "assessment_targets": 465,
+      "folds": 38,
+      "gap_rows": 24,
+      "learning_rate": 0.001,
+      "model": "A6 GRU / Conv1D32-k3-GELU ardından aynı GRU",
+      "release": "advisor-cnn-gru-v1.0.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "selected_checkpoints": 228,
+      "selection_rows": 528,
+      "selection_targets": 465,
+      "sequence_length": 64,
+      "stopping": "each architecture selection BCE patience15, maximum100",
+      "thresholds": "fixed0.5 plus selection-score top5/top10 cutoff; assessment untouched by choice",
+      "train_rows": 5040,
+      "trajectories": 228
+    },
+    "outcome": "pending",
+    "parent_ids": [
+      "exp-031-checkpoint-selection",
+      "exp-021-feature-comparison"
+    ],
+    "question": "Yerel nedensel CNN ön işlemesi, aynı altı girdide GRU kontrolüne göre sonraki validation döneminde seçicilik ve kararlılığı artırıyor mu?",
+    "results": [],
+    "selection_rule": "Epoch yalnız seçim BCE; fixed0.5 ve seçim üst%5/%10 skor cutoffları değerlendirmeye değişmeden uygulanır.",
+    "status": "planned",
+    "title": "Altı özellik: GRU ve nedensel CNN ardından GRU"
+  },
+  "recorded_at": "2026-10-30T14:41:02.367838+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 51
+}

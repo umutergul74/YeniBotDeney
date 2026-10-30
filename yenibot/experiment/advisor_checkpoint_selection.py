@@ -59,7 +59,9 @@ def validate_completed(folder, signature):
     return True
 
 
-def train_fold(frame, fold, cfg, features, seed, folder, signature, device):
+def train_fold(frame, fold, cfg, features, seed, folder, signature, device, *, model_factory=None, selectors=('bce','ap')):
+    if tuple(selectors) not in (('bce',),('bce','ap')):
+        raise ValueError('BCE stopping requires BCE selection; unsupported selectors')
     import torch
     from torch import nn
     from torch.utils.data import DataLoader
@@ -82,7 +84,8 @@ def train_fold(frame, fold, cfg, features, seed, folder, signature, device):
         return DataLoader(ds, batch_size=cfg['training']['batch_size'], shuffle=shuffle, num_workers=0)
     train_loader, selection_loader = loader(fold.train, True), loader(selection)
     engine.seed_everything(seed+fold.fold, cfg['training']['deterministic'])
-    model = engine.build_advisor_model(len(features), 'gru', cfg['model']).to(device)
+    model = (engine.build_advisor_model(len(features), 'gru', cfg['model']) if model_factory is None
+             else model_factory(len(features), cfg['model'])).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=cfg['training']['learning_rate'],
                                   weight_decay=cfg['training']['weight_decay'])
     history, states, epochs = [], {}, {}
@@ -116,6 +119,7 @@ def train_fold(frame, fold, cfg, features, seed, folder, signature, device):
             raise ValueError('Nonfinite selection metric')
         patience += 1
         for rule, key in [('bce','bce'),('ap','average_precision')]:
+            if rule not in selectors: continue
             improved = metrics[key] < best[rule] if rule == 'bce' else metrics[key] > best[rule]
             if improved:
                 best[rule], epochs[rule] = metrics[key], epoch+1
@@ -133,7 +137,7 @@ def train_fold(frame, fold, cfg, features, seed, folder, signature, device):
     assessment_loader = loader(assessment)
     results = {}
     files = ['selection.json','history.csv']
-    for rule in DESIGN['selectors']:
+    for rule in selectors:
         model.load_state_dict(states[rule])
         engine.atomic_checkpoint(folder/(rule+'.pt'),dict(signature=signature,model=states[rule],
             epoch=epochs[rule],scaler_center=scaler.center_,scaler_scale=scaler.scale_,features=features))

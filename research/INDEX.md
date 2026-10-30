@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**31 deney/plan · 50 geçmiş kaydı**
+**32 deney/plan · 51 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -39,6 +39,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-029-a6-period-diagnosis](#exp-029-a6-period-diagnosis) | A6 fold28/37: train-validation dağılım ve etiket ilişkisi | completed | mixed |
 | [exp-030-comprehensive-diagnosis](#exp-030-comprehensive-diagnosis) | 684 eğitim: epoch, eşik, dönem ve 37 girdi teşhisi | completed | mixed |
 | [exp-031-checkpoint-selection](#exp-031-checkpoint-selection) | A6: seÃ§im ve deÄŸerlendirme ayrÄ±mÄ±yla BCE/AP checkpoint karÅŸÄ±laÅŸtÄ±rmasÄ± | completed | not_selected |
+| [exp-032-cnn-gru](#exp-032-cnn-gru) | Altı özellik: GRU ve nedensel CNN ardından GRU | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -2228,3 +2229,34 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **not_selected**
 - [research/analyses/checkpoint-selection-20261030/REPORT.md](sources/9b8552f3e80053c4630b036a024a080fbec466e96674b8c38043f607840a36cb.md) · SHA256 `9b8552f3e80053c4630b036a024a080fbec466e96674b8c38043f607840a36cb`
 
 [Son kayıt](events/000050.json) · revizyon 2 · Completed Colab review: AP selection advantage did not transfer to subsequent assessment.
+
+## exp-032-cnn-gru
+
+**Altı özellik: GRU ve nedensel CNN ardından GRU**
+
+Yerel nedensel CNN ön işlemesi, aynı altı girdide GRU kontrolüne göre sonraki validation döneminde seçicilik ve kararlılığı artırıyor mu?
+
+Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-031-checkpoint-selection, exp-021-feature-comparison
+
+**Yöntem:** {"assessment_rows": 528, "assessment_targets": 465, "folds": 38, "gap_rows": 24, "learning_rate": 0.001, "model": "A6 GRU / Conv1D32-k3-GELU ardından aynı GRU", "release": "advisor-cnn-gru-v1.0.0", "seeds": [42, 43, 44], "selected_checkpoints": 228, "selection_rows": 528, "selection_targets": 465, "sequence_length": 64, "stopping": "each architecture selection BCE patience15, maximum100", "thresholds": "fixed0.5 plus selection-score top5/top10 cutoff; assessment untouched by choice", "train_rows": 5040, "trajectories": 228}
+
+**Veri kimliği:** {"evaluation_scope": "selection/assessment inside historical validation only; no final test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Epoch yalnız seçim BCE; fixed0.5 ve seçim üst%5/%10 skor cutoffları değerlendirmeye değişmeden uygulanır.
+
+**Karar / öğrenilen:** Kullanıcı onaylı hazırlık. Mevcut06 notebooku kullanılır; yeni A100 workspace. Gerçek eğitim henüz çalıştırılmadı.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Tarihsel validation görülmüştür; final test değildir.
+- Dönemler/seedler bağımsız değildir.
+- Parametre sayısı eşit değildir; bu somut mimari değişikliği karşılaştırılır.
+- Sabit hiperparametreler her mimarinin erişebileceği en iyi performansı göstermez.
+
+**Kanıt kopyaları:**
+- [research/analyses/cnn-gru-20261030/PLAN.md](sources/86b4605a0f22f5b6458d0995984b720e752a7b0f478b35f010031cd0e0a1102f.md) · SHA256 `86b4605a0f22f5b6458d0995984b720e752a7b0f478b35f010031cd0e0a1102f`
+
+[Son kayıt](events/000051.json) · revizyon 1 · Kullanıcı onaylı GRU ve nedensel CNN-GRU hazırlığı; yeni eğitim henüz çalıştırılmadı.

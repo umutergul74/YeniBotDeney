@@ -33,7 +33,7 @@ class WorkflowTests(unittest.TestCase):
             release = {
                 '04_barrier_study.ipynb': 'advisor-selective-v1.1.0',
                 '05_feature_comparison.ipynb': 'advisor-feature-comparison-v1.0.0',
-                '06_learning_rate.ipynb': 'advisor-checkpoint-selection-v1.0.0',
+                '06_learning_rate.ipynb': 'advisor-cnn-gru-v1.0.0',
             }.get(path.name, 'advisor-notebooks-v2.1.0')
             self.assertIn(release, joined)
             self.assertNotIn('import torch', joined)

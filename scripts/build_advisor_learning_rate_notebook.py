@@ -38,5 +38,15 @@ def build_checkpoint():
     return nb
 
 
+def build_cnn_gru():
+    nb=build_checkpoint();cells=nb['cells']
+    cells[0]['source']='# Altı özellik: GRU ve CNN → GRU\n\nYeni A100 Colab oturumunda, icinbedava34@gmail.com hesabıyla sırayla çalıştırın.\n2 mimari × 38 fold × 3 seed = 228 eğitim. İki kontrol de sıfırdan eğitilir.\nCNN: sola dolgulu Conv1D, 32 kanal, pencere3, GELU; ardından mevcut GRU.\nAltı özellik, 2/5 ATR, 10 bar, LR0.001, BCE loss ve patience15 sabit.\nTrain5040; validation528 seçim +24 boşluk +528 değerlendirme; her bölüm465 hedef.\nEpoch yalnız seçim BCE ile seçilir. Final test yok; eski çalışmalar korunur.\n'
+    cells[1]['source']=cells[1]['source'].replace('checkpoint_selection_v1/a6_bce_ap_a100_001','cnn_gru_v1/a6_a100_001').replace('advisor-checkpoint-selection-v1.0.0','advisor-cnn-gru-v1.0.0')
+    cells[3]['source']=cells[3]['source'].replace('scripts/advisor_checkpoint_selection.py','scripts/advisor_cnn_gru.py')
+    cells[6]['source']='## GRU ve CNN → GRU: toplam 228 eğitim\nHer mimari kendi seçim BCE değerine göre durur; en iyi BCE ağırlığı saklanır.\nKesinti sonrası aynı çalışma alanında devam edilir.\n'
+    cells[9]['source']=cells[9]['source'].replace('checkpoint_selection_review.zip','cnn_gru_review.zip').replace('Review ZIP:','İnceleme ZIP:')
+    return nb
+
+
 if __name__=='__main__':
-    (ROOT/'notebooks/workflows/06_learning_rate.ipynb').write_text(json.dumps(build_checkpoint(),ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')
+    (ROOT/'notebooks/workflows/06_learning_rate.ipynb').write_text(json.dumps(build_cnn_gru(),ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')
