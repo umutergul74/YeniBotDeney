@@ -44,13 +44,16 @@ def architecture_signature(study,architecture):
     return hashlib.sha256(f'{study}:{architecture}'.encode()).hexdigest()
 
 
-def report(root,signature):
+def report(root,signature,*,comparisons=None,archive_name='cnn_gru_review.zip',description=None):
+    comparisons = comparisons or {a:(root/'runs'/a,architecture_signature(signature,a)) for a in DESIGN['architectures']}
+    labels=list(comparisons)
+    if len(labels)!=2:raise ValueError('İki karşılaştırma gerekli')
     records=[]; predictions=[]; identities={}
-    for architecture in DESIGN['architectures']:
+    for architecture,(run_root,run_identity) in comparisons.items():
         for seed in (42,43,44):
             for fold in range(38):
-                folder=root/'runs'/architecture/f'seed_{seed}'/f'fold_{fold:03d}'
-                sig=run_signature(architecture_signature(signature,architecture),seed,fold)
+                folder=run_root/f'seed_{seed}'/f'fold_{fold:03d}'
+                sig=run_signature(run_identity,seed,fold)
                 if not validate_completed(folder,sig):raise ValueError('228 eğitimin tamamlanması gerekli')
                 info=json.loads((folder/'metrics.json').read_text())
                 if set(info['results'])!={'bce'}:raise ValueError('Yalnız BCE seçimi bekleniyor')
@@ -79,12 +82,12 @@ def report(root,signature):
     summary['no_signal_runs']=grouped.signals.apply(lambda s:int((s==0).sum()))
     summary[['bce_mean','ap_mean']]=grouped[['bce','ap']].mean()
     summary.to_csv(out/'summary.csv')
-    table[table.architecture=='gru'].merge(table[table.architecture=='cnn_gru'],
-        on=['seed','fold','policy'],suffixes=('_gru','_cnn_gru'),validate='one_to_one').to_csv(out/'paired.csv',index=False)
+    table[table.architecture==labels[0]].merge(table[table.architecture==labels[1]],
+        on=['seed','fold','policy'],suffixes=('_'+labels[0],'_'+labels[1]),validate='one_to_one').to_csv(out/'paired.csv',index=False)
     pd.concat(predictions).to_parquet(out/'assessment_predictions.parquet',index=False)
     import matplotlib.pyplot as plt
     fig,axes=plt.subplots(1,2,figsize=(11,4),layout='constrained')
-    for arch in DESIGN['architectures']:
+    for arch in labels:
         g=table[(table.architecture==arch)&(table.policy=='selection_top5')].groupby('fold')[['tp','signals','samples']].sum()
         axes[0].plot(g.index,100*g.tp/g.signals.replace(0,np.nan),label=arch)
         axes[1].plot(g.index,100*g.signals/g.samples,label=arch)
@@ -92,14 +95,18 @@ def report(root,signature):
     axes[0].set_ylabel('Precision (%)');axes[1].set_ylabel('Gerçekleşen sinyal oranı (%)')
     fig.suptitle('Seçim bölümündeki üst %5 eşiğiyle sonraki validation bölümü')
     fig.savefig(out/'comparison.png',dpi=150);plt.close(fig)
-    (out/'README.md').write_text('228 eğitim; yalnız seçim BCE ile epoch seçimi. Eşikler seçim bölümünden gelir. '
+    (out/'README.md').write_text((description or '228 eğitim; yalnız seçim BCE ile epoch seçimi. Eşikler seçim bölümünden gelir. ')+
         'Değerlendirme: bölüm başına 465 hedef. Tarihsel validation; final test değildir. '
         'Seed ve dönemler bağımsız işlemler değildir. Otomatik kazanan yok. Ağırlıklar runs klasöründe.\n',encoding='utf-8')
-    with zipfile.ZipFile(out/'cnn_gru_review.zip','w',zipfile.ZIP_DEFLATED) as z:
+    with zipfile.ZipFile(out/archive_name,'w',zipfile.ZIP_DEFLATED) as z:
         for parent in ['runs','reports','artifacts','reproducibility']:
             for p in sorted((root/parent).rglob('*')):
                 if p.is_file() and p.suffix in {'.csv','.json','.md','.parquet','.png'}:z.write(p,p.relative_to(root).as_posix())
-    print(summary.to_string());print('İnceleme ZIP:',out/'cnn_gru_review.zip')
+        for label,(run_root,_) in comparisons.items():
+            if not run_root.is_relative_to(root):
+                for p in sorted(run_root.rglob('*')):
+                    if p.is_file() and p.suffix in {'.csv','.json','.parquet'}:z.write(p,'control_runs/'+label+'/'+p.relative_to(run_root).as_posix())
+    print(summary.to_string());print('İnceleme ZIP:',out/archive_name)
 
 
 def main():

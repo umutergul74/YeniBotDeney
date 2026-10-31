@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**33 deney/plan · 53 geçmiş kaydı**
+**34 deney/plan · 54 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -41,6 +41,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-031-checkpoint-selection](#exp-031-checkpoint-selection) | A6: seÃ§im ve deÄŸerlendirme ayrÄ±mÄ±yla BCE/AP checkpoint karÅŸÄ±laÅŸtÄ±rmasÄ± | completed | not_selected |
 | [exp-032-cnn-gru](#exp-032-cnn-gru) | AltÄ± Ã¶zellik: GRU ve nedensel CNN ardÄ±ndan GRU | completed | not_selected |
 | [exp-033-transfer-diagnosis](#exp-033-transfer-diagnosis) | GRU ve CNN-GRU seçimden değerlendirmeye aktarım teşhisi | completed | inconclusive |
+| [exp-034-gru-capacity](#exp-034-gru-capacity) | GRU kapasitesi: hidden128 kontrolüne karşı hidden64 | planned | pending |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -2328,3 +2329,34 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **inconclusive**
 - [research/analyses/cnn-gru-transfer-20261031/REPORT.md](sources/9bc013119c14f8ea725cb02ffe36a913564c8dbd58e1d98f5c405447263a9cf3.md) · SHA256 `9bc013119c14f8ea725cb02ffe36a913564c8dbd58e1d98f5c405447263a9cf3`
 
 [Son kayıt](events/000053.json) · revizyon 1 · Önceki analizleri tekrarlamadan exp032 seçim-değerlendirme aktarımını tamamla.
+
+## exp-034-gru-capacity
+
+**GRU kapasitesi: hidden128 kontrolüne karşı hidden64**
+
+Yalnız gizli boyutu azaltmak sonraki validation bölümünde seçicilik ve kararlılığı artırır mı?
+
+Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+
+Önceki kayıtlar: exp-032-cnn-gru, exp-033-transfer-diagnosis
+
+**Yöntem:** {"assessment_rows": 528, "assessment_targets": 465, "changed_factor": "model.gru_hidden:128->64", "folds": 38, "gap_rows": 24, "learning_rate": 0.001, "model": "A6 GRU hidden128 / hidden64", "release": "advisor-gru-capacity-v1.0.0", "reused_trajectories": 114, "seeds": [42, 43, 44], "selected_checkpoints": 228, "selection_rows": 528, "selection_targets": 465, "sequence_length": 64, "stopping": "each architecture selection BCE patience15, maximum100", "thresholds": "fixed0.5 plus selection-score top5/top10 cutoff; assessment untouched by choice", "train_rows": 5040, "trajectories": 114}
+
+**Veri kimliği:** {"evaluation_scope": "selection/assessment inside historical validation only; no final test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Epoch yalnÄ±z seÃ§im BCE; fixed0.5 ve seÃ§im Ã¼st%5/%10 skor cutofflarÄ± deÄŸerlendirmeye deÄŸiÅŸmeden uygulanÄ±r.
+
+**Karar / öğrenilen:** Hazırlık onaylandı;114 mevcut kontrol salt okunur kullanılır,114 yeni aday Colab eğitimi bekleniyor.
+
+**Henüz sonuç yok.**
+
+**Sınırlar / açık noktalar:**
+- Tarihsel validation gÃ¶rÃ¼lmÃ¼ÅŸtÃ¼r; final test deÄŸildir.
+- DÃ¶nemler/seedler baÄŸÄ±msÄ±z deÄŸildir.
+- Parametre sayÄ±sÄ± eÅŸit deÄŸildir; bu somut mimari deÄŸiÅŸikliÄŸi karÅŸÄ±laÅŸtÄ±rÄ±lÄ±r.
+- Sabit hiperparametreler her mimarinin eriÅŸebileceÄŸi en iyi performansÄ± gÃ¶stermez.
+
+**Kanıt kopyaları:**
+- [research/analyses/gru-capacity-20261031/PLAN.md](sources/3c4e7970f0e9845fc0f664181151c6c23074dfe2546e899b7e06309124141ab7.md) · SHA256 `3c4e7970f0e9845fc0f664181151c6c23074dfe2546e899b7e06309124141ab7`
+
+[Son kayıt](events/000054.json) · revizyon 1 · Kullanıcı onaylı tek değişken hidden128->64 hazırlığı; eski kontrol yeniden eğitilmeyecek.

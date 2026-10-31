@@ -48,5 +48,16 @@ def build_cnn_gru():
     return nb
 
 
+def build_capacity():
+    nb=build_cnn_gru();cells=nb['cells']
+    cells[0]['source']='# GRU kapasitesi: hidden128 → hidden64\n\nYeni A100 oturumu; icinbedava34@gmail.com hesabı.\nYalnız GRU gizli boyutu değişir. Katman2, fusion128, dropout0.2, LR0.001 ve altı özellik aynı.\nÖnceki CNN-GRU çalışmasının114 GRU kontrolü salt okunur doğrulanır; yeniden eğitilmez.\nHidden64 için38 fold ×3 seed =114 yeni eğitim.\nTrain5040; validation528 seçim +24 boşluk +528 değerlendirme,465 hedef/bölüm.\nEpoch seçim BCE ile; eşikler0.5 ve seçim üst%5/%10. Final test yok.\n'
+    cells[1]['source']=cells[1]['source'].replace("ROOT=Path('/content/drive/MyDrive/yeniBot/advisor_experiments/cnn_gru_v1/a6_a100_001')", "CONTROL=Path('/content/drive/MyDrive/yeniBot/advisor_experiments/cnn_gru_v1/a6_a100_001')\nROOT=Path('/content/drive/MyDrive/yeniBot/advisor_experiments/gru_capacity_v1/hidden64_a100_001')").replace('advisor-cnn-gru-v1.0.0','advisor-gru-capacity-v1.0.0')
+    cells[3]['source']=cells[3]['source'].replace('scripts/advisor_cnn_gru.py','scripts/advisor_capacity.py').replace("'--source',str(SOURCE)","'--source',str(SOURCE),'--control',str(CONTROL)")
+    cells[4]['source']='##114 eski kontrolün dosyalarını, ortamını ve bölmelerini doğrula\n'
+    cells[6]['source']='## Yalnız hidden64 için114 eğitim\nKontrol yeniden eğitilmez. Kesinti sonrası aynı workspace ile devam eder.\n'
+    cells[9]['source']=cells[9]['source'].replace('cnn_gru_review.zip','capacity_review.zip')
+    return nb
+
+
 if __name__=='__main__':
-    (ROOT/'notebooks/workflows/06_learning_rate.ipynb').write_text(json.dumps(build_cnn_gru(),ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')
+    (ROOT/'notebooks/workflows/06_learning_rate.ipynb').write_text(json.dumps(build_capacity(),ensure_ascii=False,indent=1)+'\n',encoding='utf-8',newline='\n')

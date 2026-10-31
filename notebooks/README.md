@@ -1,10 +1,10 @@
 # Notebook giriş noktaları
 
-**Güncel kontrollü deney:** [06 · GRU ve CNN → GRU](workflows/06_learning_rate.ipynb).
-Altı özellik/LR0.001; validation528 seçim +24 boşluk +528 değerlendirme,228 eğitim.
-[Plan ve sınırlar](../research/analyses/cnn-gru-20261030/PLAN.md).
-Yeni A100 oturumu ve yeni workspace kullanın. Önceki checkpoint deneyi
-`advisor-checkpoint-selection-v1.0.0` etiketinde korunur; final test yapılmaz.
+**Güncel kontrollü deney:** [06 · GRU hidden128 → hidden64](workflows/06_learning_rate.ipynb).
+Altı özellik/LR0.001; aynı bölmeler.114 eski GRU kontrolü korunur,114 yeni aday eğitilir.
+[Plan ve sınırlar](../research/analyses/gru-capacity-20261031/PLAN.md).
+Yeni A100 oturumu ve yeni workspace kullanın. Önceki CNN-GRU deneyi
+`advisor-cnn-gru-v1.0.0` etiketinde korunur; final test yapılmaz.
 
 **Araştırmanın ana ekranı [deney defteridir](../research/INDEX.md).**
 Bu notebooklar kayıt sisteminin yerine geçmez. Yeni öneri önce plan olarak
