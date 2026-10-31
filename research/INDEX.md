@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**34 deney/plan · 54 geçmiş kaydı**
+**34 deney/plan · 55 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -41,7 +41,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-031-checkpoint-selection](#exp-031-checkpoint-selection) | A6: seÃ§im ve deÄŸerlendirme ayrÄ±mÄ±yla BCE/AP checkpoint karÅŸÄ±laÅŸtÄ±rmasÄ± | completed | not_selected |
 | [exp-032-cnn-gru](#exp-032-cnn-gru) | AltÄ± Ã¶zellik: GRU ve nedensel CNN ardÄ±ndan GRU | completed | not_selected |
 | [exp-033-transfer-diagnosis](#exp-033-transfer-diagnosis) | GRU ve CNN-GRU seçimden değerlendirmeye aktarım teşhisi | completed | inconclusive |
-| [exp-034-gru-capacity](#exp-034-gru-capacity) | GRU kapasitesi: hidden128 kontrolüne karşı hidden64 | planned | pending |
+| [exp-034-gru-capacity](#exp-034-gru-capacity) | GRU kapasitesi: hidden128 kontrolÃ¼ne karÅŸÄ± hidden64 | completed | mixed |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -486,6 +486,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-033-transfer-diagnosis | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+114 yeni hidden64 ve114 eski hidden128;465 assessment hedefi/run · AP/BCE eşit run ortalaması; precision toplam sayılardan
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-034-gru-capacity | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -2332,11 +2342,11 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **inconclusive**
 
 ## exp-034-gru-capacity
 
-**GRU kapasitesi: hidden128 kontrolüne karşı hidden64**
+**GRU kapasitesi: hidden128 kontrolÃ¼ne karÅŸÄ± hidden64**
 
-Yalnız gizli boyutu azaltmak sonraki validation bölümünde seçicilik ve kararlılığı artırır mı?
+YalnÄ±z gizli boyutu azaltmak sonraki validation bÃ¶lÃ¼mÃ¼nde seÃ§icilik ve kararlÄ±lÄ±ÄŸÄ± artÄ±rÄ±r mÄ±?
 
-Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **mixed**
 
 Önceki kayıtlar: exp-032-cnn-gru, exp-033-transfer-diagnosis
 
@@ -2344,19 +2354,29 @@ Kampanya: `campaign-001` · Durum: **planned** · Sonuç: **pending**
 
 **Veri kimliği:** {"evaluation_scope": "selection/assessment inside historical validation only; no final test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
 
-**Seçim kuralı:** Epoch yalnÄ±z seÃ§im BCE; fixed0.5 ve seÃ§im Ã¼st%5/%10 skor cutofflarÄ± deÄŸerlendirmeye deÄŸiÅŸmeden uygulanÄ±r.
+**Seçim kuralı:** Epoch yalnÃ„Â±z seÃƒÂ§im BCE; fixed0.5 ve seÃƒÂ§im ÃƒÂ¼st%5/%10 skor cutofflarÃ„Â± deÃ„Å¸erlendirmeye deÃ„Å¸iÃ…Å¸meden uygulanÃ„Â±r.
 
-**Karar / öğrenilen:** Hazırlık onaylandı;114 mevcut kontrol salt okunur kullanılır,114 yeni aday Colab eğitimi bekleniyor.
+**Karar / öğrenilen:** Hidden64 küçük BCE/üst%10 precision kazanımı sağladı; AP, sabit0.5 ve seed tutarlılığında genel üstünlük yok. Kontrol değiştirilmedi; final test yok.
 
-**Henüz sonuç yok.**
+**validation** · 114 yeni hidden64 ve114 eski hidden128;465 assessment hedefi/run · AP/BCE eşit run ortalaması; precision toplam sayılardan
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| hidden128_ap | 0.404100 |
+| hidden128_bce | 0.611859 |
+| hidden128_top10_precision | 0.421152 |
+| hidden64_ap | 0.402509 |
+| hidden64_bce | 0.608071 |
+| hidden64_top10_precision | 0.430113 |
 
 **Sınırlar / açık noktalar:**
-- Tarihsel validation gÃ¶rÃ¼lmÃ¼ÅŸtÃ¼r; final test deÄŸildir.
-- DÃ¶nemler/seedler baÄŸÄ±msÄ±z deÄŸildir.
-- Parametre sayÄ±sÄ± eÅŸit deÄŸildir; bu somut mimari deÄŸiÅŸikliÄŸi karÅŸÄ±laÅŸtÄ±rÄ±lÄ±r.
-- Sabit hiperparametreler her mimarinin eriÅŸebileceÄŸi en iyi performansÄ± gÃ¶stermez.
+- Tarihsel validation gÃƒÂ¶rÃƒÂ¼lmÃƒÂ¼Ã…Å¸tÃƒÂ¼r; final test deÃ„Å¸ildir.
+- DÃƒÂ¶nemler/seedler baÃ„Å¸Ã„Â±msÃ„Â±z deÃ„Å¸ildir.
+- Parametre sayÃ„Â±sÃ„Â± eÃ…Å¸it deÃ„Å¸ildir; bu somut mimari deÃ„Å¸iÃ…Å¸ikliÃ„Å¸i karÃ…Å¸Ã„Â±laÃ…Å¸tÃ„Â±rÃ„Â±lÃ„Â±r.
+- Sabit hiperparametreler her mimarinin eriÃ…Å¸ebileceÃ„Å¸i en iyi performansÃ„Â± gÃƒÂ¶stermez.
 
 **Kanıt kopyaları:**
 - [research/analyses/gru-capacity-20261031/PLAN.md](sources/3c4e7970f0e9845fc0f664181151c6c23074dfe2546e899b7e06309124141ab7.md) · SHA256 `3c4e7970f0e9845fc0f664181151c6c23074dfe2546e899b7e06309124141ab7`
+- [research/analyses/gru-capacity-review-20261031/REPORT.md](sources/7ccfb87c6b6144c42e558a6b5f5ca62f74be6b7e6ff91ca217c596d3928f2fba.md) · SHA256 `7ccfb87c6b6144c42e558a6b5f5ca62f74be6b7e6ff91ca217c596d3928f2fba`
 
-[Son kayıt](events/000054.json) · revizyon 1 · Kullanıcı onaylı tek değişken hidden128->64 hazırlığı; eski kontrol yeniden eğitilmeyecek.
+[Son kayıt](events/000055.json) · revizyon 2 · Tamamlanan hidden64 çıktıları Drive üzerinden doğrulandı; sonuç karışık.
