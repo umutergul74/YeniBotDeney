@@ -1,0 +1,86 @@
+{
+  "previous_sha256": "cf644dbfb520b98143c22a9f1592b565382058011d9b1b86468cbdb73e3262be",
+  "reason": "Kullanıcının tamamlanmış CNN-GRU ZIP çıktıları doğrulandı; aday genel iyileşme sağlamadı.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "selection/assessment inside historical validation only; no final test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "CNN-GRU genel AP/BCE ve dönem/seed kararlılığında tutarlı iyileşme sağlamadı; GRU kontrolü korunur.228 çalışma tamam; final test yok.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/cnn-gru-20261030/PLAN.md",
+        "path": "sources/86b4605a0f22f5b6458d0995984b720e752a7b0f478b35f010031cd0e0a1102f.md",
+        "sha256": "86b4605a0f22f5b6458d0995984b720e752a7b0f478b35f010031cd0e0a1102f"
+      },
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/cnn-gru-20261031/REPORT.md",
+        "path": "sources/ca7d5315bf1e4c04c3c54e084267face7f8ba1383d4454c83a2e28cb3773e0d4.md",
+        "sha256": "ca7d5315bf1e4c04c3c54e084267face7f8ba1383d4454c83a2e28cb3773e0d4"
+      }
+    ],
+    "id": "exp-032-cnn-gru",
+    "limitations": [
+      "Tarihsel validation gÃ¶rÃ¼lmÃ¼ÅŸtÃ¼r; final test deÄŸildir.",
+      "DÃ¶nemler/seedler baÄŸÄ±msÄ±z deÄŸildir.",
+      "Parametre sayÄ±sÄ± eÅŸit deÄŸildir; bu somut mimari deÄŸiÅŸikliÄŸi karÅŸÄ±laÅŸtÄ±rÄ±lÄ±r.",
+      "Sabit hiperparametreler her mimarinin eriÅŸebileceÄŸi en iyi performansÄ± gÃ¶stermez."
+    ],
+    "method": {
+      "assessment_rows": 528,
+      "assessment_targets": 465,
+      "folds": 38,
+      "gap_rows": 24,
+      "learning_rate": 0.001,
+      "model": "A6 GRU / Conv1D32-k3-GELU ardÄ±ndan aynÄ± GRU",
+      "release": "advisor-cnn-gru-v1.0.0",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "selected_checkpoints": 228,
+      "selection_rows": 528,
+      "selection_targets": 465,
+      "sequence_length": 64,
+      "stopping": "each architecture selection BCE patience15, maximum100",
+      "thresholds": "fixed0.5 plus selection-score top5/top10 cutoff; assessment untouched by choice",
+      "train_rows": 5040,
+      "trajectories": 228
+    },
+    "outcome": "not_selected",
+    "parent_ids": [
+      "exp-031-checkpoint-selection",
+      "exp-021-feature-comparison"
+    ],
+    "question": "Yerel nedensel CNN Ã¶n iÅŸlemesi, aynÄ± altÄ± girdide GRU kontrolÃ¼ne gÃ¶re sonraki validation dÃ¶neminde seÃ§icilik ve kararlÄ±lÄ±ÄŸÄ± artÄ±rÄ±yor mu?",
+    "results": [
+      {
+        "aggregation": "AP/BCE eşit run ortalaması; precision toplam TP/sinyal",
+        "cohort": "228 run, mimari başına114; bölüm başına465 assessment hedefi",
+        "metrics": {
+          "cnn_gru_ap": 0.4007842470808329,
+          "cnn_gru_bce": 0.6133660057134795,
+          "cnn_gru_top5_precision": 0.42436453812771235,
+          "gru_ap": 0.4040999823914991,
+          "gru_bce": 0.6118588860620532,
+          "gru_top5_precision": 0.41154071470415937
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Epoch yalnÄ±z seÃ§im BCE; fixed0.5 ve seÃ§im Ã¼st%5/%10 skor cutofflarÄ± deÄŸerlendirmeye deÄŸiÅŸmeden uygulanÄ±r.",
+    "status": "completed",
+    "title": "AltÄ± Ã¶zellik: GRU ve nedensel CNN ardÄ±ndan GRU"
+  },
+  "recorded_at": "2026-10-31T13:13:28.818510+00:00",
+  "revision": 2,
+  "schema_version": 1,
+  "sequence": 52
+}
