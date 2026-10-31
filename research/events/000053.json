@@ -1,0 +1,67 @@
+{
+  "previous_sha256": "86bebdf7dc365b9b854e602ca109f0d3e717a0b7927fcd718cbdfad58831b3ea",
+  "reason": "Önceki analizleri tekrarlamadan exp032 seçim-değerlendirme aktarımını tamamla.",
+  "record": {
+    "campaign": "campaign-001",
+    "data": {
+      "evaluation_scope": "selection/assessment inside historical validation only; no final test command",
+      "labels_id": "original-tp2-sl5-h10-stop-first",
+      "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c",
+      "snapshot_id": "legacy-colab-v1-development",
+      "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"
+    },
+    "decision": "Kesin neden doğrulanmadı. Ortak dönem davranışı güçlü, seçim avantajı aktarımı zayıf. Sonraki öneri yalnız GRU hidden128->64; uygulanmadı/eğitilmedi.",
+    "evidence": [
+      {
+        "kind": "review_document",
+        "original_path": "research/analyses/cnn-gru-transfer-20261031/REPORT.md",
+        "path": "sources/9bc013119c14f8ea725cb02ffe36a913564c8dbd58e1d98f5c405447263a9cf3.md",
+        "sha256": "9bc013119c14f8ea725cb02ffe36a913564c8dbd58e1d98f5c405447263a9cf3"
+      }
+    ],
+    "id": "exp-033-transfer-diagnosis",
+    "limitations": [
+      "Tarihsel validation gÃƒÂ¶rÃƒÂ¼lmÃƒÂ¼Ã…Å¸tÃƒÂ¼r; final test deÃ„Å¸ildir.",
+      "DÃƒÂ¶nemler/seedler baÃ„Å¸Ã„Â±msÃ„Â±z deÃ„Å¸ildir.",
+      "Parametre sayÃ„Â±sÃ„Â± eÃ…Å¸it deÃ„Å¸ildir; bu somut mimari deÃ„Å¸iÃ…Å¸ikliÃ„Å¸i karÃ…Å¸Ã„Â±laÃ…Å¸tÃ„Â±rÃ„Â±lÃ„Â±r.",
+      "Sabit hiperparametreler her mimarinin eriÃ…Å¸ebileceÃ„Å¸i en iyi performansÃ„Â± gÃƒÂ¶stermez."
+    ],
+    "method": {
+      "aggregation": "Üç seed ortalamasıyla dönem Spearman korelasyonu; AP-pozitif oranı betimleyici farkı",
+      "changed_factor": "Yok; mevcut tahmin/history üzerinde betimleyici analiz",
+      "folds": 38,
+      "runs": 228,
+      "seeds": [
+        42,
+        43,
+        44
+      ]
+    },
+    "outcome": "inconclusive",
+    "parent_ids": [
+      "exp-030-comprehensive-diagnosis",
+      "exp-031-checkpoint-selection",
+      "exp-032-cnn-gru"
+    ],
+    "question": "Mevcut iki mimari aynı dönemlerde mi zorlanıyor ve seçim avantajı sonraki bölüme taşınıyor mu?",
+    "results": [
+      {
+        "aggregation": "38 fold, her fold üç seed ortalaması",
+        "cohort": "Exp032 aynı228 run; seçim/assessment465 hedef",
+        "metrics": {
+          "cnn_transfer_excess_spearman": 0.18853266221687273,
+          "gru_transfer_excess_spearman": 0.08808403545245651,
+          "shared_excess_spearman": 0.8759164022321917
+        },
+        "split": "validation"
+      }
+    ],
+    "selection_rule": "Yeni model/epoch/eşik seçimi yok; final test yok.",
+    "status": "completed",
+    "title": "GRU ve CNN-GRU seçimden değerlendirmeye aktarım teşhisi"
+  },
+  "recorded_at": "2026-10-31T13:27:42.521812+00:00",
+  "revision": 1,
+  "schema_version": 1,
+  "sequence": 53
+}

@@ -4,7 +4,7 @@ Bu görünüm kayıtlı sonuçları listeler; analiz veya eğitim çalıştırma
 Kaynak: `events/` içindeki eklemeli kayıtlar. Rakamlar kaynak raporların yuvarlatılmış değerleridir.
 Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması değildir.
 
-**32 deney/plan · 52 geçmiş kaydı**
+**33 deney/plan · 53 geçmiş kaydı**
 
 | Kimlik | Soru / yöntem | Durum | Sonuç yorumu |
 |---|---|---|---|
@@ -40,6 +40,7 @@ Validation ve test ayrı kapsamdır; bu tablo otomatik bir başarı sıralaması
 | [exp-030-comprehensive-diagnosis](#exp-030-comprehensive-diagnosis) | 684 eğitim: epoch, eşik, dönem ve 37 girdi teşhisi | completed | mixed |
 | [exp-031-checkpoint-selection](#exp-031-checkpoint-selection) | A6: seÃ§im ve deÄŸerlendirme ayrÄ±mÄ±yla BCE/AP checkpoint karÅŸÄ±laÅŸtÄ±rmasÄ± | completed | not_selected |
 | [exp-032-cnn-gru](#exp-032-cnn-gru) | AltÄ± Ã¶zellik: GRU ve nedensel CNN ardÄ±ndan GRU | completed | not_selected |
+| [exp-033-transfer-diagnosis](#exp-033-transfer-diagnosis) | GRU ve CNN-GRU seçimden değerlendirmeye aktarım teşhisi | completed | inconclusive |
 
 ## Kayıtlı sonuçlar · validation
 
@@ -474,6 +475,16 @@ Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sı
 | Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|
 | exp-032-cnn-gru | — | — | — | — | — |
+
+## Kayıtlı sonuçlar · validation
+
+Exp032 aynı228 run; seçim/assessment465 hedef · 38 fold, her fold üç seed ortalaması
+
+Yalnızca mevcut rapor değerlerinin yan yana görünümü; yeniden puanlama/sıralama yok.
+
+| Deney | BCE ↓ | AP ↑ | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| exp-033-transfer-diagnosis | — | — | — | — | — |
 
 ## exp-001-a
 
@@ -2280,3 +2291,40 @@ Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **not_selected**
 - [research/analyses/cnn-gru-20261031/REPORT.md](sources/ca7d5315bf1e4c04c3c54e084267face7f8ba1383d4454c83a2e28cb3773e0d4.md) · SHA256 `ca7d5315bf1e4c04c3c54e084267face7f8ba1383d4454c83a2e28cb3773e0d4`
 
 [Son kayıt](events/000052.json) · revizyon 2 · Kullanıcının tamamlanmış CNN-GRU ZIP çıktıları doğrulandı; aday genel iyileşme sağlamadı.
+
+## exp-033-transfer-diagnosis
+
+**GRU ve CNN-GRU seçimden değerlendirmeye aktarım teşhisi**
+
+Mevcut iki mimari aynı dönemlerde mi zorlanıyor ve seçim avantajı sonraki bölüme taşınıyor mu?
+
+Kampanya: `campaign-001` · Durum: **completed** · Sonuç: **inconclusive**
+
+Önceki kayıtlar: exp-030-comprehensive-diagnosis, exp-031-checkpoint-selection, exp-032-cnn-gru
+
+**Yöntem:** {"aggregation": "Üç seed ortalamasıyla dönem Spearman korelasyonu; AP-pozitif oranı betimleyici farkı", "changed_factor": "Yok; mevcut tahmin/history üzerinde betimleyici analiz", "folds": 38, "runs": 228, "seeds": [42, 43, 44]}
+
+**Veri kimliği:** {"evaluation_scope": "selection/assessment inside historical validation only; no final test command", "labels_id": "original-tp2-sl5-h10-stop-first", "raw_sha256": "a6be57890593b9d47357c5b8ee50b54ab61857b9f13a859e9e85c85525731c5c", "snapshot_id": "legacy-colab-v1-development", "split_id": "original33551-38fold-5040-1080-720-step720-purge24-embargo24"}
+
+**Seçim kuralı:** Yeni model/epoch/eşik seçimi yok; final test yok.
+
+**Karar / öğrenilen:** Kesin neden doğrulanmadı. Ortak dönem davranışı güçlü, seçim avantajı aktarımı zayıf. Sonraki öneri yalnız GRU hidden128->64; uygulanmadı/eğitilmedi.
+
+**validation** · Exp032 aynı228 run; seçim/assessment465 hedef · 38 fold, her fold üç seed ortalaması
+
+| Ölçüt | Kayıtlı değer |
+|---|---:|
+| cnn_transfer_excess_spearman | 0.188533 |
+| gru_transfer_excess_spearman | 0.088084 |
+| shared_excess_spearman | 0.875916 |
+
+**Sınırlar / açık noktalar:**
+- Tarihsel validation gÃƒÂ¶rÃƒÂ¼lmÃƒÂ¼Ã…Å¸tÃƒÂ¼r; final test deÃ„Å¸ildir.
+- DÃƒÂ¶nemler/seedler baÃ„Å¸Ã„Â±msÃ„Â±z deÃ„Å¸ildir.
+- Parametre sayÃ„Â±sÃ„Â± eÃ…Å¸it deÃ„Å¸ildir; bu somut mimari deÃ„Å¸iÃ…Å¸ikliÃ„Å¸i karÃ…Å¸Ã„Â±laÃ…Å¸tÃ„Â±rÃ„Â±lÃ„Â±r.
+- Sabit hiperparametreler her mimarinin eriÃ…Å¸ebileceÃ„Å¸i en iyi performansÃ„Â± gÃƒÂ¶stermez.
+
+**Kanıt kopyaları:**
+- [research/analyses/cnn-gru-transfer-20261031/REPORT.md](sources/9bc013119c14f8ea725cb02ffe36a913564c8dbd58e1d98f5c405447263a9cf3.md) · SHA256 `9bc013119c14f8ea725cb02ffe36a913564c8dbd58e1d98f5c405447263a9cf3`
+
+[Son kayıt](events/000053.json) · revizyon 1 · Önceki analizleri tekrarlamadan exp032 seçim-değerlendirme aktarımını tamamla.
